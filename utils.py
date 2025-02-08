@@ -1,19 +1,22 @@
-from selectors import SelectSelector
-
 from github import Github
 import pickle
 import os.path
+import requests
+
+g = Github()
 
 def save_repos():
-    if Github().get_rate_limit().core.remaining != 0:
+    if g.get_rate_limit().core.remaining != 0:
         try:
-            user = Github().get_user("rubenxi")
+            user = g.get_user("rubenxi")
             repos = user.get_repos()
             repos_local = []
             for repo in repos:
                 if repo.fork is False:
-                    repos_local.append([repo.name, repo.description, repo.html_url, repo.stargazers_count, repo.language, repo.get_readme()])
-                    print(repo.get_readme().content)
+                    url = 'https://raw.githubusercontent.com/rubenxi/' + repo.name + '/refs/heads/main/README.md'
+                    response = requests.get(url)
+                    readme = response.text
+                    repos_local.append([repo.name, repo.description, repo.html_url, repo.stargazers_count, repo.language, readme])
         except Exception:
             print("Rate limit")
             pass
