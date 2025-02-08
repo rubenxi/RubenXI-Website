@@ -16,6 +16,12 @@ def save_repos():
                     url = 'https://raw.githubusercontent.com/rubenxi/' + repo.name + '/refs/heads/main/README.md'
                     response = requests.get(url)
                     readme = response.text
+                    if "404: Not Found" == readme:
+                        url = 'https://raw.githubusercontent.com/rubenxi/' + repo.name + '/refs/heads/master/README.md'
+                        response = requests.get(url)
+                        readme = response.text
+                    if "404: Not Found" == readme:
+                        readme = "No readme in this repo"
                     repos_local.append([repo.name, repo.description, repo.html_url, repo.stargazers_count, repo.language, readme])
         except Exception:
             print("Rate limit")
