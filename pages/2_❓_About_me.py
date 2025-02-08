@@ -12,11 +12,10 @@ st.markdown(
 """
 **Software Engineer**
 
-⚲ Spain
+📍 **Spain**
 
-My GitHub
-
-[github.com/rubenxi](github.com/rubenxi)
+**My GitHub**  
+**[github.com/rubenxi](github.com/rubenxi)**
 
 # 📌 Profile
 I am a multidisciplinary software engineer aiming to be a DevOps. I
