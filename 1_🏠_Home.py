@@ -1,5 +1,6 @@
 import streamlit as st
 from utils import get_repos_github
+import streamlit.components.v1 as components
 
 st.set_page_config(
     layout="wide",
@@ -16,8 +17,9 @@ def hide_menus():
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 def main():
+
     st.sidebar.title("RubenXI")
-    st.sidebar.text("Some information about me and my projects. You can check the repos on GitHub or even see the full readme here by clicking on \"See readme\"")
+    st.sidebar.text("Some information about me and my projects. \nYou can check the repos on GitHub or even see the full readme here by clicking on \"See readme\"")
 
     col1, col2 = st.columns(2)
     with col1:
@@ -44,7 +46,7 @@ def main():
         st.markdown(intro_md)
         st.divider()
         st.markdown(abilities_md)
-
+    st.divider()
     st.header("My GitHub repositories")
     with st.spinner("Retrieving information...", show_time=True):
         repos = get_repos_github()
@@ -69,6 +71,10 @@ def main():
                             else:
                                 break
 
+    path_to_html = "./penguin.html"
+    with open(path_to_html, 'r') as f:
+        html_data = f.read()
+    st.components.v1.html(html_data, height=50)
 
 if __name__ == "__main__":
     main()

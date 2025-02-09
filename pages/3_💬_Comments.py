@@ -1,6 +1,7 @@
 import streamlit as st
 import pickle
 import os
+import streamlit.components.v1 as components
 
 st.set_page_config(
     layout="wide",
@@ -40,8 +41,13 @@ def main():
 
         with st.chat_message("user"):
             st.markdown(user_input)
-
+        st.balloons()
         save_chat_history(st.session_state["messages"])
+        path_to_html = "./popup.html"
+        with open(path_to_html, 'r') as f:
+            html_data = f.read()
+        st.components.v1.html(html_data)
+
 
 if __name__ == "__main__":
     main()
