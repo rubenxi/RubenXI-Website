@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .penguin {
+            font-size: 2rem;
+            position: absolute;
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="penguin" class="penguin">🐧</div>
+
+    <script>
+        const penguin = document.getElementById('penguin');
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        let direction = 'left';
+        let positionX = 0;
+        let positionY = 0;
+        let isJumping = false;
+        let jumpHeight = 0;
+        let frames = 0;
+        function movePenguin() {
+        let speed = 0.5
+
+            // Move horizontally
+            if (direction === 'left') {
+                positionX += speed;
+                penguin.style.transform = 'rotateY(180deg)';
+                if (positionX >= screenWidth - 100) {
+                    direction = 'right';
+                }
+            } else {
+                positionX -= speed;
+                penguin.style.transform = 'rotateY(0deg)';
+                if (positionX <= 0) {
+                    direction = 'left';
+                }
+            }
+
+            // Make the penguin jump
+            if (isJumping) {
+                jumpHeight += 1;
+                if (jumpHeight >= 10) {
+                    isJumping = false;
+                }
+            } else {
+                jumpHeight -= 1;
+                if (jumpHeight <= 0) {
+                    jumpHeight = 0;
+                }
+            }
+
+            penguin.style.left = `${positionX}px`;
+            penguin.style.bottom = `${positionY + jumpHeight}px`;
+            frames++
+          if (frames >= 25) {
+          frames = 0
+          isJumping = true
+        }
+        }
+        
+        setInterval(movePenguin, 10);
+    </script>
+
+</body>
+</html>
