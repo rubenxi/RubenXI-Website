@@ -2,6 +2,7 @@ from github import Github
 import pickle
 import os.path
 import requests
+from lxml import html
 
 g = Github()
 
@@ -39,4 +40,52 @@ def get_repos_github():
     else:
         return None
 
+
+headers = {'User-Agent': 'Mozilla/5.0'}
+
+def get_news(country_code, options_name_link):
+    url = options_name_link[int(country_code)][2]
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        tree = html.fromstring(response.content)
+        news = []
+        xpath_all = '/html/body/div[3]/div[6]/div[1]/div[2]/div[2]/div'
+        news_size = tree.xpath(xpath_all)
+        if len(news_size) <= 1:
+            xpath_all = '/html/body/div[3]/div[5]/div[1]/div[2]/div[2]/div'
+            news_size = tree.xpath(xpath_all)
+        for i in range(1, len(news_size) + 1):
+            time = tree.xpath(xpath_all + '[' + str(i) + ']/div[1]/span')
+            title = tree.xpath(xpath_all + '[' + str(i) + ']/div[2]')
+            link = tree.xpath(xpath_all + '[' + str(i) + ']/div[1]/div/a/@href')
+            news.append([time[0].text_content(), title[0].text_content(), link[0]])
+        return news
+
+    else:
+        return None
+
+
+def show_options():
+    options_name_link = []
+    url_options = 'https://liveuamap.com'
+    response_options = requests.get(url_options, headers=headers)
+    if response_options.status_code == 200:
+        tree = html.fromstring(response_options.content)
+        xpath_all = '/html/body/div[3]/div[3]/div/div'
+        options_size = tree.xpath(xpath_all)
+        for i in range(2, len(options_size) + 1):
+            country_row = tree.xpath(xpath_all + '[' + str(i) + ']/div')
+            for j in range(1, len(country_row) + 1):
+                name = tree.xpath(xpath_all + '[' + str(i) + ']/div[' + str(j) + ']/a[2]/span')
+                link = tree.xpath(xpath_all + '[' + str(i) + ']/div[' + str(j) + ']/a[2]/@href')
+                if '#' not in link:
+                    options_name_link.append((len(options_name_link) + 1, name[0].text_content(), link[0]))
+    else:
+        return None
+
+    return options_name_link
+
+
 save_repos()
+
+

@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit import container, button
 from utils import get_repos_github
 import streamlit.components.v1 as components
 
@@ -24,12 +25,12 @@ def main():
     col1, col2 = st.columns(2)
     with col1:
         st.image("logo.png")
-
     with col2:
         st.title("RubenXI")
         intro_md = """\
-        **I'm a multidisciplinary Software Engineer aiming to be a DevOps**
+        **I'm a multidisciplinary Software Engineer aiming to be a DevOps**  
         """
+
         abilities_md = """\
         💻 **Software development**
         
@@ -44,6 +45,23 @@ def main():
         🔥 **And more...**
     """
         st.markdown(intro_md)
+        col3, col4 = st.columns(2)
+
+        @st.dialog("What's mozmail?")
+        def show_info():
+            st.markdown("""\
+            **@mozmail is the domain used by Firefox Relay, a Mozilla service that helps protect your privacy by masking your real email address. Emails sent to this address are securely forwarded to my personal inbox, reducing spam and phishing risks.**
+            
+            ---
+            
+            Since this website is public, I use it to avoid bot spam or any other problem.           
+                        """)
+        with col3:
+            st.link_button("📧 **Send me an email**","mailto: hg5l8ssre@mozmail.com", type="primary")
+        with col4:
+            if st.button("❓"):
+                show_info()
+
         st.divider()
         st.markdown(abilities_md)
     st.divider()
@@ -65,7 +83,7 @@ def main():
                                 st.markdown("⭐**" + str(repo[3]) + "**")
                                 st.divider()
                                 st.markdown("**"+repo[1]+"**")
-                                st.link_button("🚀 View on GitHub", repo[2])
+                                st.link_button("🚀 View on GitHub", repo[2], type="primary")
                                 with st.expander("See readme"):
                                     st.markdown(repo[5])
                             else:

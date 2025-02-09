@@ -243,9 +243,9 @@ def main():
     with st.sidebar.container(border=True):
         cols = st.sidebar.columns(2)
         with cols[0]:
-            ben = st.button("**English**", key="en")
+            ben = st.button("**English**", key="en", type="primary")
         with cols[1]:
-            bes = st.button("**Español**", key="es")
+            bes = st.button("**Español**", key="es", type="primary")
     st.sidebar.divider()
     st.sidebar.title("❓ More about me")
     st.sidebar.text("If you want to know more about me and my experience you can read this page."

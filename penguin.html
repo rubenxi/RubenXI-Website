@@ -35,8 +35,6 @@
         let frames = 0;
         function movePenguin() {
         let speed = 0.5
-
-            // Move horizontally
             if (direction === 'left') {
                 positionX += speed;
                 penguin.style.transform = 'rotateY(180deg)';
@@ -50,8 +48,6 @@
                     direction = 'left';
                 }
             }
-
-            // Make the penguin jump
             if (isJumping) {
                 jumpHeight += 1;
                 if (jumpHeight >= 10) {

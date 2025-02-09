@@ -9,12 +9,12 @@ Access online in the link:
 https://rubenxi-website.streamlit.app/
 
 Please note that the website is public and not moderated. I am not responsible for what anonymous users write in the comments section.
+
 # Requirements
 - Python 3
 - pip
 - streamlit
 - PyGithub
-
 
 # Install
 ```
