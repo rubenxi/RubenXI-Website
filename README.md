@@ -15,6 +15,7 @@ Please note that the website is public and not moderated. I am not responsible f
 - pip
 - streamlit
 - PyGithub
+- lxml
 
 # Install
 ```
