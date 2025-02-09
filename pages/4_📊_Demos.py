@@ -41,20 +41,21 @@ def main():
             with col3:
                 st.link_button("🚀 View on GitHub", "https://github.com/rubenxi/newsPython", type="primary")
             option = st.selectbox("**Choose a country or conflict**", names)
-            if option is not None:
-                code = names.index(option)
-                with st.spinner("Retrieving information...", show_time=True):
-                    news = get_news(code, options_name_link)
-                if news is not None:
-                    for j in range(len(news)):
-                            cols = st.columns(3)
-                            for i in range(len(cols)):
-                                col = cols[i]
-                                with col:
-                                    if j * 3 + i < len(news):
-                                        st.link_button("**" + news[j * 3 + i][0] + "**\n\n" + news[j * 3 + i][1], news[j * 3 + i][2])
-                                    else:
-                                        break
+            if option is None:
+                option = names[0]
+            code = names.index(option)
+            with st.spinner("Retrieving information...", show_time=True):
+                news = get_news(code, options_name_link)
+            if news is not None:
+                for j in range(len(news)):
+                        cols = st.columns(3)
+                        for i in range(len(cols)):
+                            col = cols[i]
+                            with col:
+                                if j * 3 + i < len(news):
+                                    st.link_button("**" + news[j * 3 + i][0] + "**\n\n" + news[j * 3 + i][1], news[j * 3 + i][2])
+                                else:
+                                    break
 
 
 
