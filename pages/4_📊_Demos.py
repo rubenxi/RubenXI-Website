@@ -3,7 +3,9 @@ import pickle
 import os
 import streamlit.components.v1 as components
 from utils import show_options
+from utils import get_coords
 from utils import get_news
+import pandas as pd
 
 st.set_page_config(
     layout="wide",
@@ -53,11 +55,22 @@ def main():
                             col = cols[i]
                             with col:
                                 if j * 3 + i < len(news):
-                                    st.link_button("**" + news[j * 3 + i][0] + "**\n\n" + news[j * 3 + i][1], news[j * 3 + i][2])
+                                    with st.container(border=True):
+                                        st.link_button("**" + news[j * 3 + i][0] + "**\n\n" + news[j * 3 + i][1], news[j * 3 + i][2])
+                                        if st.button("🗺️ See in map", key="map_"+news[j * 3 + i][2], type="tertiary"):
+                                            @st.dialog(option + " Map")
+                                            def show_map():
+                                                lat, lon = get_coords(news[j * 3 + i][2])
+                                                data = pd.DataFrame({
+                                                    'latitude': [lat],
+                                                    'longitude': [lon]
+                                                })
+                                                st.map(data, zoom=6, size=8000)
+
+                                            with st.spinner("Loading map...", show_time=True):
+                                                show_map()
                                 else:
                                     break
-
-
 
 if __name__ == "__main__":
     main()

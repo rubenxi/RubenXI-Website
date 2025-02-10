@@ -3,6 +3,8 @@ import pickle
 import os.path
 import requests
 from lxml import html
+import re
+import base64
 
 g = Github()
 
@@ -64,6 +66,24 @@ def get_news(country_code, options_name_link):
     else:
         return None
 
+def get_coords(url_coords):
+    lat = 0
+    lon = 0
+    response_coords = requests.get(url_coords, headers=headers)
+    if response_coords.status_code == 200:
+        tree_coords = html.fromstring(response_coords.content)
+        xpath_all_coords = '//script/text()'
+        scripts = tree_coords.xpath(xpath_all_coords)
+        for script in scripts:
+            if "zoom" in script:
+                matches = re.findall(r'lat\s*=\s*([-]?\d+\.\d+);', script)
+                lng_matches = re.findall(r'lng\s*=\s*([-]?\d+\.\d+);', script)
+                if matches and lng_matches:
+                    lat = float(matches[-1])
+                    lon = float(lng_matches[-1])
+                else:
+                    print("No map location available")
+    return [lat,lon]
 
 def show_options():
     options_name_link = []
