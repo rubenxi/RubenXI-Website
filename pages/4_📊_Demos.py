@@ -82,6 +82,21 @@ def main():
         Context: {context}
         User said: 
         """
+        with col1:
+            st.header("DeepSeek Chat")
+        with col2:
+            @st.dialog("DeepSeek Chat")
+            def show_info():
+                st.markdown("""\
+                        **This project is a chat written in Python that communicates with a HuggingFace model of DeepSeek in the cloud.**
+
+                        ---
+
+                        🚀 This project and many others can be found on my GitHub.           
+                                    """)
+
+            if st.button("❓ About this project  "):
+                show_info()
 
         def answer_question_server_simple(question):
             client = InferenceClient(api_key=api_key)
