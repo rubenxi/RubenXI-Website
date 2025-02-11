@@ -108,12 +108,10 @@ def main():
 
         question = st.chat_input("Question")
 
-
         if question:
             st.chat_message("user").write(question)
             with st.spinner("Thinking...", show_time=True):
-                answer = answer_question_simple(question)
-                st.chat_message("assistant").write(remove_think(answer))
+                response = st.write_stream(answer_question_server_simple(question))
 
 
 if __name__ == "__main__":
