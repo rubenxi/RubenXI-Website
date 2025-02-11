@@ -6,6 +6,8 @@ from utils import show_options
 from utils import get_coords
 from utils import get_news
 import pandas as pd
+import re
+from huggingface_hub import InferenceClient
 
 st.set_page_config(
     layout="wide",
@@ -13,11 +15,10 @@ st.set_page_config(
     page_icon="logo.png"
 )
 
-
 def main():
     st.sidebar.title("📊 Demo projects")
     st.sidebar.text("Here there are demos of some of my projects separated by tabs. You can click each tab to see the app and use it")
-    news_tab, wip_tab = st.tabs(["**News**", "**WIP**"])
+    news_tab, deepseek_tab = st.tabs(["**News**", "**DeepSeek**"])
     options_name_link = show_options()
     names = []
     for element in options_name_link:
@@ -71,6 +72,49 @@ def main():
                                                 show_map()
                                 else:
                                     break
+    with deepseek_tab:
+
+        api_key = st.secrets["api_key"]
+
+        template_server = """
+        Answer the user.
+
+        Context: {context}
+        User said: 
+        """
+
+        def answer_question_server_simple(question):
+            client = InferenceClient(api_key=api_key)
+
+            messages = [
+                {"role": "user", "content": template_server + question}
+            ]
+
+            with st.chat_message("assistant"):
+                stream = client.chat.completions.create(
+                    model="deepseek-ai/DeepSeek-R1-Distill-Qwen-32B",
+                    messages=messages,
+                    temperature=0.5,
+                    max_tokens=2048,
+                    top_p=0.7,
+                    stream=True
+                )
+                ended_thinking = False
+                for chunk in stream:
+                    if ended_thinking:
+                        yield chunk.choices[0].delta.content
+                    if "</think" in chunk.choices[0].delta.content:
+                        ended_thinking = True
+
+        question = st.chat_input("Question")
+
+
+        if question:
+            st.chat_message("user").write(question)
+            with st.spinner("Thinking...", show_time=True):
+                answer = answer_question_simple(question)
+                st.chat_message("assistant").write(remove_think(answer))
+
 
 if __name__ == "__main__":
     main()
