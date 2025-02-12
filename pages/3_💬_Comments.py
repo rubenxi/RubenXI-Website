@@ -26,6 +26,7 @@ def save_chat_history(messages):
 def main():
     st.sidebar.title("💬 Leave a comment!")
     st.sidebar.text("You can write as many comments as you want, it's anonymous!")
+    st.session_state.messages = []
 
     if "messages" not in st.session_state:
         st.session_state["messages"] = load_chat_history()
