@@ -3,8 +3,11 @@
 
 Check the AI chat to ask about me or see my GitHub repos!. You can also find cool animations and some interesting projects.
 
-![Screenshot_20250208_235847](https://github.com/user-attachments/assets/06741e2b-0689-4176-a662-df5decc036e1)
-![Screenshot_20250209_000121](https://github.com/user-attachments/assets/af331fca-e61a-4e0e-a034-a47d34186645)
+![Screenshot_20250212_223548](https://github.com/user-attachments/assets/8dbb2ee2-ef64-4f9f-a073-55b83fac8d68)
+![Screenshot_20250212_223318](https://github.com/user-attachments/assets/2f1dd594-83f2-4d22-9c06-877ee60c9d1a)
+![Screenshot_20250212_223150](https://github.com/user-attachments/assets/8b926f93-a65f-42b7-b90a-a570b4ed7cd5)
+![Screenshot_20250212_223218](https://github.com/user-attachments/assets/803fd6fa-9f45-4108-9fa4-9b64181d0ed1)
+
 
 # Online
 Access online in the link:
