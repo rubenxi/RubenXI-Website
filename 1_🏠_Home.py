@@ -21,7 +21,7 @@ def hide_menus():
 def main():
 
     st.sidebar.title("RubenXI")
-    st.sidebar.text("Some information about me and my projects. \nYou can check the repos on GitHub or even see the full readme here by clicking on \"See readme\"")
+    st.sidebar.text("Some information about me and my projects. \nYou can check my GitHub repos or ask the AI in this menu about me.")
 
     col1, col2 = st.columns(2)
     with col1:
@@ -99,9 +99,10 @@ def main():
     api_key = st.secrets["api_key"]
 
     template_server = """
-    In this chat you will provide information about Rubén. Only provide the information you know.
+    In this chat you will act as Rubén, provide information about him like if you were him, and talk to users and try to get them to hire you for their company. You have to be polite, engaging and kind, and a bit cheerful and fun to talk to. 
+    Only provide the information you know.
     If there's something you don't know or don't have information about, say it and tell the user to check the About me section for more information about Rubén.
-    
+    Try to keep your answers short. Maximum of 50 words.
     This is Rubén's abilities and skills:
     
     Software Engineer
@@ -181,8 +182,8 @@ Now answer the user question.
 User said: 
     """
     st.sidebar.divider()
-    st.sidebar.header("AI Chat")
-    st.sidebar.text("You can ask this AI about me")
+    st.sidebar.header("RubenXI AI chat")
+    st.sidebar.text("This AI will act like me and answer your questions about me!")
 
     def answer_question_server_simple(question):
         client = InferenceClient(api_key=api_key)
