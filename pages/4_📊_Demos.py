@@ -75,12 +75,11 @@ def main():
     with deepseek_tab:
 
         api_key = st.secrets["api_key"]
-
+        model = "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B"#Models: https://huggingface.co/playground
         template_server = """
-        Answer the user.
+        
+        System: Answer the user.
 
-        Context: {context}
-        User said: 
         """
         col4, col5, col6 = st.columns(3)
         with col4:
@@ -89,7 +88,15 @@ def main():
             @st.dialog("DeepSeek Chat")
             def show_info():
                 st.markdown("""\
-                        **This project is a chat written in Python that communicates with a HuggingFace model of DeepSeek in the cloud.**
+                        **This project is a chat written in Python that communicates with a HuggingFace model of DeepSeek (or some other ones) in the cloud. It uses the HuggingFace API to send the content of the message to the model online, getting then a response in stream format to output it to the chat.** 
+                        
+                        **You can choose a model with the menu "Model to use". The model will change and the new one will be used.**  
+                        
+                        **You can write a context for the AI that will be treated like the setup of the conversation, if you want to roleplay with a character this is where you write the description for it.**
+                        
+                        **The memory toggle will change between 2 processing modes:**   
+                        - **Memory on: The AI will remember the conversation all along. It gets slower with time since parsing more context takes more resources. In this mode old messages will appear.**  
+                        - **Memory off: The AI will answer every question like if it was the first message that was sent. In this mode the old messages disappear every time a new one is sent.**
 
                         ---
 
@@ -101,35 +108,84 @@ def main():
         with col6:
             st.link_button("🚀 View on GitHub", "https://github.com/rubenxi/deepseek-web-chat", type="primary")
 
+        question = st.chat_input("Write a message...")
+        col_m, col_c = st.columns(2)
+        with col_m:
+            col_m1, col_m2 = st.columns(2)
+            with col_m1:
+                st.markdown("**Note: New messages appear on top**")
+            with col_m2:
+                memory = st.toggle("Memory", value=True)
+            model = st.selectbox(
+                "Model to use",
+                ("deepseek-ai/DeepSeek-R1-Distill-Qwen-32B", "Qwen/Qwen2.5-72B-Instruct"), key = "model"
+            )
+        with col_c:
+            context = st.text_area("Context for the conversation")
+
+        if "messages" not in st.session_state:
+            st.session_state.messages = []
+
         def answer_question_server_simple(question):
             client = InferenceClient(api_key=api_key)
 
-            messages = [
-                {"role": "user", "content": template_server + question}
-            ]
-
             with st.chat_message("assistant"):
+                messages_stream = [{"role": "user", "content": template_server + question}]
+                if memory:
+                    if len(context) >= 1:
+                        messages_stream = [
+                                              {"role": "user", "content": template_server}
+                                          ] + [
+                                              {"role": "user", "content": "context: " + context}
+                                          ] + [
+                                              {"role": m["role"], "content": m["content"]} for m in
+                                              reversed(st.session_state.messages)
+                                          ]
+                    else:
+                        messages_stream = [
+                                              {"role": "user", "content": template_server}
+                                          ] + [
+                                              {"role": m["role"], "content": m["content"]} for m in
+                                              reversed(st.session_state.messages)
+                                          ]
+
                 stream = client.chat.completions.create(
-                    model="deepseek-ai/DeepSeek-R1-Distill-Qwen-32B",
-                    messages=messages,
+                    model=model,
+                    messages=messages_stream,
                     temperature=0.5,
                     max_tokens=2048,
                     top_p=0.7,
                     stream=True
                 )
                 ended_thinking = False
+                thinking = ""
                 for chunk in stream:
-                    if ended_thinking:
+                    if ended_thinking or model != "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B":
                         yield chunk.choices[0].delta.content
+                    else:
+                        thinking += chunk.choices[0].delta.content
                     if "</think" in chunk.choices[0].delta.content:
                         ended_thinking = True
-
-        question = st.chat_input("Question")
+                with st.expander("See thinking"):
+                    if len(thinking) <= 1:
+                        st.markdown('This model doesn\'t provide thinking')
+                    else:
+                        st.markdown(thinking.replace('</think>', ''))
 
         if question:
-            st.chat_message("user").write(question)
+            if memory:
+                st.session_state.messages.insert(0, {"role": "user", "content": question})
+            else:
+                st.chat_message("user").write(question)
+
             with st.spinner("Thinking...", show_time=True):
                 response = st.write_stream(answer_question_server_simple(question))
+
+            for message in st.session_state.messages:
+                with st.chat_message(message["role"]):
+                    st.markdown(message["content"])
+            if memory:
+                st.session_state.messages.insert(0, {"role": "assistant", "content": response})
 
 
 if __name__ == "__main__":

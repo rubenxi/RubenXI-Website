@@ -2,6 +2,7 @@ import streamlit as st
 from streamlit import container, button
 from utils import get_repos_github
 import streamlit.components.v1 as components
+from huggingface_hub import InferenceClient
 
 st.set_page_config(
     layout="wide",
@@ -93,6 +94,121 @@ def main():
     with open(path_to_html, 'r') as f:
         html_data = f.read()
     st.components.v1.html(html_data, height=50)
+
+
+    api_key = st.secrets["api_key"]
+
+    template_server = """
+    In this chat you will provide information about Rubén. Only provide the information you know.
+    If there's something you don't know or don't have information about, say it and tell the user to check the About me section for more information about Rubén.
+    
+    This is Rubén's abilities and skills:
+    
+    Software Engineer
+
+Spain
+
+GitHub: https://github.com/rubenxi
+
+I am a multidisciplinary software engineer aiming to be a DevOps. I like learning new technologies to grow as a developer. I’m a dedicated and hardworking individual who focuses intently on tasks and gives my all until they are completed. I take my job seriously and do not like to waste time. I adapt quickly and learn very fast anything I am asked to do. I have always been passionate about software development and technology, and I take every opportunity to learn more.
+I thrive in team environments and am confident in my ability to collaborate effectively to complete projects of any scope. I take a practical approach to my work and am committed to learning anything I don’t yet know in order to succeed. I am resilient and persistent, but if I encounter something beyond my capabilities, I am not afraid to seek help and prioritize teamwork over risking mistakes due to pride.
+
+Professional Experience
+Dekra 2024 — 2025
+During my internship at Dekra, I had the opportunity to learn from outstanding professionals about cybersecurity, the pentesting process, certification standards, and system administration. I also gained valuable insight into the internal workings of a large organization like Dekra.
+Some of the key tasks I worked on included:
+
+Developing applications and scripts in Python and Bash
+Virtualization and containerization
+Linux and Windows Server administration and problem solving
+Detecting and documenting security flaws
+Pentesting and system compromising
+Certification for different devices like Cisco routers
+
+Personal Interests
+Software development
+I’m passionate about software development, and I worked on multiple applications such as Python scripts or a video game written in Java. I enjoy the process of developing software and I can get immersed into it a lot, which is something that always makes me focus on what I’m doing until I finish. Some of my projects can be found on my GitHub.
+
+Linux and scripting
+I have been studying, using, and managing Linux-based systems daily for many years, acquiring deep and solid knowledge in the process. Scripts and tools I developed are available on my GitHub.
+
+Education
+Software Engineering
+Final degree project: “RejillaApp: Attention assessment and training App”
+
+Certifications
+Udemy 36-hour course: “Complete Linux Training Course to Get Your Dream IT Job 2024”
+The best Linux Administration course that prepares you for corporate jobs and for RHCSA, RHCE, LFCS, CLNP certifications
+
+Skills
+
+Java
+Bash Shell Scripting
+Python
+AI scripting / management
+Docker
+Git
+Visual Studio
+IntelliJ IDEA
+Eclipse
+RHEL
+Linux
+Android
+VMWare
+Oracle VirtualBox
+SQL
+.NET
+C#
+Soft skills
+
+Problem-solving abilities
+Open-minded
+Willingness to learn
+Critical thinking
+Patience
+Initiative
+Pro-activity
+Collaboration
+Teamwork
+Analytical mind
+Languages
+
+Spanish: Native
+English: Professional
+    
+That's the end of the information.
+Now answer the user question.
+User said: 
+    """
+    st.sidebar.divider()
+    st.sidebar.header("AI Chat")
+    st.sidebar.text("You can ask this AI about me")
+
+    def answer_question_server_simple(question):
+        client = InferenceClient(api_key=api_key)
+
+        messages = [
+            {"role": "user", "content": template_server + question}
+        ]
+
+        with st.sidebar.chat_message("assistant"):
+            stream = client.chat.completions.create(
+                model="Qwen/Qwen2.5-72B-Instruct",
+                messages=messages,
+                temperature=0.5,
+                max_tokens=2048,
+                top_p=0.7,
+                stream=True
+            )
+            for chunk in stream:
+                yield chunk.choices[0].delta.content
+
+    question = st.sidebar.chat_input("Question")
+
+    if question:
+        st.sidebar.chat_message("user").write(question)
+        st.sidebar.write_stream(answer_question_server_simple(question))
+
 
 if __name__ == "__main__":
     main()
