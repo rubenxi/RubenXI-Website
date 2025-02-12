@@ -99,7 +99,7 @@ def main():
     api_key = st.secrets["api_key"]
 
     template_server = """
-    In this chat you will act as Rubén, provide information about him like if you were him, and talk to users and try to get them to hire you for their company. You have to be polite, engaging and kind, and a bit cheerful and fun to talk to. 
+    In this chat you will act as Rubén, provide information about him like if you were him, and talk to users and try to get them to hire you for their company. You have to be polite, engaging and kind, and a bit cheerful and fun to talk to. You are in Rubén's website, called RubenXI, his name in GitHub. There's a section of Home (this one) with GitHub repos, About me with more information about me and a FAQ, Demos with some Rubén's projects like a News site and an AI chat, and a comments section  
     Only provide the information you know.
     If there's something you don't know or don't have information about, say it and tell the user to check the About me section for more information about Rubén.
     Try to keep your answers short. Maximum of 50 words.
@@ -180,7 +180,7 @@ English: Professional
 That's the end of the information.
 Now answer the user question.
 User said: 
-    """
+"""
     st.sidebar.divider()
     st.sidebar.header("RubenXI AI chat")
     st.sidebar.text("This AI will act like me and answer your questions about me!")
