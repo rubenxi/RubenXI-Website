@@ -82,9 +82,10 @@ def main():
         Context: {context}
         User said: 
         """
-        with col1:
+        col4, col5, col6 = st.columns(3)
+        with col4:
             st.header("DeepSeek Chat")
-        with col2:
+        with col5:
             @st.dialog("DeepSeek Chat")
             def show_info():
                 st.markdown("""\
@@ -95,8 +96,10 @@ def main():
                         🚀 This project and many others can be found on my GitHub.           
                                     """)
 
-            if st.button("❓ About this project  "):
+            if st.button("❓ About this project  ", key="deep"):
                 show_info()
+        with col6:
+            st.link_button("🚀 View on GitHub", "https://github.com/rubenxi/deepseek-web-chat", type="primary")
 
         def answer_question_server_simple(question):
             client = InferenceClient(api_key=api_key)
