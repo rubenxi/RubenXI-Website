@@ -20,8 +20,6 @@ def hide_menus():
 
 def main():
 
-    st.sidebar.title("RubenXI")
-    st.sidebar.text("Some information about me and my projects. \nYou can check my GitHub repos or ask the AI in this menu about me.")
 
     col1, col2 = st.columns(2)
     with col1:
@@ -63,7 +61,6 @@ def main():
             if st.button("❓"):
                 show_info()
 
-        st.divider()
         st.markdown(abilities_md)
     st.divider()
     st.header("My GitHub repositories")
@@ -181,8 +178,7 @@ That's the end of the information.
 Now answer the user question.
 User said: 
 """
-    st.sidebar.divider()
-    st.sidebar.header("RubenXI AI chat")
+    st.sidebar.title("🤖 RubenXI AI Chat")
     st.sidebar.text("This AI will act like me and answer your questions about me!")
 
     def answer_question_server_simple(question):
