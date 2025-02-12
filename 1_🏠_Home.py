@@ -192,7 +192,7 @@ User said:
             {"role": "user", "content": template_server + question}
         ]
 
-        with st.sidebar.chat_message("assistant"):
+        with st.sidebar.chat_message("assistant",avatar="logo.png"):
             stream = client.chat.completions.create(
                 model="Qwen/Qwen2.5-72B-Instruct",
                 messages=messages,
