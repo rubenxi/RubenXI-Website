@@ -118,7 +118,7 @@ def main():
                 memory = st.toggle("Memory", value=True)
             model = st.selectbox(
                 "Model to use",
-                ("deepseek-ai/DeepSeek-R1-Distill-Qwen-32B", "Qwen/Qwen2.5-72B-Instruct"), key = "model"
+                ("deepseek-ai/DeepSeek-R1-Distill-Qwen-32B", "Qwen/Qwen2.5-72B-Instruct", "01-ai/Yi-1.5-34B-Chat"), key = "model"
             )
         with col_c:
             context = st.text_area("Context for the conversation")
@@ -166,10 +166,8 @@ def main():
                         thinking += chunk.choices[0].delta.content
                     if "</think" in chunk.choices[0].delta.content:
                         ended_thinking = True
-                with st.expander("See thinking"):
-                    if len(thinking) <= 1:
-                        st.markdown('This model doesn\'t provide thinking')
-                    else:
+                if len(thinking) >= 1:
+                    with st.expander("See thinking"):
                         st.markdown(thinking.replace('</think>', ''))
 
         if question:
