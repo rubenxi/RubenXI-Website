@@ -178,6 +178,7 @@ That's the end of the information.
 Now answer the user question.
 User said: 
 """
+    
     st.sidebar.title("🤖 RubenXI AI Chat")
     st.sidebar.text("This AI will act like me and answer your questions about me!")
 

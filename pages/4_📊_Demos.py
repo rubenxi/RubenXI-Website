@@ -75,7 +75,7 @@ def main():
     with deepseek_tab:
 
         api_key = st.secrets["api_key"]
-        model = "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B"#Models: https://huggingface.co/playground
+        model = "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B" #Models: https://huggingface.co/playground
         template_server = """
         
         System: Answer the user.
@@ -123,14 +123,14 @@ def main():
         with col_c:
             context = st.text_area("Context for the conversation")
 
-        if "messages" not in st.session_state:
+        if "messages" not in st.session_state or not memory:
             st.session_state.messages = []
 
         def answer_question_server_simple(question):
             client = InferenceClient(api_key=api_key)
 
             with st.chat_message("assistant"):
-                messages_stream = [{"role": "user", "content": template_server + question}]
+                messages_stream = [{"role": "user", "content": template_server + " context: " + context + " user: " + question}]
                 if memory:
                     if len(context) >= 1:
                         messages_stream = [
