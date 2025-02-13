@@ -18,32 +18,32 @@ def load_chat_history():
     return []
 
 
-def save_chat_history(messages):
+def save_chat_history(messages_c):
     with open(data_file, "wb") as f:
-        pickle.dump(messages, f)
+        pickle.dump(messages_c, f)
 
 
 def main():
     st.sidebar.title("💬 Leave a comment!")
     st.sidebar.text("You can write as many comments as you want, it's anonymous!")
 
-    st.session_state["messages"] = load_chat_history()
+    st.session_state["messages_c"] = load_chat_history()
 
-    for message in st.session_state["messages"]:
+    for message in st.session_state["messages_c"]:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
     user_input = st.chat_input("Type your comment...")
     
     if user_input:
-        st.session_state["messages"] = load_chat_history()
-        st.session_state["messages"].append({"role": "user", "content": user_input})
-        save_chat_history(st.session_state["messages"])
+        st.session_state["messages_c"] = load_chat_history()
+        st.session_state["messages_c"].append({"role": "user", "content": user_input})
+        save_chat_history(st.session_state["messages_c"])
 
         with st.chat_message("user"):
             st.markdown(user_input)
         st.balloons()
-        save_chat_history(st.session_state["messages"])
+        save_chat_history(st.session_state["messages_c"])
         path_to_html = "./popup.html"
         with open(path_to_html, 'r') as f:
             html_data = f.read()
