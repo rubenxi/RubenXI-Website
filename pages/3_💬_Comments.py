@@ -26,7 +26,6 @@ def save_chat_history(messages):
 def main():
     st.sidebar.title("💬 Leave a comment!")
     st.sidebar.text("You can write as many comments as you want, it's anonymous!")
-    st.session_state.messages = []
 
     if "messages" not in st.session_state:
         st.session_state["messages"] = load_chat_history()
@@ -36,6 +35,7 @@ def main():
             st.markdown(message["content"])
 
     user_input = st.chat_input("Type your comment...")
+    
     if user_input:
         st.session_state["messages"].append({"role": "user", "content": user_input})
         save_chat_history(st.session_state["messages"])
