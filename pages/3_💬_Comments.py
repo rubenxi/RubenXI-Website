@@ -27,8 +27,7 @@ def main():
     st.sidebar.title("💬 Leave a comment!")
     st.sidebar.text("You can write as many comments as you want, it's anonymous!")
 
-    if "messages" not in st.session_state:
-        st.session_state["messages"] = load_chat_history()
+    st.session_state["messages"] = load_chat_history()
 
     for message in st.session_state["messages"]:
         with st.chat_message(message["role"]):
@@ -37,6 +36,7 @@ def main():
     user_input = st.chat_input("Type your comment...")
     
     if user_input:
+        st.session_state["messages"] = load_chat_history()
         st.session_state["messages"].append({"role": "user", "content": user_input})
         save_chat_history(st.session_state["messages"])
 
