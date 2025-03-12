@@ -30,7 +30,7 @@ not afraid to seek help and prioritize teamwork over risking mistakes
 due to pride.
 
 # 💼 Professional Experience
-## 🏢 Dekra 2024 — 2025
+## 🏢 Dekra Oct 2024 — 2025
 During my internship at Dekra, I had the opportunity to learn from
 outstanding professionals about cybersecurity, the pentesting process,
 certification standards and system administration. I also gained valuable
@@ -107,7 +107,7 @@ Soy un ingeniero de software multidisciplinario con el objetivo de convertirme e
 Me desenvuelvo bien en entornos de trabajo en equipo y tengo confianza en mi capacidad para colaborar de manera efectiva en proyectos de cualquier envergadura. Adopto un enfoque práctico en mi trabajo y me comprometo a aprender lo que no sé aún para tener éxito. Soy resiliente y persistente, pero si me enfrento a algo fuera de mis capacidades, no tengo miedo de pedir ayuda y priorizo el trabajo en equipo por encima de arriesgarme a cometer errores por orgullo.
 
 # 💼 Experiencia Profesional  
-## 🏢 Dekra 2024 — 2025  
+## 🏢 Dekra Oct 2024 — 2025  
 Durante mis prácticas en Dekra, tuve la oportunidad de aprender de profesionales destacados sobre ciberseguridad, el proceso de pentesting, estándares de certificación y administración de sistemas. También adquirí valiosos conocimientos sobre el funcionamiento interno de una gran organización como Dekra. Algunas de las tareas clave en las que trabajé incluyen:  
 - Desarrollo de aplicaciones y scripts en Python y Bash  
 - Virtualización y contenedores  

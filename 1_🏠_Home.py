@@ -9,6 +9,23 @@ st.set_page_config(
     page_title="RubenXI",
     page_icon="logo.png"
 )
+api_key = st.secrets["api_key"]
+
+
+def check_rate_limit():
+    try:
+        response = client.get("https://huggingface.co/api/whoami", headers={"Authorization": f"Bearer {api_key}"})
+
+        rate_limit = response.headers.get("x-ratelimit-limit", "Unknown")
+        rate_remaining = response.headers.get("x-ratelimit-remaining", "Unknown")
+        rate_reset = response.headers.get("x-ratelimit-reset", "Unknown")
+
+        print(f"Rate Limit: {rate_limit}")
+        print(f"Rate Remaining: {rate_remaining}")
+        print(f"Rate Reset Time (seconds): {rate_reset}")
+
+    except Exception as e:
+        print(f"Error checking rate limit: {e}")
 
 def hide_menus():
     hide_streamlit_style = """
@@ -93,8 +110,6 @@ def main():
     st.components.v1.html(html_data, height=50)
 
 
-    api_key = st.secrets["api_key"]
-
     template_server = """
     In this chat you will act as Rubén, provide information about him like if you were him, and talk to users and try to get them to hire you for their company. You have to be polite, engaging and kind, and a bit cheerful and fun to talk to. You are in Rubén's website, called RubenXI, his name in GitHub. There's a section of Home (this one) with GitHub repos, About me with more information about me and a FAQ, Demos with some Rubén's projects like a News site and an AI chat, and a comments section  
     Only provide the information you know.
@@ -178,7 +193,7 @@ That's the end of the information.
 Now answer the user question.
 User said: 
 """
-    
+
     st.sidebar.title("🤖 RubenXI AI Chat")
     st.sidebar.text("This AI will act like me and answer your questions about me!")
 
@@ -205,8 +220,15 @@ User said:
 
     if question:
         st.sidebar.chat_message("user").write(question)
-        st.sidebar.write_stream(answer_question_server_simple(question))
-
+        try:
+            st.sidebar.write_stream(answer_question_server_simple(question))
+        except Exception as e:
+            st.sidebar.write("""**⚠️ Rate Limit ⚠️**
+            
+My website uses an api key that is free, so it may hit a limit at some point
+            
+Try again later...
+            """)
 
 if __name__ == "__main__":
     main()

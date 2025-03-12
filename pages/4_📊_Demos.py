@@ -175,16 +175,20 @@ def main():
                 st.session_state.messages.insert(0, {"role": "user", "content": question})
             else:
                 st.chat_message("user").write(question)
+            try:
+                with st.spinner("Thinking...", show_time=True):
+                    response = st.write_stream(answer_question_server_simple(question))
+                for message in st.session_state.messages:
+                    with st.chat_message(message["role"]):
+                        st.markdown(message["content"])
+                if memory:
+                    st.session_state.messages.insert(0, {"role": "assistant", "content": response})
+            except Exception as e:
+                st.write("""**⚠️ Rate Limit ⚠️**
 
-            with st.spinner("Thinking...", show_time=True):
-                response = st.write_stream(answer_question_server_simple(question))
+My website uses an api key that is free, so it may hit a limit at some point
 
-            for message in st.session_state.messages:
-                with st.chat_message(message["role"]):
-                    st.markdown(message["content"])
-            if memory:
-                st.session_state.messages.insert(0, {"role": "assistant", "content": response})
-
-
+Try again later...
+                                        """)
 if __name__ == "__main__":
     main()
