@@ -27,12 +27,12 @@ def save_repos():
                         readme = "No readme in this repo"
                     repos_local.append([repo.name, repo.description, repo.html_url, repo.stargazers_count, repo.language, readme])
         except Exception:
-            print("Rate limit")
+            print("Rate limit GitHub")
             pass
         with open('repos.pkl', 'wb') as f:
             pickle.dump(repos_local, f)
     else:
-        print("Rate limit")
+        print("Rate limit GitHub")
 
 def get_repos_github():
     if os.path.exists('./repos.pkl'):
@@ -41,7 +41,6 @@ def get_repos_github():
             return repos_local
     else:
         return None
-
 
 headers = {'User-Agent': 'Mozilla/5.0'}
 
@@ -104,7 +103,6 @@ def show_options():
         return None
 
     return options_name_link
-
 
 save_repos()
 

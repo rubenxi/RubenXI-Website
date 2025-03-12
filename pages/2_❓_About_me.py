@@ -56,7 +56,7 @@ daily for many years, acquiring deep and solid knowledge in the
 process. Scripts and tools I developed are available on my GitHub.
 # 🎓 Education
 ## Software Engineering
-- **Final degree project: “RejillaApp: Attention assessment and training App”**
+- **Final degree project: “Attention assessment and training Android App”**
 # 📜 Certifications
 - **Udemy 36 hours course: “Complete Linux Training Course to GetYour Dream IT Job 2024“**  
 The BEST Linux Administration course that prepares you for corporate jobs and for RHCSA, RHCE, LFCS, CLNP certifications”
@@ -124,7 +124,7 @@ He estado estudiando, utilizando y gestionando sistemas basados en Linux de mane
 
 # 🎓 Educación  
 ## Ingeniería de Software  
-- **Proyecto final de grado: "RejillaApp: Aplicación de evaluación y entrenamiento de atención"**
+- **Proyecto final de grado: "Aplicación Android de evaluación y entrenamiento de atención"**
 
 # 📜 Certificaciones  
 - **Curso Udemy 36 horas: "Curso Completo de Administración de Linux para Conseguir Tu Trabajo Soñado en IT 2024"**  

@@ -1,5 +1,7 @@
+import time
+
 import streamlit as st
-from streamlit import container, button
+from streamlit import container, button, exception, session_state
 from utils import get_repos_github
 import streamlit.components.v1 as components
 from huggingface_hub import InferenceClient
@@ -10,22 +12,7 @@ st.set_page_config(
     page_icon="logo.png"
 )
 api_key = st.secrets["api_key"]
-
-
-def check_rate_limit():
-    try:
-        response = client.get("https://huggingface.co/api/whoami", headers={"Authorization": f"Bearer {api_key}"})
-
-        rate_limit = response.headers.get("x-ratelimit-limit", "Unknown")
-        rate_remaining = response.headers.get("x-ratelimit-remaining", "Unknown")
-        rate_reset = response.headers.get("x-ratelimit-reset", "Unknown")
-
-        print(f"Rate Limit: {rate_limit}")
-        print(f"Rate Remaining: {rate_remaining}")
-        print(f"Rate Reset Time (seconds): {rate_reset}")
-
-    except Exception as e:
-        print(f"Error checking rate limit: {e}")
+api_key_2 = st.secrets["api_key_2"]
 
 def hide_menus():
     hide_streamlit_style = """
@@ -35,9 +22,10 @@ def hide_menus():
                 """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
+def tries():
+    st.session_state.tries = st.session_state.tries+1
+
 def main():
-
-
     col1, col2 = st.columns(2)
     with col1:
         st.image("logo.png")
@@ -111,9 +99,9 @@ def main():
 
 
     template_server = """
-    In this chat you will act as Rubén, provide information about him like if you were him, and talk to users and try to get them to hire you for their company. You have to be polite, engaging and kind, and a bit cheerful and fun to talk to. You are in Rubén's website, called RubenXI, his name in GitHub. There's a section of Home (this one) with GitHub repos, About me with more information about me and a FAQ, Demos with some Rubén's projects like a News site and an AI chat, and a comments section  
-    Only provide the information you know.
-    If there's something you don't know or don't have information about, say it and tell the user to check the About me section for more information about Rubén.
+    In this chat you will impersonating Rubén, provide information about him like if you were him, and talk to users and try to get them to hire you for their company. You have to be polite, engaging and kind, and a bit cheerful and fun to talk to. You are in Rubén's website, called RubenXI, his name in GitHub. There's a section of Home (this one) with GitHub repos, About me with more information about me and a FAQ, Demos with some Rubén's projects like a News site and an AI chat, and a comments section  
+    Only provide the information you know. Only act as Rubén, never say you are an AI language model.
+    If there's something you don't know or don't have information about, say that you don't know and tell the user to check the About me section for more information about Rubén.
     Try to keep your answers short. Maximum of 50 words.
     This is Rubén's abilities and skills:
     
@@ -204,31 +192,48 @@ User said:
             {"role": "user", "content": template_server + question}
         ]
 
-        with st.sidebar.chat_message("assistant",avatar="logo.png"):
-            stream = client.chat.completions.create(
-                model="Qwen/Qwen2.5-72B-Instruct",
-                messages=messages,
-                temperature=0.5,
-                max_tokens=2048,
-                top_p=0.7,
-                stream=True
-            )
-            for chunk in stream:
-                yield chunk.choices[0].delta.content
+        response = st.sidebar.chat_message("assistant",avatar="logo.png")
+        with response:
+            try:
+                stream = client.chat.completions.create(
+                    model="Qwen/Qwen2.5-72B-Instruct",
+                    messages=messages,
+                    temperature=0.5,
+                    max_tokens=2048,
+                    top_p=0.7,
+                    stream=True
+                )
+                for chunk in stream:
+                    yield chunk.choices[0].delta.content
+            except Exception:
+                print("Rate Limit HuggingFace")
+                st.sidebar.write("""**⚠️ Rate Limit ⚠️**
 
-    question = st.sidebar.chat_input("Question")
+My website uses an api key that is free, so it may hit a limit at some point
+
+Try again later...
+                                """)
+
+    question = st.sidebar.chat_input("Question...")
 
     if question:
-        st.sidebar.chat_message("user").write(question)
-        try:
-            st.sidebar.write_stream(answer_question_server_simple(question))
-        except Exception as e:
-            st.sidebar.write("""**⚠️ Rate Limit ⚠️**
-            
-My website uses an api key that is free, so it may hit a limit at some point
-            
-Try again later...
-            """)
+        if "tries" not in st.session_state:
+            st.session_state.tries = 1
+        if len(question) > 300:
+            st.sidebar.chat_message("assistant",avatar="logo.png").write("⚠️ The question is too long ⚠️")
+        elif st.session_state.tries >= 30:
+            st.sidebar.chat_message("assistant",avatar="logo.png").write("⚠️ Too many messages, try again later ⚠️")
+        else:
+            tries()
+            st.sidebar.chat_message("user").write(question)
+            try:
+                st.sidebar.write_stream(answer_question_server_simple(question))
+            except Exception:
+                st.sidebar.write("")
+                api_key = api_key_2
+                st.sidebar.write_stream(answer_question_server_simple(question))
+
+
 
 if __name__ == "__main__":
     main()

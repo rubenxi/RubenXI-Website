@@ -15,6 +15,9 @@ st.set_page_config(
     page_icon="logo.png"
 )
 
+def tries():
+    st.session_state.tries = st.session_state.tries+1
+
 def main():
     st.sidebar.title("📊 Demo projects")
     st.sidebar.text("Here there are demos of some of my projects separated by tabs. You can click each tab to see the app and use it")
@@ -74,7 +77,8 @@ def main():
                                     break
     with deepseek_tab:
 
-        api_key = st.secrets["api_key"]
+        api_key = st.secrets["api_key_3"]
+
         model = "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B" #Models: https://huggingface.co/playground
         template_server = """
         
@@ -118,7 +122,7 @@ def main():
                 memory = st.toggle("Memory", value=True)
             model = st.selectbox(
                 "Model to use",
-                ("deepseek-ai/DeepSeek-R1-Distill-Qwen-32B", "Qwen/Qwen2.5-72B-Instruct", "01-ai/Yi-1.5-34B-Chat"), key = "model"
+                ("deepseek-ai/DeepSeek-R1-Distill-Qwen-32B", "Qwen/Qwen2.5-72B-Instruct", "01-ai/Yi-1.5-34B-Chat", "Qwen/QwQ-32B-Preview"), key = "model"
             )
         with col_c:
             context = st.text_area("Context for the conversation")
@@ -171,20 +175,28 @@ def main():
                         st.markdown(thinking.replace('</think>', ''))
 
         if question:
-            if memory:
-                st.session_state.messages.insert(0, {"role": "user", "content": question})
+            if "tries" not in st.session_state:
+                st.session_state.tries = 1
+            if len(question) > 300 or len(context) > 400:
+                st.chat_message("assistant", avatar="logo.png").write("⚠️ The question is too long ⚠️")
+            elif st.session_state.tries >= 30:
+                st.chat_message("assistant", avatar="logo.png").write("⚠️ Too many messages, try again later ⚠️")
             else:
-                st.chat_message("user").write(question)
-            try:
-                with st.spinner("Thinking...", show_time=True):
-                    response = st.write_stream(answer_question_server_simple(question))
-                for message in st.session_state.messages:
-                    with st.chat_message(message["role"]):
-                        st.markdown(message["content"])
+                tries()
                 if memory:
-                    st.session_state.messages.insert(0, {"role": "assistant", "content": response})
-            except Exception as e:
-                st.write("""**⚠️ Rate Limit ⚠️**
+                    st.session_state.messages.insert(0, {"role": "user", "content": question})
+                else:
+                    st.chat_message("user").write(question)
+                try:
+                    with st.spinner("Thinking...", show_time=True):
+                        response = st.write_stream(answer_question_server_simple(question))
+                    for message in st.session_state.messages:
+                        with st.chat_message(message["role"]):
+                            st.markdown(message["content"])
+                    if memory:
+                        st.session_state.messages.insert(0, {"role": "assistant", "content": response})
+                except Exception as e:
+                    st.write("""**⚠️ Rate Limit ⚠️**
 
 My website uses an api key that is free, so it may hit a limit at some point
 
