@@ -32,6 +32,8 @@ def tries():
 def main():
     api_key = st.secrets["api_key"]
     api_key_2 = st.secrets["api_key_2"]
+    api_key_4 = st.secrets["api_key_4"]
+
     date_file = "date_file.pkl"
     n_file = "n_file.pkl"
     daily_questions = 50
@@ -245,7 +247,21 @@ Try again tomorrow...
                 except Exception:
                     sidebar_messages.empty()
                     api_key = api_key_2
-                    st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
+                    try:
+                        st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
+                    except Exception:
+                        sidebar_messages.empty()
+                        api_key = api_key_4
+                        try:
+                            st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
+                        except Exception:
+                            sidebar_messages.empty()
+                            st.sidebar.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
+
+My website uses an api key that is free, so it may hit a limit at some point
+
+Try again tomorrow...
+                                                                                """)
 
 if __name__ == "__main__":
     main()
