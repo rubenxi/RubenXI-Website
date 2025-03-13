@@ -217,7 +217,7 @@ User said:
                 yield chunk.choices[0].delta.content
         save_n(load_n(n_file) + 1, n_file)
 
-    question = st.sidebar.chat_input("Question...")
+    question = st.sidebar.chat_input("Question...", max_chars=300)
     if question:
         current_date = datetime.today().strftime('%Y-%m-%d')
         last_date = load_date(date_file)
