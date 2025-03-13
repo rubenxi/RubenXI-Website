@@ -5,6 +5,8 @@ import requests
 from lxml import html
 import re
 import base64
+import pickle
+from datetime import datetime
 
 g = Github()
 
@@ -103,6 +105,30 @@ def show_options():
         return None
 
     return options_name_link
+
+
+def load_date(date_file):
+    if os.path.exists(date_file):
+        with open(date_file, "rb") as f:
+            return pickle.load(f)
+    return []
+
+
+def save_date(date_today, date_file):
+    with open(date_file, "wb") as f:
+        pickle.dump(date_today, f)
+
+def load_n(n_file):
+    if os.path.exists(n_file):
+        with open(n_file, "rb") as f:
+            return pickle.load(f)
+    return []
+
+
+def save_n(n, n_file):
+    with open(n_file, "wb") as f:
+        pickle.dump(n, f)
+
 
 save_repos()
 

@@ -1,18 +1,20 @@
 import time
-
 import streamlit as st
 from streamlit import container, button, exception, session_state
 from utils import get_repos_github
 import streamlit.components.v1 as components
 from huggingface_hub import InferenceClient
+from utils import save_n
+from utils import save_date
+from utils import load_n
+from utils import load_date
+from datetime import datetime
 
 st.set_page_config(
     layout="wide",
     page_title="RubenXI",
     page_icon="logo.png"
 )
-api_key = st.secrets["api_key"]
-api_key_2 = st.secrets["api_key_2"]
 
 def hide_menus():
     hide_streamlit_style = """
@@ -22,11 +24,19 @@ def hide_menus():
                 """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
+
 def tries():
-    st.session_state.tries = st.session_state.tries+1
+    st.session_state.tries = st.session_state.tries + 1
+
 
 def main():
+    api_key = st.secrets["api_key"]
+    api_key_2 = st.secrets["api_key_2"]
+    date_file = "date_file.pkl"
+    n_file = "n_file.pkl"
+    daily_questions = 50
     col1, col2 = st.columns(2)
+
     with col1:
         st.image("logo.png")
     with col2:
@@ -37,15 +47,15 @@ def main():
 
         abilities_md = """\
         💻 **Software development**
-        
+
         🐧 **Linux**
-        
+
         🧠 **AI** 
-        
+
         🔓 **Open source**
-        
+
         🎮 **Videogames**     
-         
+
         🔥 **And more...**
     """
         st.markdown(intro_md)
@@ -55,13 +65,14 @@ def main():
         def show_info():
             st.markdown("""\
             **@mozmail is the domain used by Firefox Relay, a Mozilla service that helps protect your privacy by masking your real email address. Emails sent to this address are securely forwarded to my personal inbox, reducing spam and phishing risks.**
-            
+
             ---
-            
+
             Since this website is public, I use it to avoid bot spam or any other problem.           
                         """)
+
         with col3:
-            st.link_button("📧 **Send me an email**","mailto: hg5l8ssre@mozmail.com", type="primary")
+            st.link_button("📧 **Send me an email**", "mailto: hg5l8ssre@mozmail.com", type="primary")
         with col4:
             if st.button("❓"):
                 show_info()
@@ -78,14 +89,14 @@ def main():
                     col = cols[i]
                     with col:
                         with st.container(border=True):
-                            if j*3+i < len(repos):
+                            if j * 3 + i < len(repos):
                                 repo_col = st.columns(2)
-                                repo = repos[j*3+i]
-                                repo_col[0].markdown("**"+repo[0]+"**")
-                                repo_col[1].markdown("**"+str(repo[4])+"**")
+                                repo = repos[j * 3 + i]
+                                repo_col[0].markdown("**" + repo[0] + "**")
+                                repo_col[1].markdown("**" + str(repo[4]) + "**")
                                 st.markdown("⭐**" + str(repo[3]) + "**")
                                 st.divider()
-                                st.markdown("**"+repo[1]+"**")
+                                st.markdown("**" + repo[1] + "**")
                                 st.link_button("🚀 View on GitHub", repo[2], type="primary")
                                 with st.expander("See readme"):
                                     st.markdown(repo[5])
@@ -97,14 +108,13 @@ def main():
         html_data = f.read()
     st.components.v1.html(html_data, height=50)
 
-
     template_server = """
     In this chat you will impersonating Rubén, provide information about him like if you were him, and talk to users and try to get them to hire you for their company. You have to be polite, engaging and kind, and a bit cheerful and fun to talk to. You are in Rubén's website, called RubenXI, his name in GitHub. There's a section of Home (this one) with GitHub repos, About me with more information about me and a FAQ, Demos with some Rubén's projects like a News site and an AI chat, and a comments section  
     Only provide the information you know. Only act as Rubén, never say you are an AI language model.
     If there's something you don't know or don't have information about, say that you don't know and tell the user to check the About me section for more information about Rubén.
     Try to keep your answers short. Maximum of 50 words.
     This is Rubén's abilities and skills:
-    
+
     Software Engineer
 
 Spain
@@ -176,7 +186,7 @@ Languages
 
 Spanish: Native
 English: Professional
-    
+
 That's the end of the information.
 Now answer the user question.
 User said: 
@@ -185,55 +195,57 @@ User said:
     st.sidebar.title("🤖 RubenXI AI Chat")
     st.sidebar.text("This AI will act like me and answer your questions about me!")
 
-    def answer_question_server_simple(question):
+    def answer_question_server_simple(question, sidebar_messages):
         client = InferenceClient(api_key=api_key)
 
         messages = [
             {"role": "user", "content": template_server + question}
         ]
-
-        response = st.sidebar.chat_message("assistant",avatar="logo.png")
+        response = sidebar_messages.chat_message("assistant", avatar="logo.png")
         with response:
-            try:
-                stream = client.chat.completions.create(
-                    model="Qwen/Qwen2.5-72B-Instruct",
-                    messages=messages,
-                    temperature=0.5,
-                    max_tokens=2048,
-                    top_p=0.7,
-                    stream=True
-                )
-                for chunk in stream:
-                    yield chunk.choices[0].delta.content
-            except Exception:
-                print("Rate Limit HuggingFace")
-                st.sidebar.write("""**⚠️ Rate Limit ⚠️**
+            stream = client.chat.completions.create(
+                model="Qwen/Qwen2.5-72B-Instruct",
+                messages=messages,
+                temperature=0.5,
+                max_tokens=2048,
+                top_p=0.7,
+                stream=True
+            )
+            for chunk in stream:
+                yield chunk.choices[0].delta.content
+        save_n(load_n(n_file) + 1, n_file)
+
+    question = st.sidebar.chat_input("Question...")
+    if question:
+        current_date = datetime.today().strftime('%Y-%m-%d')
+        last_date = load_date(date_file)
+        if current_date != last_date:
+            save_date(current_date, date_file)
+            save_n(0, n_file)
+        if load_n(n_file) >= daily_questions:
+            st.sidebar.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
 
 My website uses an api key that is free, so it may hit a limit at some point
 
-Try again later...
-                                """)
-
-    question = st.sidebar.chat_input("Question...")
-
-    if question:
-        if "tries" not in st.session_state:
-            st.session_state.tries = 1
-        if len(question) > 300:
-            st.sidebar.chat_message("assistant",avatar="logo.png").write("⚠️ The question is too long ⚠️")
-        elif st.session_state.tries >= 30:
-            st.sidebar.chat_message("assistant",avatar="logo.png").write("⚠️ Too many messages, try again later ⚠️")
+Try again tomorrow...
+                                                    """)
         else:
-            tries()
-            st.sidebar.chat_message("user").write(question)
-            try:
-                st.sidebar.write_stream(answer_question_server_simple(question))
-            except Exception:
-                st.sidebar.write("")
-                api_key = api_key_2
-                st.sidebar.write_stream(answer_question_server_simple(question))
-
-
+            if "tries" not in st.session_state:
+                st.session_state.tries = 1
+            if len(question) > 300:
+                st.sidebar.chat_message("assistant", avatar="logo.png").write("⚠️ The question is too long ⚠️")
+            elif st.session_state.tries >= 30:
+                st.sidebar.chat_message("assistant", avatar="logo.png").write("⚠️ Too many messages, try again later ⚠️")
+            else:
+                tries()
+                st.sidebar.chat_message("user").write(question)
+                sidebar_messages = st.sidebar.empty()
+                try:
+                    st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
+                except Exception:
+                    sidebar_messages.empty()
+                    api_key = api_key_2
+                    st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
 
 if __name__ == "__main__":
     main()

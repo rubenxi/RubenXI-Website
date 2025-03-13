@@ -8,6 +8,11 @@ from utils import get_news
 import pandas as pd
 import re
 from huggingface_hub import InferenceClient
+from utils import save_n
+from utils import save_date
+from utils import load_n
+from utils import load_date
+from datetime import datetime
 
 st.set_page_config(
     layout="wide",
@@ -19,6 +24,9 @@ def tries():
     st.session_state.tries = st.session_state.tries+1
 
 def main():
+    daily_questions = 30
+    date_file_demos = "date_file_demos.pkl"
+    n_file_demos = "n_file_demos.pkl"
     st.sidebar.title("📊 Demo projects")
     st.sidebar.text("Here there are demos of some of my projects separated by tabs. You can click each tab to see the app and use it")
     news_tab, deepseek_tab = st.tabs(["**News**", "**DeepSeek**"])
@@ -112,7 +120,7 @@ def main():
         with col6:
             st.link_button("🚀 View on GitHub", "https://github.com/rubenxi/deepseek-web-chat", type="primary")
 
-        question = st.chat_input("Write a message...")
+        question = st.chat_input("Write a message...", max_chars=300)
         col_m, col_c = st.columns(2)
         with col_m:
             col_m1, col_m2 = st.columns(2)
@@ -125,8 +133,9 @@ def main():
                 ("deepseek-ai/DeepSeek-R1-Distill-Qwen-32B", "Qwen/Qwen2.5-72B-Instruct", "01-ai/Yi-1.5-34B-Chat", "Qwen/QwQ-32B-Preview"), key = "model"
             )
         with col_c:
-            context = st.text_area("Context for the conversation")
-
+            context = st.text_area("Context for the conversation", max_chars=400)
+            api_key_user = st.sidebar.text_input("Api key", placeholder="hf_...",
+                                                 help="Set your own HuggingFace api key. You can get one here: https://huggingface.co/settings/tokens/new?tokenType=read")
         if "messages" not in st.session_state or not memory:
             st.session_state.messages = []
 
@@ -175,32 +184,51 @@ def main():
                         st.markdown(thinking.replace('</think>', ''))
 
         if question:
-            if "tries" not in st.session_state:
-                st.session_state.tries = 1
-            if len(question) > 300 or len(context) > 400:
-                st.chat_message("assistant", avatar="logo.png").write("⚠️ The question is too long ⚠️")
-            elif st.session_state.tries >= 30:
-                st.chat_message("assistant", avatar="logo.png").write("⚠️ Too many messages, try again later ⚠️")
+            current_date = datetime.today().strftime('%Y-%m-%d')
+            last_date = load_date(date_file_demos)
+            if current_date != last_date:
+                save_date(current_date, date_file_demos)
+                save_n(0, n_file_demos)
+            if api_key_user:
+                api_key = api_key_user
+            elif load_n(n_file_demos) <= daily_questions:
+                api_key = st.secrets["api_key_3"]
             else:
-                tries()
-                if memory:
-                    st.session_state.messages.insert(0, {"role": "user", "content": question})
-                else:
-                    st.chat_message("user").write(question)
-                try:
-                    with st.spinner("Thinking...", show_time=True):
-                        response = st.write_stream(answer_question_server_simple(question))
-                    for message in st.session_state.messages:
-                        with st.chat_message(message["role"]):
-                            st.markdown(message["content"])
-                    if memory:
-                        st.session_state.messages.insert(0, {"role": "assistant", "content": response})
-                except Exception as e:
-                    st.write("""**⚠️ Rate Limit ⚠️**
+                st.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
 
 My website uses an api key that is free, so it may hit a limit at some point
 
+Try again tomorrow or use your own api key...
+                                            """)
+            if api_key_user or (not api_key_user and load_n(n_file_demos) <= daily_questions):
+                if "tries" not in st.session_state:
+                    st.session_state.tries = 1
+                if len(question) > 300 or len(context) > 400:
+                    st.chat_message("assistant", avatar="logo.png").write("⚠️ The question is too long ⚠️")
+                elif st.session_state.tries >= 30:
+                    st.chat_message("assistant", avatar="logo.png").write("⚠️ Too many messages, try again later ⚠️")
+                else:
+                    tries()
+                    if memory:
+                        st.session_state.messages.insert(0, {"role": "user", "content": question})
+                    else:
+                        st.chat_message("user").write(question)
+                    try:
+                        with st.spinner("Thinking...", show_time=True):
+                            response = st.write_stream(answer_question_server_simple(question))
+                            save_n(load_n(n_file_demos) + 1, n_file_demos)
+                        for message in st.session_state.messages:
+                            with st.chat_message(message["role"]):
+                                st.markdown(message["content"])
+                        if memory:
+                            st.session_state.messages.insert(0, {"role": "assistant", "content": response})
+                    except Exception as e:
+                        print(str(e))
+                        st.write("""**⚠️ Rate Limit ⚠️**
+    
+My website uses an api key that is free, so it may hit a limit at some point
+    
 Try again later...
-                                        """)
+                                            """)
 if __name__ == "__main__":
     main()
