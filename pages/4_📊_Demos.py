@@ -124,10 +124,13 @@ def main():
         col_m, col_c = st.columns(2)
         with col_m:
             col_m1, col_m2 = st.columns(2)
-            with col_m1:
-                st.markdown("**Note: New messages appear on top**")
             with col_m2:
                 memory = st.toggle("Memory", value=True)
+            with col_m1:
+                if memory:
+                    st.markdown("**Note: New messages appear on top**")
+                else:
+                    st.markdown("") 
             model = st.selectbox(
                 "Model to use",
                 ("deepseek-ai/DeepSeek-R1-Distill-Qwen-32B", "Qwen/Qwen2.5-72B-Instruct", "01-ai/Yi-1.5-34B-Chat", "Qwen/QwQ-32B-Preview"), key = "model"
