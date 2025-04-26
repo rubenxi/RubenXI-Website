@@ -187,7 +187,6 @@ Now answer the user question.
 User said: 
 """
 
-                                                    help="Set your own HuggingFace api key. You can get one here: https://huggingface.co/settings/tokens/new?tokenType=read")
     st.sidebar.title("🤖 RubenXI AI Chat")
     st.sidebar.text("This AI will act like me and answer your questions about me!.")
     def answer_question_server_simple(question, sidebar_messages):
@@ -278,8 +277,10 @@ Try again tomorrow or use your own api key...
 My website uses an api key that is free, so it may hit a limit at some point.
 
 Try again tomorrow or use your own api key...
-                                        if not api_key_user:                                            """)
-                                            api_key_user = st.sidebar.text_input("🔑 Api key", placeholder="hf_...",
+                                                                               """)                                        
+                                        if not api_key_user:                                            
+                                            api_key_user = st.sidebar.text_input("🔑 Api key", placeholder="hf_...", help="Set your own HuggingFace api key. You can get one here: https://huggingface.co/settings/tokens/new?tokenType=read")
+
 
 
 if __name__ == "__main__":
