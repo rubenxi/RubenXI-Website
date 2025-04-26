@@ -190,6 +190,9 @@ User said:
 
     st.sidebar.title("🤖 RubenXI AI Chat")
     st.sidebar.text("This AI will act like me and answer your questions about me!.")
+    def show_api_key():
+        if not api_key_user:                                            
+            api_key_user = st.sidebar.text_input("🔑 Api key", placeholder="hf_...", help="Set your own HuggingFace api key. You can get one here: https://huggingface.co/settings/tokens/new?tokenType=read")
     def answer_question_server_simple(question, sidebar_messages):
         client = InferenceClient(api_key=api_key)
 
@@ -231,6 +234,7 @@ Your api key has been rate limited or you set an incorrect api key
                 save_date(current_date, date_file)
                 save_n(0, n_file)
             if load_n(n_file) >= daily_questions:
+                show_api_key()
                 st.sidebar.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
     
 My website uses an api key that is free, so it may hit a limit at some point.
@@ -243,6 +247,7 @@ Try again tomorrow or use your own api key...
                 if len(question) > 300:
                     st.sidebar.chat_message("assistant", avatar="logo.png").write("⚠️ The question is too long ⚠️")
                 elif st.session_state.tries >= session_limit:
+                    show_api_key()
                     st.sidebar.chat_message("assistant", avatar="logo.png").write("⚠️ Too many messages, try again later or use your own api key ⚠️")
                 else:
                     tries()
@@ -272,6 +277,7 @@ Try again tomorrow or use your own api key...
                                     try:
                                         st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
                                     except Exception:
+                                        show_api_key()
                                         sidebar_messages.empty()
                                         st.sidebar.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
 
@@ -279,10 +285,7 @@ My website uses an api key that is free, so it may hit a limit at some point.
 
 Try again tomorrow or use your own api key...
                                                                                """)                                        
-                                        if not api_key_user:                                            
-                                            api_key_user = st.sidebar.text_input("🔑 Api key", placeholder="hf_...", help="Set your own HuggingFace api key. You can get one here: https://huggingface.co/settings/tokens/new?tokenType=read")
-
-
+                                        
 
 if __name__ == "__main__":
     main()
