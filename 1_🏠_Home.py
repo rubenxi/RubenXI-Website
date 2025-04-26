@@ -187,7 +187,7 @@ Now answer the user question.
 User said: 
 """
 
-    q                                                 help="Set your own HuggingFace api key. You can get one here: https://huggingface.co/settings/tokens/new?tokenType=read")
+                                                    help="Set your own HuggingFace api key. You can get one here: https://huggingface.co/settings/tokens/new?tokenType=read")
     st.sidebar.title("🤖 RubenXI AI Chat")
     st.sidebar.text("This AI will act like me and answer your questions about me!.")
     def answer_question_server_simple(question, sidebar_messages):
