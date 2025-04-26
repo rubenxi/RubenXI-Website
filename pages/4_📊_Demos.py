@@ -24,7 +24,8 @@ def tries():
     st.session_state.tries = st.session_state.tries+1
 
 def main():
-    daily_questions = 30
+    daily_questions = 10
+    session_limit = 5
     date_file_demos = "date_file_demos.pkl"
     n_file_demos = "n_file_demos.pkl"
     st.sidebar.title("📊 Demo projects")
@@ -208,7 +209,7 @@ Try again tomorrow or use your own api key...
                     st.session_state.tries = 1
                 if len(question) > 300 or len(context) > 400:
                     st.chat_message("assistant", avatar="logo.png").write("⚠️ The question is too long ⚠️")
-                elif st.session_state.tries >= 10:
+                elif st.session_state.tries >= session_limit:
                     st.chat_message("assistant", avatar="logo.png").write("⚠️ Too many messages, try again later ⚠️")
                 else:
                     tries()
