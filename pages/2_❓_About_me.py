@@ -204,14 +204,6 @@ Los scripts y herramientas que he desarrollado están disponibles en mi GitHub.
 """
 
 aq_es = """
-- **¿Que experiencia laboral tienes?**
-
-Actualmente estoy haciendo prácticas, pero no dispongo de experiencia laboral \"completa\". Entiendo que esto
-es algo problemático a la hora de contratarme, sin embargo, tengo bastante confianza en mi capacidad para aprender
-muy rápido cualquier cosa que se me pida, me gusta aprender cosas nuevas y le pongo mucho esfuerzo, no creo ser
-el estudiante recién graduado promedio que no tiene conocimiento de nada que no sea lo impartido en la carrera, 
-tengo bastante experiencia personal valorable en bastantes tecnologías, creo que eso demuestra mis capacidades.
-
 - **¿Qué puestos te interesan?**
 
 Cualquier puesto relacionado con el desarrollo de software back-end o front-end me interesa. Especialmente si es usando lenguajes
@@ -246,10 +238,6 @@ de trabajo, por ejemplo.
 """
 
 aq_en = """
-- **What work experience do you have?**
-
-I am currently doing an internship, but I don't have "full" work experience. I understand this can be an issue when it comes to hiring, however, I am confident in my ability to learn anything quickly. I enjoy learning new things and put in a lot of effort. I don't consider myself to be the typical recent graduate with no knowledge outside of what was taught in the degree. I have valuable personal experience with various technologies, and I believe that demonstrates my abilities.
-
 - **What positions are you interested in?**
 
 I am interested in any role related to software development, back-end or front-end. Especially if it involves languages I know, such as Java or Python, and if it involves using a framework I'm not familiar with, even better, as it will allow me to learn more. Specifically, the DevOps role seems to align well with my philosophy of learning multiple disciplines at once.  
