@@ -234,7 +234,7 @@ Your api key has been rate limited or you set an incorrect api key
     
 My website uses an api key that is free, so it may hit a limit at some point
     
-Try again tomorrow...
+Try again tomorrow or use your own api key...
                                                         """)
             else:
                 if "tries" not in st.session_state:
@@ -242,7 +242,7 @@ Try again tomorrow...
                 if len(question) > 300:
                     st.sidebar.chat_message("assistant", avatar="logo.png").write("⚠️ The question is too long ⚠️")
                 elif st.session_state.tries >= session_limit:
-                    st.sidebar.chat_message("assistant", avatar="logo.png").write("⚠️ Too many messages, try again later ⚠️")
+                    st.sidebar.chat_message("assistant", avatar="logo.png").write("⚠️ Too many messages, try again later or use your own api key ⚠️")
                 else:
                     tries()
                     st.sidebar.chat_message("user").write(question)
@@ -266,7 +266,7 @@ Try again tomorrow...
 
 My website uses an api key that is free, so it may hit a limit at some point
 
-Try again tomorrow...
+Try again tomorrow or use your own api key...
                                                                                     """)
 
 if __name__ == "__main__":
