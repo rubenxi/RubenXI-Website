@@ -217,8 +217,7 @@ User said:
             sidebar_messages = st.sidebar.empty()
             try:
                 st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
-            except Exception as e:
-                print(e)
+            except Exception:
                 sidebar_messages.empty()
                 st.sidebar.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
 

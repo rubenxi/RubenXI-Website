@@ -225,8 +225,7 @@ Try again tomorrow or use your own api key...
                                 st.markdown(message["content"])
                         if memory:
                             st.session_state.messages.insert(0, {"role": "assistant", "content": response})
-                    except Exception as e:
-                        print(str(e))
+                    except Exception:
                         st.write("""**⚠️ Rate Limit ⚠️**
     
 My website uses an api key that is free, so it may hit a limit at some point
