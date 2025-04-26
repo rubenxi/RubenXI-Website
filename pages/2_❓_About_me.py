@@ -6,96 +6,106 @@ st.set_page_config(
     page_icon="logo.png"
 )
 cv_en ="""
-**Software Engineer**
+# **Software Engineer**
 
 📍 **Spain**
 
 **My GitHub**  
 **[github.com/rubenxi](https://github.com/rubenxi)**
 
-# 📌 Profile
-I am a multidisciplinary software engineer aiming to be a DevOps. I
-like learning new technologies to grow as a developer. I’m a dedicated
-and hardworking individual who focuses intently on tasks and gives my
-all until they are completed. I take my job seriously and does not like to
-waste time. I adapt quickly and learn very fast anything I am asked to
-do. I have always been passionate about software development and
-technology, and I take every opportunity to learn more.
-I thrive in team environments and am confident in my ability to
-collaborate effectively to complete projects of any scope.
-I take a practical approach to my work and am committed to learning
-anything I don’t yet know in order to succeed. I am resilient and
-persistent, but if I encounter something beyond my capabilities, I am
-not afraid to seek help and prioritize teamwork over risking mistakes
-due to pride.
+# 📌 Profile  
+I am a multidisciplinary software engineer, currently working as a Level 1 Systems Operator in English. I enjoy learning new technologies to grow professionally. I am a dedicated and hard-working person who focuses intensely on tasks and gives my best until they are completed. I take my work seriously and dislike wasting time. I adapt quickly and learn anything I’m asked to do very fast.  
+I have always been passionate about software development and technology, and I seize every opportunity to learn more. I thrive in team environments and have confidence in my ability to collaborate effectively on projects of any size. I take a hands-on approach to my work and am committed to learning whatever I don’t yet know to succeed. I am resilient and persistent, but if I face something beyond my abilities, I am not afraid to ask for help and prioritize teamwork over risking mistakes out of pride.
 
-# 💼 Professional Experience
-## 🏢 Dekra Oct 2024 — 2025
-During my internship at Dekra, I had the opportunity to learn from
-outstanding professionals about cybersecurity, the pentesting process,
-certification standards and system administration. I also gained valuable
-insight into the internal workings of a large organization like Dekra.
-Some of the key tasks I worked on included:
-- Developing applications and scripts in Python and Bash
-- Virtualization and containerization
-- Linux and Windows Server administration and problem solving
-- Detecting and documenting security flaws
-- Pentesting and system compromissing
-- Certification for different devices like Cisco routers
+# 💼 Professional Experience  
 
-# 🎯 Personal Interests
-## 💻 Software development
-I’m passionate about Software development, and I worked on multiple
-applications such as Python scripts or a video game written in Java.
-I enjoy the process of developing Software and I can get inmersed into
-it a lot, which is something that always makes me focus in what I’m
-doing until I finish. Some of my projects can be found on my Github.
-## 🐧 Linux and scripting
-I have been studying, using, and managing Linux-based systems
-daily for many years, acquiring deep and solid knowledge in the
-process. Scripts and tools I developed are available on my GitHub.
-# 🎓 Education
-## Software Engineering
-- **Final degree project: “Attention assessment and training Android App”**
-# 📜 Certifications
-- **Udemy 36 hours course: “Complete Linux Training Course to GetYour Dream IT Job 2024“**  
-The BEST Linux Administration course that prepares you for corporate jobs and for RHCSA, RHCE, LFCS, CLNP certifications”
-# 🛠 Skills
-- Java
-- Bash Shell Scripting
-- Python
-- AI scripting / management
-- Docker
-- Git
-- Visual Studio
-- IntelliJ IDEA
-- Eclipse
-- RHEL
-- Linux
+## 🏢 Aubay  
+**Remote L1 Systems Operator: Mar 2025 — Present**  
+Permanent project providing services to a major UK banking entity. The service involves systems monitoring and resolving tickets and incidents, using ITIL methodology and entirely in English.  
+Some of the tools used in the project include:  
+- Grafana (monitoring and data extraction)  
+- Jenkins (process automation)  
+- Dbeaver/PostgreSQL (database management and querying)  
+- Freshservice (ticketing and incident tracking)  
+- AWS, Kubernetes, and Prometheus (monitored and managed services)  
+- JMSToolBox (transaction queue management)  
+- Git (version and change control)
+
+## 🏢 Dekra  
+**Internship: Oct 2024 — Feb 2025**  
+During my internship at Dekra, I had the opportunity to learn from great professionals about cybersecurity, the pentesting process, certification standards, and systems administration.  
+Some of the key tasks I worked on include:  
+- Application and script development in Python and Bash  
+- Virtualization (VirtualBox and Proxmox) and containers  
+- Troubleshooting and administration in Linux and Windows Server  
+- Detection and documentation of security vulnerabilities  
+- Pentesting and system security  
+- Certification of various devices like Cisco routers
+
+# 🎯 Personal Interests  
+
+## 💻 Software Development  
+I’m passionate about software development and have worked on various applications, such as Python scripts and a video game developed in Java.  
+Some of my projects can be found on my GitHub.
+
+## 🐧 Linux and Scripting  
+I’ve been studying, using, and managing Linux-based systems daily for many years, gaining deep and solid knowledge in the process.  
+The scripts and tools I’ve developed are available on my GitHub.
+
+# 🎓 Education  
+
+## Software Engineering 
+
+# 📜 Certifications  
+
+- **Udemy 36-hour course: "Complete Linux Training Course to Get Your Dream IT Job 2024"**  
+  The best Linux Administration course to prepare you for corporate jobs and certifications like RHCSA, RHCE, LFCS, CLNP.
+
+- **Udemy Aubay course: "Grafana. Complete Course in Spanish"**
+
+# 🛠 Technical Skills  
+
+- Linux  
+- Bash Shell Scripting  
+- Docker  
+- Python  
+- AI scripting  
+- Git  
+- VMWare / VirtualBox  
+- Proxmox  
+- Streamlit  
+- Grafana  
+- Jenkins  
+- Dbeaver / PostgreSQL / SQL  
+- Freshservice  
+- Visual Studio  
+- IntelliJ IDEA  
+- Eclipse  
+- RHEL  
+- Java  
 - Android
-- VMWare
-- Oracle VirtualBox
-- SQL
-- .NET
-- C#
-# 🤝 Soft skills
-- Problem-solving abilities
-- Open-minded
-- Willingness to learn
-- Critical thinking
-- Patience
-- Initiative
-- Pro-activity
-- Collaboration
-- Teamwork
-- Analytical mind
-# 🌍 Languages
-- Spanish: Native
-- English: Professional
+
+# 🤝 Soft Skills  
+
+- Problem-solving  
+- Open-mindedness  
+- Willingness to learn  
+- Critical thinking  
+- Patience  
+- Initiative  
+- Proactiveness  
+- Collaboration  
+- Teamwork  
+- Analytical mindset  
+
+# 🌍 Languages  
+
+- Spanish: Native  
+- English: Professional  
 """
 
 cv_es = """
-**Ingeniero de Software**
+# **Ingeniero de Software**
 
 📍 **España**
 
@@ -103,67 +113,94 @@ cv_es = """
 **[github.com/rubenxi](https://github.com/rubenxi)**
 
 # 📌 Perfil  
-Soy un ingeniero de software multidisciplinario con el objetivo de convertirme en DevOps. Me gusta aprender nuevas tecnologías para crecer como desarrollador. Soy una persona dedicada y trabajadora que se enfoca intensamente en las tareas y da lo mejor de sí hasta que se completan. Me tomo mi trabajo en serio y no me gusta perder el tiempo. Me adapto rápidamente y aprendo muy rápido cualquier cosa que se me pida. Siempre me ha apasionado el desarrollo de software y la tecnología, y aprovecho cada oportunidad para aprender más.  
-Me desenvuelvo bien en entornos de trabajo en equipo y tengo confianza en mi capacidad para colaborar de manera efectiva en proyectos de cualquier envergadura. Adopto un enfoque práctico en mi trabajo y me comprometo a aprender lo que no sé aún para tener éxito. Soy resiliente y persistente, pero si me enfrento a algo fuera de mis capacidades, no tengo miedo de pedir ayuda y priorizo el trabajo en equipo por encima de arriesgarme a cometer errores por orgullo.
+Soy un ingeniero de software multidisciplinario, actualmente trabajando como operador de sistemas L1 en inglés. Me gusta aprender nuevas tecnologías para crecer como profesional. Soy una persona dedicada y trabajadora que se enfoca intensamente en las tareas y da lo mejor de sí hasta que se completan. Me tomo mi trabajo en serio y no me gusta perder el tiempo. Me adapto rápidamente y aprendo muy rápido cualquier cosa que se me pida hacer.  
+Siempre me ha apasionado el desarrollo de software y la tecnología, y aprovecho cada oportunidad para aprender más. Me desenvuelvo bien en entornos de trabajo en equipo y tengo confianza en mi capacidad para colaborar de manera efectiva en proyectos de cualquier envergadura. Adopto un enfoque práctico en mi trabajo y me comprometo a aprender lo que no sé aún para tener éxito. Soy resiliente y persistente, pero si me enfrento a algo fuera de mis capacidades, no tengo miedo de pedir ayuda y priorizo el trabajo en equipo por encima de arriesgarme a cometer errores por orgullo.
 
 # 💼 Experiencia Profesional  
-## 🏢 Dekra Oct 2024 — 2025  
-Durante mis prácticas en Dekra, tuve la oportunidad de aprender de profesionales destacados sobre ciberseguridad, el proceso de pentesting, estándares de certificación y administración de sistemas. También adquirí valiosos conocimientos sobre el funcionamiento interno de una gran organización como Dekra. Algunas de las tareas clave en las que trabajé incluyen:  
+
+## 🏢 Aubay  
+**Operador de sistemas L1 en remoto: Mar 2025 — Actual**  
+Proyecto fijo dando servicio a una importante entidad bancaria de Reino Unido. El servicio consiste en monitorización de sistemas y resolución de tickets e incidencias, utilizando metodología ITIL y completamente en inglés.  
+Algunas de las herramientas usadas en el proyecto son:  
+- Grafana (monitorización y extracción de datos)  
+- Jenkins (automatización de procesos)  
+- Dbeaver/PostgreSQL (gestión y consulta de bases de datos)  
+- Freshservice (ticketing e incidencias)  
+- AWS, Kubernetes y Prometheus (servicios a monitorizar y gestionar)  
+- JMSToolBox (gestión de colas de transacciones)  
+- Git (gestión de versiones y cambios)
+
+## 🏢 Dekra  
+**Prácticas: Oct 2024 — Feb 2025**  
+Durante mis prácticas en Dekra, tuve la oportunidad de aprender de grandes profesionales sobre ciberseguridad, el proceso de pentesting, los estándares de certificación y la administración de sistemas.  
+Algunas de las tareas clave en las que trabajé incluyen:  
 - Desarrollo de aplicaciones y scripts en Python y Bash  
-- Virtualización y contenedores  
+- Virtualización (VirtualBox y Proxmox) y contenedores  
 - Administración y resolución de problemas en Linux y Windows Server  
 - Detección y documentación de fallos de seguridad  
-- Pentesting y comprometer sistemas  
+- Pentesting y seguridad de sistemas  
 - Certificación de diferentes dispositivos como routers Cisco
 
 # 🎯 Intereses Personales  
+
 ## 💻 Desarrollo de software  
-Soy un apasionado del desarrollo de software y he trabajado en múltiples aplicaciones, como scripts en Python o un videojuego escrito en Java. Disfruto del proceso de desarrollar software y me puedo sumergir mucho en él, lo que siempre me permite concentrarme en lo que estoy haciendo hasta terminarlo. Algunos de mis proyectos pueden encontrarse en mi GitHub.  
+Me apasiona el desarrollo de software y he trabajado en múltiples aplicaciones, como scripts en Python y un videojuego desarrollado en Java.  
+Algunos de mis proyectos se pueden encontrar en mi GitHub.
+
 ## 🐧 Linux y scripting  
-He estado estudiando, utilizando y gestionando sistemas basados en Linux de manera diaria durante muchos años, adquiriendo un conocimiento profundo y sólido en el proceso. Los scripts y herramientas que desarrollé están disponibles en mi GitHub.
+He estado estudiando, utilizando y administrando sistemas basados en Linux a diario durante muchos años, adquiriendo un conocimiento profundo y sólido en el proceso.  
+Los scripts y herramientas que he desarrollado están disponibles en mi GitHub.
 
 # 🎓 Educación  
-## Ingeniería de Software  
-- **Proyecto final de grado: "Aplicación Android de evaluación y entrenamiento de atención"**
+
+## Ingeniería del Software
 
 # 📜 Certificaciones  
-- **Curso Udemy 36 horas: "Curso Completo de Administración de Linux para Conseguir Tu Trabajo Soñado en IT 2024"**  
-El MEJOR curso de Administración de Linux que te prepara para trabajos corporativos y para las certificaciones RHCSA, RHCE, LFCS, CLNP.
+
+- **Curso Udemy 36 horas: "Complete Linux Training Course to Get Your Dream IT Job 2024"**  
+  El mejor curso de Administración de Linux que te prepara para trabajos corporativos y certificaciones RHCSA, RHCE, LFCS, CLNP.
+
+- **Curso Udemy Aubay: "Grafana. Curso completo en Español"**
 
 # 🛠 Habilidades  
-- Java  
+
+- Linux  
 - Bash Shell Scripting  
-- Python  
-- Scripting / gestión de IA  
 - Docker  
+- Python  
+- AI scripting  
 - Git  
+- VMWare / VirtualBox  
+- Proxmox  
+- Streamlit  
+- Grafana  
+- Jenkins  
+- Dbeaver / PostgreSQL / SQL  
+- Freshservice  
 - Visual Studio  
 - IntelliJ IDEA  
 - Eclipse  
 - RHEL  
-- Linux  
-- Android  
-- VMWare  
-- Oracle VirtualBox  
-- SQL  
-- .NET  
-- C#
+- Java  
+- Android
 
 # 🤝 Habilidades blandas  
-- Habilidades de resolución de problemas  
+
+- Resolución de problemas  
 - Mente abierta  
-- Disposición para aprender  
+- Ganas de aprender  
 - Pensamiento crítico  
 - Paciencia  
 - Iniciativa  
 - Proactividad  
 - Colaboración  
 - Trabajo en equipo  
-- Mente analítica
+- Mente analítica  
 
 # 🌍 Idiomas  
+
 - Español: Nativo  
-- Inglés: Profesional
+- Inglés: Profesional  
 """
 
 aq_es = """
