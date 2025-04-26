@@ -33,6 +33,8 @@ def main():
     api_key_1 = st.secrets["api_key"]
     api_key_2 = st.secrets["api_key_2"]
     api_key_4 = st.secrets["api_key_4"]
+    api_key_5 = st.secrets["api_key_5"]
+    api_key_6 = st.secrets["api_key_6"]
 
     date_file = "date_file.pkl"
     n_file = "n_file.pkl"
@@ -262,7 +264,17 @@ Try again tomorrow or use your own api key...
                                 st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
                             except Exception:
                                 sidebar_messages.empty()
-                                st.sidebar.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
+                                api_key = api_key_5
+                                try:
+                                    st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
+                                except Exception:
+                                    sidebar_messages.empty()
+                                    api_key = api_key_6
+                                    try:
+                                        st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
+                                    except Exception:
+                                        sidebar_messages.empty()
+                                        st.sidebar.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
 
 My website uses an api key that is free, so it may hit a limit at some point
 
