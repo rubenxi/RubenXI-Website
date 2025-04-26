@@ -53,8 +53,7 @@ I’ve been studying, using, and managing Linux-based systems daily for many yea
 The scripts and tools I’ve developed are available on my GitHub.
 
 # 🎓 Education  
-
-## Software Engineering 
+**Software Engineering**
 
 # 📜 Certifications  
 
@@ -152,8 +151,7 @@ He estado estudiando, utilizando y administrando sistemas basados en Linux a dia
 Los scripts y herramientas que he desarrollado están disponibles en mi GitHub.
 
 # 🎓 Educación  
-
-## Ingeniería del Software
+**Ingeniería del Software**
 
 # 📜 Certificaciones  
 
