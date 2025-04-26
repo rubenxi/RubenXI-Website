@@ -241,7 +241,7 @@ Try again tomorrow...
                 st.session_state.tries = 1
             if len(question) > 300:
                 st.sidebar.chat_message("assistant", avatar="logo.png").write("⚠️ The question is too long ⚠️")
-            elif st.session_state.tries >= 10:
+            elif st.session_state.tries >= 5:
                 st.sidebar.chat_message("assistant", avatar="logo.png").write("⚠️ Too many messages, try again later ⚠️")
             else:
                 tries()
