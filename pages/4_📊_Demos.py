@@ -137,7 +137,7 @@ def main():
             )
         with col_c:
             context = st.text_area("Context for the conversation", max_chars=400)
-            api_key_user = st.sidebar.text_input("Api key", placeholder="hf_...",
+            api_key_user = st.sidebar.text_input("🔑 Api key", placeholder="hf_...",
                                                  help="Set your own HuggingFace api key. You can get one here: https://huggingface.co/settings/tokens/new?tokenType=read")
         if "messages" not in st.session_state or not memory:
             st.session_state.messages = []

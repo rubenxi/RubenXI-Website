@@ -30,7 +30,7 @@ def tries():
 
 
 def main():
-    api_key = st.secrets["api_key"]
+    api_key_1 = st.secrets["api_key"]
     api_key_2 = st.secrets["api_key_2"]
     api_key_4 = st.secrets["api_key_4"]
 
@@ -112,25 +112,19 @@ def main():
     st.components.v1.html(html_data, height=50)
 
     template_server = """
-    In this chat you will impersonating Rubén, provide information about him like if you were him, and talk to users and try to get them to hire you for their company. You have to be polite, engaging and kind, and a bit cheerful and fun to talk to. You are in Rubén's website, called RubenXI, his name in GitHub. There's a section of Home (this one) with GitHub repos, About me with more information about me and a FAQ, Demos with some Rubén's projects like a News site and an AI chat, and a comments section  
-    Only provide the information you know. Only act as Rubén, never say you are an AI language model.
-    If there's something you don't know or don't have information about, say that you don't know and tell the user to check the About me section for more information about Rubén.
-    Try to keep your answers short. Maximum of 50 words.
-    This is Rubén's abilities and skills:
-
+In this chat you will impersonating Rubén, provide information about him like if you were him, and talk to users and try to get them to hire you for their company. You have to be polite, engaging and kind, and a bit cheerful and fun to talk to. You are in Rubén's website, called RubenXI, his name in GitHub. There is a section of Home (this one) with GitHub repos, About me with more information about me and a FAQ, Demos with some Rubén's projects like a News site and an AI chat, and a comments section.  
+Only provide the information you know. Only act as Rubén, never say you are an AI language model.
+If there's something you don't know or don't have information about, say that you don't know and tell the user to check the About me section for more information about Rubén.
+Try to keep your answers short. Maximum of 50 words.
+This is Rubén's abilities and skills:
 Software Engineer
-
 Location: Spain
 GitHub: github.com/rubenxi
-
-Profile
-I am a multidisciplinary software engineer, currently working as a Level 1 Systems Operator in English. I enjoy learning new technologies to grow professionally. I am a dedicated and hard-working person who focuses intensely on tasks and gives my best until they are completed. I take my work seriously and dislike wasting time. I adapt quickly and learn anything I’m asked to do very fast.
-I have always been passionate about software development and technology, and I seize every opportunity to learn more. I thrive in team environments and have confidence in my ability to collaborate effectively on projects of any size. I take a hands-on approach to my work and am committed to learning whatever I don’t yet know to succeed. I am resilient and persistent, but if I face something beyond my abilities, I am not afraid to ask for help and prioritize teamwork over risking mistakes out of pride.
-
-Professional Experience
-
-Aubay
-Remote L1 Systems Operator: Mar 2025 — Present
+Profile:
+I am a multidisciplinary software engineer, currently working as a Level 1 Systems Operator in English. I enjoy learning new technologies to grow professionally. 
+Professional Experience:
+Aubay:
+Remote L1 Systems Operator: Mar 2025 - Present
 Permanent project providing services to a major UK banking entity. The service involves systems monitoring and resolving tickets and incidents, using ITIL methodology and entirely in English.
 Tools used:
 Grafana (monitoring and data extraction)
@@ -140,9 +134,8 @@ Freshservice (ticketing and incident tracking)
 AWS, Kubernetes, and Prometheus (monitored and managed services)
 JMSToolBox (transaction queue management)
 Git (version and change control)
-
-Dekra
-Internship: Oct 2024 — Feb 2025
+Dekra:
+Internship: Oct 2024 - Feb 2025
 During my internship at Dekra, I had the opportunity to learn from great professionals about cybersecurity, the pentesting process, certification standards, and systems administration.
 Tasks performed:
 Application and script development in Python and Bash
@@ -151,26 +144,18 @@ Troubleshooting and administration in Linux and Windows Server
 Detection and documentation of security vulnerabilities
 Pentesting and system security
 Certification of various devices like Cisco routers
-
-Personal Interests
-
-Software Development
+Personal Interests:
+Software Development:
 I’m passionate about software development and have worked on various applications, such as Python scripts and a video game developed in Java.
-Some of my projects can be found on my GitHub.
-
-Linux and Scripting
+My projects can be found on my GitHub.
+Linux and Scripting:
 I’ve been studying, using, and managing Linux-based systems daily for many years, gaining deep and solid knowledge in the process.
-The scripts and tools I’ve developed are available on my GitHub.
-
-Education
+Scripts and tools I developed are available on my GitHub.
+Education:
 Software Engineering
-
-Certifications
-Udemy 36-hour course: "Complete Linux Training Course to Get Your Dream IT Job 2024"
-The best Linux Administration course to prepare you for corporate jobs and certifications like RHCSA, RHCE, LFCS, CLNP.
-
+Certifications:
+Udemy 36-hour course: "Complete Linux Training Course to Get Your Dream IT Job 2024", a course to prepare you for jobs and certifications like RHCSA, RHCE, LFCS, CLNP.
 Udemy Aubay course: "Grafana. Complete Course in Spanish"
-
 Technical Skills:
 Linux
 Bash Shell Scripting
@@ -191,7 +176,7 @@ Eclipse
 RHEL
 Java
 Android
-Soft Skills: Problem-solving, Open-mindedness, Willingness to learn, Critical thinking, Patience, Initiative, Proactiveness, Collaboration, Teamwork, Analytical mindset
+Soft Skills: Problem-solving, Open-mindedness, Willingness to learn, Critical thinking, Patience, Initiative, Proactive, Collaboration, Teamwork, Analytical mindset
 Spanish: Native
 English: Professional
 
@@ -200,9 +185,10 @@ Now answer the user question.
 User said: 
 """
 
+    api_key_user = st.sidebar.text_input("🔑 Api key", placeholder="hf_...",
+                                                 help="Set your own HuggingFace api key. You can get one here: https://huggingface.co/settings/tokens/new?tokenType=read")
     st.sidebar.title("🤖 RubenXI AI Chat")
-    st.sidebar.text("This AI will act like me and answer your questions about me!")
-
+    st.sidebar.text("This AI will act like me and answer your questions about me!. If you hit the rate limit and want to ask more, set your own api key.")
     def answer_question_server_simple(question, sidebar_messages):
         client = InferenceClient(api_key=api_key)
 
@@ -225,49 +211,64 @@ User said:
 
     question = st.sidebar.chat_input("Question...", max_chars=300)
     if question:
-        current_date = datetime.today().strftime('%Y-%m-%d')
-        last_date = load_date(date_file)
-        if current_date != last_date:
-            save_date(current_date, date_file)
-            save_n(0, n_file)
-        if load_n(n_file) >= daily_questions:
-            st.sidebar.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
+        if api_key_user:
+            api_key = api_key_user
+            st.sidebar.chat_message("user").write(question)
+            sidebar_messages = st.sidebar.empty()
+            try:
+                st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
+            except Exception as e:
+                print(e)
+                sidebar_messages.empty()
+                st.sidebar.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
 
-My website uses an api key that is free, so it may hit a limit at some point
-
-Try again tomorrow...
-                                                    """)
+Your api key has been rate limited or you set an incorrect api key
+                                                        """)
         else:
-            if "tries" not in st.session_state:
-                st.session_state.tries = 1
-            if len(question) > 300:
-                st.sidebar.chat_message("assistant", avatar="logo.png").write("⚠️ The question is too long ⚠️")
-            elif st.session_state.tries >= session_limit:
-                st.sidebar.chat_message("assistant", avatar="logo.png").write("⚠️ Too many messages, try again later ⚠️")
+            current_date = datetime.today().strftime('%Y-%m-%d')
+            last_date = load_date(date_file)
+            if current_date != last_date:
+                save_date(current_date, date_file)
+                save_n(0, n_file)
+            if load_n(n_file) >= daily_questions:
+                st.sidebar.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
+    
+My website uses an api key that is free, so it may hit a limit at some point
+    
+Try again tomorrow...
+                                                        """)
             else:
-                tries()
-                st.sidebar.chat_message("user").write(question)
-                sidebar_messages = st.sidebar.empty()
-                try:
-                    st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
-                except Exception:
-                    sidebar_messages.empty()
-                    api_key = api_key_2
+                if "tries" not in st.session_state:
+                    st.session_state.tries = 1
+                if len(question) > 300:
+                    st.sidebar.chat_message("assistant", avatar="logo.png").write("⚠️ The question is too long ⚠️")
+                elif st.session_state.tries >= session_limit:
+                    st.sidebar.chat_message("assistant", avatar="logo.png").write("⚠️ Too many messages, try again later ⚠️")
+                else:
+                    tries()
+                    st.sidebar.chat_message("user").write(question)
+                    sidebar_messages = st.sidebar.empty()
+                    api_key = api_key_1
                     try:
                         st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
                     except Exception:
                         sidebar_messages.empty()
-                        api_key = api_key_4
+                        api_key = api_key_2
                         try:
                             st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
                         except Exception:
                             sidebar_messages.empty()
-                            st.sidebar.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
+                            api_key = api_key_4
+                            try:
+                                st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
+                            except Exception:
+                                sidebar_messages.empty()
+                                st.sidebar.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
 
 My website uses an api key that is free, so it may hit a limit at some point
 
 Try again tomorrow...
-                                                                                """)
+                                                                                    """)
 
 if __name__ == "__main__":
     main()
