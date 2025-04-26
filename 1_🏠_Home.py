@@ -276,7 +276,7 @@ Try again tomorrow or use your own api key...
                                         sidebar_messages.empty()
                                         st.sidebar.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
 
-My website uses an api key that is free, so it may hit a limit at some point
+My website uses an api key that is free, so it may hit a limit at some point.
 
 Try again tomorrow or use your own api key...
                                                                                     """)
