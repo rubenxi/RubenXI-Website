@@ -36,7 +36,8 @@ def main():
 
     date_file = "date_file.pkl"
     n_file = "n_file.pkl"
-    daily_questions = 50
+    daily_questions = 10
+    session_limit = 3
     col1, col2 = st.columns(2)
 
     with col1:
@@ -241,7 +242,7 @@ Try again tomorrow...
                 st.session_state.tries = 1
             if len(question) > 300:
                 st.sidebar.chat_message("assistant", avatar="logo.png").write("⚠️ The question is too long ⚠️")
-            elif st.session_state.tries >= 5:
+            elif st.session_state.tries >= session_limit:
                 st.sidebar.chat_message("assistant", avatar="logo.png").write("⚠️ Too many messages, try again later ⚠️")
             else:
                 tries()
