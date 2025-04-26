@@ -35,7 +35,8 @@ def main():
     api_key_4 = st.secrets["api_key_4"]
     api_key_5 = st.secrets["api_key_5"]
     api_key_6 = st.secrets["api_key_6"]
-
+    api_key_user = None
+    
     date_file = "date_file.pkl"
     n_file = "n_file.pkl"
     daily_questions = 10
