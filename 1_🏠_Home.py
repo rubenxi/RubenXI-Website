@@ -117,75 +117,80 @@ def main():
     Try to keep your answers short. Maximum of 50 words.
     This is Rubén's abilities and skills:
 
-    Software Engineer
+Software Engineer
 
-Spain
+Location: Spain
+GitHub: github.com/rubenxi
 
-GitHub: https://github.com/rubenxi
-
-I am a multidisciplinary software engineer aiming to be a DevOps. I like learning new technologies to grow as a developer. I’m a dedicated and hardworking individual who focuses intently on tasks and gives my all until they are completed. I take my job seriously and do not like to waste time. I adapt quickly and learn very fast anything I am asked to do. I have always been passionate about software development and technology, and I take every opportunity to learn more.
-I thrive in team environments and am confident in my ability to collaborate effectively to complete projects of any scope. I take a practical approach to my work and am committed to learning anything I don’t yet know in order to succeed. I am resilient and persistent, but if I encounter something beyond my capabilities, I am not afraid to seek help and prioritize teamwork over risking mistakes due to pride.
+Profile
+I am a multidisciplinary software engineer, currently working as a Level 1 Systems Operator in English. I enjoy learning new technologies to grow professionally. I am a dedicated and hard-working person who focuses intensely on tasks and gives my best until they are completed. I take my work seriously and dislike wasting time. I adapt quickly and learn anything I’m asked to do very fast.
+I have always been passionate about software development and technology, and I seize every opportunity to learn more. I thrive in team environments and have confidence in my ability to collaborate effectively on projects of any size. I take a hands-on approach to my work and am committed to learning whatever I don’t yet know to succeed. I am resilient and persistent, but if I face something beyond my abilities, I am not afraid to ask for help and prioritize teamwork over risking mistakes out of pride.
 
 Professional Experience
-Dekra 2024 — 2025
-During my internship at Dekra, I had the opportunity to learn from outstanding professionals about cybersecurity, the pentesting process, certification standards, and system administration. I also gained valuable insight into the internal workings of a large organization like Dekra.
-Some of the key tasks I worked on included:
 
-Developing applications and scripts in Python and Bash
-Virtualization and containerization
-Linux and Windows Server administration and problem solving
-Detecting and documenting security flaws
-Pentesting and system compromising
-Certification for different devices like Cisco routers
+Aubay
+Remote L1 Systems Operator: Mar 2025 — Present
+Permanent project providing services to a major UK banking entity. The service involves systems monitoring and resolving tickets and incidents, using ITIL methodology and entirely in English.
+Tools used:
+Grafana (monitoring and data extraction)
+Jenkins (process automation)
+Dbeaver/PostgreSQL (database management and querying)
+Freshservice (ticketing and incident tracking)
+AWS, Kubernetes, and Prometheus (monitored and managed services)
+JMSToolBox (transaction queue management)
+Git (version and change control)
+
+Dekra
+Internship: Oct 2024 — Feb 2025
+During my internship at Dekra, I had the opportunity to learn from great professionals about cybersecurity, the pentesting process, certification standards, and systems administration.
+Tasks performed:
+Application and script development in Python and Bash
+Virtualization (VirtualBox and Proxmox) and containers
+Troubleshooting and administration in Linux and Windows Server
+Detection and documentation of security vulnerabilities
+Pentesting and system security
+Certification of various devices like Cisco routers
 
 Personal Interests
-Software development
-I’m passionate about software development, and I worked on multiple applications such as Python scripts or a video game written in Java. I enjoy the process of developing software and I can get immersed into it a lot, which is something that always makes me focus on what I’m doing until I finish. Some of my projects can be found on my GitHub.
 
-Linux and scripting
-I have been studying, using, and managing Linux-based systems daily for many years, acquiring deep and solid knowledge in the process. Scripts and tools I developed are available on my GitHub.
+Software Development
+I’m passionate about software development and have worked on various applications, such as Python scripts and a video game developed in Java.
+Some of my projects can be found on my GitHub.
+
+Linux and Scripting
+I’ve been studying, using, and managing Linux-based systems daily for many years, gaining deep and solid knowledge in the process.
+The scripts and tools I’ve developed are available on my GitHub.
 
 Education
 Software Engineering
-Final degree project: “RejillaApp: Attention assessment and training App”
 
 Certifications
-Udemy 36-hour course: “Complete Linux Training Course to Get Your Dream IT Job 2024”
-The best Linux Administration course that prepares you for corporate jobs and for RHCSA, RHCE, LFCS, CLNP certifications
+Udemy 36-hour course: "Complete Linux Training Course to Get Your Dream IT Job 2024"
+The best Linux Administration course to prepare you for corporate jobs and certifications like RHCSA, RHCE, LFCS, CLNP.
 
-Skills
+Udemy Aubay course: "Grafana. Complete Course in Spanish"
 
-Java
+Technical Skills:
+Linux
 Bash Shell Scripting
-Python
-AI scripting / management
 Docker
+Python
+AI scripting
 Git
+VMWare, VirtualBox
+Proxmox
+Streamlit
+Grafana
+Jenkins
+Dbeaver, PostgreSQL, SQL
+Freshservice
 Visual Studio
 IntelliJ IDEA
 Eclipse
 RHEL
-Linux
+Java
 Android
-VMWare
-Oracle VirtualBox
-SQL
-.NET
-C#
-Soft skills
-
-Problem-solving abilities
-Open-minded
-Willingness to learn
-Critical thinking
-Patience
-Initiative
-Pro-activity
-Collaboration
-Teamwork
-Analytical mind
-Languages
-
+Soft Skills: Problem-solving, Open-mindedness, Willingness to learn, Critical thinking, Patience, Initiative, Proactiveness, Collaboration, Teamwork, Analytical mindset
 Spanish: Native
 English: Professional
 
