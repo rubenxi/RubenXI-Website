@@ -86,7 +86,7 @@ def main():
                                     break
     with deepseek_tab:
 
-        api_key = st.secrets["api_key_3"]
+        api_key = st.secrets["api_key_d"]
 
         model = "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B" #Models: https://huggingface.co/playground
         template_server = """
