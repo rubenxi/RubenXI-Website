@@ -222,7 +222,7 @@ Try again later or use your own api key...
                 yield chunk.choices[0].delta.content
         save_n(load_n(n_file) + 1, n_file)
 
-    question = st.sidebar.chat_input("Question...", max_chars=300)
+    question = st.sidebar.chat_input("Question...", max_chars=200)
     if question:
         if api_key_user:
             api_key = api_key_user
