@@ -134,7 +134,7 @@ def main():
                     st.markdown("") 
             model = st.selectbox(
                 "Model to use",
-                ("deepseek-ai/DeepSeek-R1-Distill-Qwen-32B", "Qwen/Qwen2.5-72B-Instruct", "Qwen/QwQ-32B-Preview"), key = "model"
+                ("deepseek-ai/DeepSeek-R1-Distill-Qwen-32B", "Qwen/Qwen2.5-72B-Instruct"), key = "model"
             )
         with col_c:
             context = st.text_area("Context for the conversation", max_chars=200)
