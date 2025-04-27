@@ -121,7 +121,7 @@ def main():
         with col6:
             st.link_button("🚀 View on GitHub", "https://github.com/rubenxi/deepseek-web-chat", type="primary")
 
-        question = st.chat_input("Write a message...", max_chars=300)
+        question = st.chat_input("Write a message...", max_chars=100)
         col_m, col_c = st.columns(2)
         with col_m:
             col_m1, col_m2 = st.columns(2)
@@ -137,7 +137,7 @@ def main():
                 ("deepseek-ai/DeepSeek-R1-Distill-Qwen-32B", "Qwen/Qwen2.5-72B-Instruct", "01-ai/Yi-1.5-34B-Chat", "Qwen/QwQ-32B-Preview"), key = "model"
             )
         with col_c:
-            context = st.text_area("Context for the conversation", max_chars=400)
+            context = st.text_area("Context for the conversation", max_chars=200)
             api_key_user = st.sidebar.text_input("🔑 Api key", placeholder="hf_...",
                                                  help="Set your own HuggingFace api key. You can get one here: https://huggingface.co/settings/tokens/new?tokenType=read")
         if "messages" not in st.session_state or not memory:
