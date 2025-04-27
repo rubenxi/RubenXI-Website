@@ -134,7 +134,7 @@ def main():
                     st.markdown("") 
             model = st.selectbox(
                 "Model to use",
-                ("deepseek-ai/DeepSeek-R1-Distill-Qwen-32B", "Qwen/Qwen2.5-72B-Instruct", "01-ai/Yi-1.5-34B-Chat", "Qwen/QwQ-32B-Preview"), key = "model"
+                ("deepseek-ai/DeepSeek-R1-Distill-Qwen-32B", "Qwen/Qwen2.5-72B-Instruct", "Qwen/QwQ-32B", "Qwen/QwQ-32B-Preview"), key = "model"
             )
         with col_c:
             context = st.text_area("Context for the conversation", max_chars=200)
@@ -177,7 +177,7 @@ def main():
                 ended_thinking = False
                 thinking = ""
                 for chunk in stream:
-                    if ended_thinking or model != "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B":
+                    if ended_thinking or model != "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B" or model !="Qwen/QwQ-32B":
                         yield chunk.choices[0].delta.content
                     else:
                         thinking += chunk.choices[0].delta.content

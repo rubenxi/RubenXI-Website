@@ -30,11 +30,8 @@ def tries():
 
 
 def main():
-    api_key_1 = st.secrets["api_key"]
-    api_key_2 = st.secrets["api_key_2"]
-    api_key_4 = st.secrets["api_key_4"]
-    api_key_5 = st.secrets["api_key_5"]
-    api_key_6 = st.secrets["api_key_6"]
+    api_keys = [st.secrets["api_key"], st.secrets["api_key_2"], st.secrets["api_key_4"], st.secrets["api_key_5"], st.secrets["api_key_6"], st.secrets["api_key_7"]]
+
     api_key_user = None
     
     date_file = "date_file.pkl"
@@ -246,20 +243,16 @@ Your api key has been rate limited or you set an incorrect api key
             if load_n(n_file) >= daily_questions:
                 st.session_state.ratelimit_hit = True
                 st.rerun()
-
             else:
                 if "tries" not in st.session_state:
                     st.session_state.tries = 1
-                if len(question) > 300:
-                    st.sidebar.chat_message("assistant", avatar="logo.png").write("⚠️ The question is too long ⚠️")
-                elif st.session_state.tries >= session_limit:
+                if st.session_state.tries >= session_limit:
                     st.session_state.ratelimit_hit = True
                     st.rerun()
                 else:
                     tries()
                     st.sidebar.chat_message("user").write(question)
                     sidebar_messages = st.sidebar.empty()
-                    api_keys = [api_key_1, api_key_2, api_key_4, api_key_5, api_key_6]
 
                     for key in api_keys:
                         api_key = key
