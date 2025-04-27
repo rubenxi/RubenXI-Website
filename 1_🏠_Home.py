@@ -30,7 +30,14 @@ def tries():
 
 
 def main():
-    api_keys = [st.secrets["api_key"], st.secrets["api_key_2"], st.secrets["api_key_4"], st.secrets["api_key_5"], st.secrets["api_key_6"], st.secrets["api_key_7"]]
+    api_keys = [st.secrets["api_key"],
+                st.secrets["api_key_2"],
+                st.secrets["api_key_4"],
+                st.secrets["api_key_5"],
+                st.secrets["api_key_6"],
+                st.secrets["api_key_7"],
+                st.secrets["api_key_8"]
+                ]
 
     api_key_user = None
     
