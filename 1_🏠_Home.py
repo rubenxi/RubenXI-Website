@@ -39,8 +39,8 @@ def main():
     
     date_file = "date_file.pkl"
     n_file = "n_file.pkl"
-    daily_questions = 10
-    session_limit = 3
+    daily_questions = 20
+    session_limit = 5
     col1, col2 = st.columns(2)
 
     with col1:
@@ -69,7 +69,7 @@ def main():
 
         @st.dialog("What's mozmail?")
         def show_info():
-            st.markdown("""\
+            st.info("""\
             **@mozmail is the domain used by Firefox Relay, a Mozilla service that helps protect your privacy by masking your real email address. Emails sent to this address are securely forwarded to my personal inbox, reducing spam and phishing risks.**
 
             ---
@@ -83,7 +83,9 @@ def main():
             if st.button("❓"):
                 show_info()
 
-        st.markdown(abilities_md)
+        col_info, col_ex = st.columns(2)
+        with col_info:
+            st.info(abilities_md)
     st.divider()
     st.header("My GitHub repositories")
     with st.spinner("Retrieving information...", show_time=True):
@@ -189,10 +191,17 @@ User said:
 """
 
     st.sidebar.title("🤖 RubenXI AI Chat")
-    st.sidebar.text("This AI will act like me and answer your questions about me!.")
-    def show_api_key():
-        if not api_key_user:                                            
-            api_key_user = st.sidebar.text_input("🔑 Api key", placeholder="hf_...", help="Set your own HuggingFace api key. You can get one here: https://huggingface.co/settings/tokens/new?tokenType=read")
+    if 'ratelimit_hit' in st.session_state:
+        api_key_user = st.sidebar.text_input("🔑 Api key", placeholder="hf_...", help="Set your own HuggingFace api key. You can get one here: https://huggingface.co/settings/tokens/new?tokenType=read")
+        if api_key_user is None or len(api_key_user) < 1:
+            st.sidebar.info("""**⚠️ Rate Limit ⚠️**
+
+My website uses an api key that is free, so it may hit a limit at some point.
+
+Try again later or use your own api key...
+                                                            """)
+
+    st.sidebar.markdown("**This AI will act like me and answer your questions about me!.**")
     def answer_question_server_simple(question, sidebar_messages):
         client = InferenceClient(api_key=api_key)
 
@@ -227,6 +236,7 @@ User said:
 
 Your api key has been rate limited or you set an incorrect api key
                                                         """)
+
         else:
             current_date = datetime.today().strftime('%Y-%m-%d')
             last_date = load_date(date_file)
@@ -234,58 +244,35 @@ Your api key has been rate limited or you set an incorrect api key
                 save_date(current_date, date_file)
                 save_n(0, n_file)
             if load_n(n_file) >= daily_questions:
-                show_api_key()
-                st.sidebar.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
-    
-My website uses an api key that is free, so it may hit a limit at some point.
-    
-Try again tomorrow or use your own api key...
-                                                        """)
+                st.session_state.ratelimit_hit = True
+                st.rerun()
+
             else:
                 if "tries" not in st.session_state:
                     st.session_state.tries = 1
                 if len(question) > 300:
                     st.sidebar.chat_message("assistant", avatar="logo.png").write("⚠️ The question is too long ⚠️")
                 elif st.session_state.tries >= session_limit:
-                    show_api_key()
-                    st.sidebar.chat_message("assistant", avatar="logo.png").write("⚠️ Too many messages, try again later or use your own api key ⚠️")
+                    st.session_state.ratelimit_hit = True
+                    st.rerun()
                 else:
                     tries()
                     st.sidebar.chat_message("user").write(question)
                     sidebar_messages = st.sidebar.empty()
-                    api_key = api_key_1
-                    try:
-                        st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
-                    except Exception:
-                        sidebar_messages.empty()
-                        api_key = api_key_2
+                    api_keys = [api_key_1, api_key_2, api_key_4, api_key_5, api_key_6]
+
+                    for key in api_keys:
+                        api_key = key
                         try:
                             st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
+                            break
                         except Exception:
+                            print("Api key rate limit for key " + str(api_keys.index(key)+1))
                             sidebar_messages.empty()
-                            api_key = api_key_4
-                            try:
-                                st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
-                            except Exception:
-                                sidebar_messages.empty()
-                                api_key = api_key_5
-                                try:
-                                    st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
-                                except Exception:
-                                    sidebar_messages.empty()
-                                    api_key = api_key_6
-                                    try:
-                                        st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
-                                    except Exception:
-                                        show_api_key()
-                                        sidebar_messages.empty()
-                                        st.sidebar.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
-
-My website uses an api key that is free, so it may hit a limit at some point.
-
-Try again tomorrow or use your own api key...
-                                                                               """)                                        
-                                        
+                    else:
+                        sidebar_messages.empty()
+                        st.session_state.ratelimit_hit = True
+                        st.rerun()
 
 if __name__ == "__main__":
     main()
