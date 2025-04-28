@@ -196,7 +196,7 @@ def main():
             if api_key_user:
                 api_key = api_key_user
             elif load_n(n_file_demos) <= daily_questions:
-                api_key = st.secrets["api_key_3"]
+                api_key = st.secrets["api_key_d"]
             else:
                 st.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
 
@@ -226,13 +226,15 @@ Try again tomorrow or use your own api key...
                                 st.markdown(message["content"])
                         if memory:
                             st.session_state.messages.insert(0, {"role": "assistant", "content": response})
-                    except Exception:
+                    except Exception as e:
                         if api_key_user:
                             st.write("""**⚠️ Rate Limit ⚠️**
 
 Your api key has been rate limited or you set an incorrect api key
                                                                         """)
                         else:
+                            print("----api: "+api_key+" | error: "+ str(e))
+
                             st.write("""**⚠️ Rate Limit ⚠️**
     
 My website uses an api key that is free, so it may hit a limit at some point
