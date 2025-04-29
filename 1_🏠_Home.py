@@ -32,13 +32,21 @@ def tries():
 def main():
     api_keys = []
     i = 1
+    day = datetime.today().day
     while True:
         key_name = f"api_key_{i}"
-        if key_name in st.secrets:
+        if key_name in st.secrets and i % 2 == 0 and day % 2 == 0:
             api_keys.append(st.secrets[key_name])
+            i += 1
+        elif key_name in st.secrets and i % 2 != 0 and day % 2 != 0:
+            api_keys.append(st.secrets[key_name])
+            i += 1
+        elif key_name in st.secrets:
             i += 1
         else:
             break
+        print(str(api_keys))
+
     api_key_user = None
     
     date_file = "date_file.pkl"
@@ -202,8 +210,8 @@ User said:
 
 My website uses an api key that is free, so it may hit a limit at some point.
 
-Try again later or use your own api key... Tries today/date:
-                                                            """+str(load_n(n_file))+" / "+str(load_date(date_file))+" api: ")
+Try again later or use your own api key...
+                                                            """)
 
     st.sidebar.markdown("**This AI will act like me and answer your questions about me!.**")
     def answer_question_server_simple(question, sidebar_messages):
@@ -225,7 +233,6 @@ Try again later or use your own api key... Tries today/date:
             for chunk in stream:
                 yield chunk.choices[0].delta.content
         save_n(load_n(n_file) + 1, n_file)
-        print(str(load_n(n_file)))
 
     question = st.sidebar.chat_input("Question...", max_chars=200)
     if question:
@@ -235,14 +242,12 @@ Try again later or use your own api key... Tries today/date:
             sidebar_messages = st.sidebar.empty()
             try:
                 st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
-            except Exception as e:
+            except Exception:
                 sidebar_messages.empty()
-                a = load_n(n_file)
-                b= load_date(date_file)
                 st.sidebar.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
 
 Your api key has been rate limited or you set an incorrect api key. Tries today/date:
-                                                        """+str(a)+" / "+str(b)+" Error: "+str(e))
+                                                        """)
 
         else:
             current_date = datetime.today().strftime('%Y-%m-%d')
