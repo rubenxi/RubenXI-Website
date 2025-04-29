@@ -245,7 +245,7 @@ Try again later or use your own api key...
                 sidebar_messages.empty()
                 st.sidebar.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
 
-Your api key has been rate limited or you set an incorrect api key. Tries today/date:
+Your api key has been rate limited or you set an incorrect api key.
                                                         """)
 
         else:
