@@ -226,18 +226,18 @@ Try again tomorrow or use your own api key...
                                 st.markdown(message["content"])
                         if memory:
                             st.session_state.messages.insert(0, {"role": "assistant", "content": response})
-                    except Exception:
+                    except Exception as e:
                         if api_key_user:
                             st.write("""**⚠️ Rate Limit ⚠️**
 
 Your api key has been rate limited or you set an incorrect api key
-                                                                        """)
+                                                                        """+str(e))
                         else:
                             st.write("""**⚠️ Rate Limit ⚠️**
     
 My website uses an api key that is free, so it may hit a limit at some point
     
 Try again later...
-                                            """)
+                                            """+str(e))
 if __name__ == "__main__":
     main()
