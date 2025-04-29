@@ -202,8 +202,8 @@ User said:
 
 My website uses an api key that is free, so it may hit a limit at some point.
 
-Try again later or use your own api key...
-                                                            """)
+Try again later or use your own api key... Tries today/date:
+                                                            """+str(load_n(n_file))+" / "+str(load_date(date_file))+" api: ")
 
     st.sidebar.markdown("**This AI will act like me and answer your questions about me!.**")
     def answer_question_server_simple(question, sidebar_messages):
@@ -225,6 +225,7 @@ Try again later or use your own api key...
             for chunk in stream:
                 yield chunk.choices[0].delta.content
         save_n(load_n(n_file) + 1, n_file)
+        print(str(load_n(n_file)))
 
     question = st.sidebar.chat_input("Question...", max_chars=200)
     if question:
@@ -234,12 +235,14 @@ Try again later or use your own api key...
             sidebar_messages = st.sidebar.empty()
             try:
                 st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
-            except Exception:
+            except Exception as e:
                 sidebar_messages.empty()
+                a = load_n(n_file)
+                b= load_date(date_file)
                 st.sidebar.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
 
-Your api key has been rate limited or you set an incorrect api key
-                                                        """)
+Your api key has been rate limited or you set an incorrect api key. Tries today/date:
+                                                        """+str(a)+" / "+str(b)+" Error: "+str(e))
 
         else:
             current_date = datetime.today().strftime('%Y-%m-%d')
