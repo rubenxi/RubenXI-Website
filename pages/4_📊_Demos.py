@@ -20,8 +20,8 @@ st.set_page_config(
     page_icon="logo.png"
 )
 
-def tries():
-    st.session_state.tries = st.session_state.tries+1
+def tries_demos():
+    st.session_state.tries_demos = st.session_state.tries_demos+1
 
 def main():
     daily_questions = 10
@@ -205,14 +205,14 @@ My website uses an api key that is free, so it may hit a limit at some point
 Try again tomorrow or use your own api key...
                                             """)
             if api_key_user or (not api_key_user and load_n(n_file_demos) <= daily_questions):
-                if "tries" not in st.session_state:
-                    st.session_state.tries = 1
+                if "tries_demos" not in st.session_state:
+                    st.session_state.tries_demos = 1
                 if len(question) > 300 or len(context) > 400:
                     st.chat_message("assistant", avatar="logo.png").write("⚠️ The question is too long ⚠️")
-                elif st.session_state.tries >= session_limit:
+                elif st.session_state.tries_demos >= session_limit:
                     st.chat_message("assistant", avatar="logo.png").write("⚠️ Too many messages, try again later ⚠️")
                 else:
-                    tries()
+                    tries_demos()
                     if memory:
                         st.session_state.messages.insert(0, {"role": "user", "content": question})
                     else:
