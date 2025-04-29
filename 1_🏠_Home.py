@@ -45,7 +45,6 @@ def main():
             i += 1
         else:
             break
-        print(str(api_keys))
 
     api_key_user = None
     
