@@ -53,7 +53,7 @@ def main():
     date_file = "date_file.pkl"
     n_file = "n_file.pkl"
     daily_questions = 500
-    session_limit = 10
+    session_limit = 5
     session_limit_genai = 50
     col1, col2 = st.columns(2)
 
