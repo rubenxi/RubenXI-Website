@@ -52,7 +52,8 @@ def main():
     
     date_file = "date_file.pkl"
     n_file = "n_file.pkl"
-    daily_questions = 500
+    daily_questions = 20
+    daily_questions_genai = 500
     session_limit = 5
     session_limit_genai = 50
     col1, col2 = st.columns(2)
@@ -277,7 +278,7 @@ Your api key has been rate limited or you set an incorrect api key.
             if current_date != last_date:
                 save_date(current_date, date_file)
                 save_n(0, n_file)
-            if load_n(n_file) >= daily_questions:
+            if load_n(n_file) >= daily_questions and load_n(n_file) >= daily_questions_genai:
                 st.session_state.ratelimit_hit = True
                 st.rerun()
             else:
@@ -292,7 +293,7 @@ Your api key has been rate limited or you set an incorrect api key.
                     sidebar_messages = st.sidebar.empty()
 
                     for key in api_keys:
-                        if st.session_state.tries >= session_limit:
+                        if st.session_state.tries >= session_limit or load_n(n_file) >= daily_questions:
                             print("Session limit for HF, using Gemini AI")
                         else:
                             api_key = key
