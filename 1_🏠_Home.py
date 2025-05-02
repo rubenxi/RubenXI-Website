@@ -53,7 +53,8 @@ def main():
     date_file = "date_file.pkl"
     n_file = "n_file.pkl"
     daily_questions = 500
-    session_limit = 15
+    session_limit = 10
+    session_limit_genai = 50
     col1, col2 = st.columns(2)
 
     with col1:
@@ -282,7 +283,7 @@ Your api key has been rate limited or you set an incorrect api key.
             else:
                 if "tries" not in st.session_state:
                     st.session_state.tries = 1
-                if st.session_state.tries >= session_limit:
+                if st.session_state.tries >= session_limit and st.session_state.tries >= session_limit_genai:
                     st.session_state.ratelimit_hit = True
                     st.rerun()
                 else:
@@ -291,31 +292,25 @@ Your api key has been rate limited or you set an incorrect api key.
                     sidebar_messages = st.sidebar.empty()
 
                     for key in api_keys:
-                        api_key = key
-                        try:
-                            st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
-                            break
-                        except Exception:
-                            print("Api key rate limit for key " + str(api_keys.index(key)+1))
-                            sidebar_messages.empty()
+                        if st.session_state.tries >= session_limit:
+                            print("Session limit for HF, using Gemini AI")
+                        else:
+                            api_key = key
+                            try:
+                                st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
+                                st.sidebar.warning("🤗 Response by HuggingFace")
+                                break
+                            except Exception:
+                                print("Api key rate limit for key " + str(api_keys.index(key)+1))
+                                sidebar_messages.empty()
                     else:
                         sidebar_messages.empty()
                         try:
-                            @st.dialog("Rate limit fallback")
-                            def show_info():
-                                st.info("""\
-                                        **HuggingFace ratelimit hit.**
-
-                                        ---
-
-                                        The AI chat will use Gemini as a fallback option until HF is available again.           
-                                                    """)
-                            if st.button("❓"):
-                                show_info()
                             api_key = api_key_genai
                             st.sidebar.write_stream(answer_question_server_simple_genai(question, sidebar_messages))
-                        except Exception:
-                            print("Rate limit Genai")
+                            st.sidebar.info("🌐 Response by Gemini AI")
+                        except Exception as e:
+                            print("Rate limit Genai" + str(e))
                             st.session_state.ratelimit_hit = True
                             st.rerun()
 

@@ -278,6 +278,5 @@ My website uses an api key that is free, so it may hit a limit at some point
     
 Try again later...
                                             """)
-                        print(str(e))
 if __name__ == "__main__":
     main()
