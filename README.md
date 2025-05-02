@@ -5,7 +5,7 @@ Check the AI chat to ask about me or see my GitHub repos!. You can also find coo
 
 In the Demos section you can find a feature rich AI chat with HuggingFace and Gemini AI capabilities and a news aggregator.
 
-![image](https://github.com/user-attachments/assets/17a392ff-319b-4f3a-81d0-f389bc1e391d)
+![Screenshot_20250212_223548](https://github.com/user-attachments/assets/8dbb2ee2-ef64-4f9f-a073-55b83fac8d68)
 ![image](https://github.com/user-attachments/assets/bbadf019-ed46-4937-b71f-86d4a5cdbfe4)
 ![Screenshot_20250212_223318](https://github.com/user-attachments/assets/2f1dd594-83f2-4d22-9c06-877ee60c9d1a)
 ![Screenshot_20250212_223150](https://github.com/user-attachments/assets/8b926f93-a65f-42b7-b90a-a570b4ed7cd5)
