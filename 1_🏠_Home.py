@@ -52,7 +52,7 @@ def main():
     
     date_file = "date_file.pkl"
     n_file = "n_file.pkl"
-    daily_questions = 20
+    daily_questions = 15
     daily_questions_genai = 500
     session_limit = 5
     session_limit_genai = 50
