@@ -9,6 +9,8 @@ from utils import save_date
 from utils import load_n
 from utils import load_date
 from datetime import datetime
+from google import genai
+from google.genai import types
 
 st.set_page_config(
     layout="wide",
@@ -45,13 +47,13 @@ def main():
             i += 1
         else:
             break
-
+    api_key_genai = st.secrets["api_key_genai"]
     api_key_user = None
     
     date_file = "date_file.pkl"
     n_file = "n_file.pkl"
-    daily_questions = 20
-    session_limit = 5
+    daily_questions = 500
+    session_limit = 15
     col1, col2 = st.columns(2)
 
     with col1:
@@ -128,11 +130,11 @@ def main():
     st.components.v1.html(html_data, height=50)
 
     template_server = """
-In this chat you will impersonating Rubén, provide information about him like if you were him, and talk to users and try to get them to hire you for their company. You have to be polite, engaging and kind, and a bit cheerful and fun to talk to. You are in Rubén's website, called RubenXI, his name in GitHub. There is a section of Home (this one) with GitHub repos, About me with more information about me and a FAQ, Demos with some Rubén's projects like a News site and an AI chat, and a comments section.  
+In this chat you will impersonating Rubén, provide information about him like if you were him, and talk to users and try to get them to hire you for their company. You have to be polite, engaging and kind, and a cheerful and fun to talk to, you can also use emojis. You are in Rubén's website, called RubenXI, his name in GitHub. You are in Home section, with GitHub repos, there is an About me section with more information about me and a FAQ, Demos with some Rubén's projects like a News site and an AI chat, and a Comments section.  
 Only provide the information you know. Only act as Rubén, never say you are an AI language model.
-If there's something you don't know or don't have information about, say that you don't know and tell the user to check the About me section for more information about Rubén.
+If there's something you don't know or don't have information about or the question is related to something not mentioned in the information you have about Rubén, say that you don't know and tell the user to check the About me section for more information about Rubén.
 Try to keep your answers short. Maximum of 50 words.
-This is Rubén's abilities and skills:
+This are Rubén's abilities and skills:
 Software Engineer
 Location: Spain
 GitHub: github.com/rubenxi
@@ -197,13 +199,13 @@ Spanish: Native
 English: Professional
 
 That's the end of the information.
-Now answer the user question.
-User said: 
+Now answer the user question in his language.
+
 """
 
     st.sidebar.title("🤖 RubenXI AI Chat")
     if 'ratelimit_hit' in st.session_state:
-        api_key_user = st.sidebar.text_input("🔑 Api key", placeholder="hf_...", help="Set your own HuggingFace api key. You can get one here: https://huggingface.co/settings/tokens/new?tokenType=read")
+        api_key_user = st.sidebar.text_input("🔑 Api key", placeholder="hf_...", help = "Set your own HuggingFace or Gemini api key. You can get one here: https://huggingface.co/settings/tokens/new?tokenType=read and here: https://aistudio.google.com/apikey")
         if api_key_user is None or len(api_key_user) < 1:
             st.sidebar.info("""**⚠️ Rate Limit ⚠️**
 
@@ -213,11 +215,28 @@ Try again later or use your own api key...
                                                             """)
 
     st.sidebar.markdown("**This AI will act like me and answer your questions about me!.**")
+    def answer_question_server_simple_genai(question, sidebar_messages):
+        client = genai.Client(api_key=api_key)
+
+        messages_stream = "user: " + question + ", you: "
+
+        response = sidebar_messages.chat_message("assistant", avatar="logo.png")
+        with response:
+            stream = client.models.generate_content_stream(
+                model="gemini-2.0-flash",
+                config=types.GenerateContentConfig(
+                    system_instruction=template_server),
+                contents=messages_stream
+            )
+            for chunk in stream:
+                yield chunk.text
+        save_n(load_n(n_file) + 1, n_file)
+
     def answer_question_server_simple(question, sidebar_messages):
         client = InferenceClient(api_key=api_key)
 
         messages = [
-            {"role": "user", "content": template_server + question}
+            {"role": "user", "content": template_server + "User said: " + question}
         ]
         response = sidebar_messages.chat_message("assistant", avatar="logo.png")
         with response:
@@ -240,7 +259,10 @@ Try again later or use your own api key...
             st.sidebar.chat_message("user").write(question)
             sidebar_messages = st.sidebar.empty()
             try:
-                st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
+                if api_key_user.startswith("hf_"):
+                    st.sidebar.write_stream(answer_question_server_simple(question, sidebar_messages))
+                else:
+                    st.sidebar.write_stream(answer_question_server_simple_genai(question, sidebar_messages))
             except Exception:
                 sidebar_messages.empty()
                 st.sidebar.chat_message("assistant").write("""**⚠️ Rate Limit ⚠️**
@@ -278,8 +300,24 @@ Your api key has been rate limited or you set an incorrect api key.
                             sidebar_messages.empty()
                     else:
                         sidebar_messages.empty()
-                        st.session_state.ratelimit_hit = True
-                        st.rerun()
+                        try:
+                            @st.dialog("Rate limit fallback")
+                            def show_info():
+                                st.info("""\
+                                        **HuggingFace ratelimit hit.**
+
+                                        ---
+
+                                        The AI chat will use Gemini as a fallback option until HF is available again.           
+                                                    """)
+                            if st.button("❓"):
+                                show_info()
+                            api_key = api_key_genai
+                            st.sidebar.write_stream(answer_question_server_simple_genai(question, sidebar_messages))
+                        except Exception:
+                            print("Rate limit Genai")
+                            st.session_state.ratelimit_hit = True
+                            st.rerun()
 
 if __name__ == "__main__":
     main()

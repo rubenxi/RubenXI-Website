@@ -3,3 +3,4 @@ PyGithub
 lxml
 pandas
 huggingface_hub
+google-genai

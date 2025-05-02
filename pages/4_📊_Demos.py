@@ -13,6 +13,9 @@ from utils import save_date
 from utils import load_n
 from utils import load_date
 from datetime import datetime
+from google import genai
+from google.genai import types
+
 
 st.set_page_config(
     layout="wide",
@@ -87,6 +90,7 @@ def main():
     with deepseek_tab:
 
         api_key = st.secrets["api_key_d"]
+        api_key_genai = st.secrets["api_key_genai"]
 
         model = "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B" #Models: https://huggingface.co/playground
         template_server = """
@@ -101,7 +105,7 @@ def main():
             @st.dialog("DeepSeek Chat")
             def show_info():
                 st.markdown("""\
-                        **This project is a chat written in Python that communicates with a HuggingFace model of DeepSeek (or some other ones) in the cloud. It uses the HuggingFace API to send the content of the message to the model online, getting then a response in stream format to output it to the chat.** 
+                        **This project is a chat written in Python that communicates with a HuggingFace model of DeepSeek (or some other ones) in the cloud or with Google Gemini. It uses the HuggingFace API and Gemini API to send the content of the message to the model online, getting then a response in stream format to output it to the chat.** 
                         
                         **You can choose a model with the menu "Model to use". The model will change and the new one will be used.**  
                         
@@ -134,18 +138,46 @@ def main():
                     st.markdown("") 
             model = st.selectbox(
                 "Model to use",
-                ("deepseek-ai/DeepSeek-R1-Distill-Qwen-32B", "Qwen/Qwen2.5-72B-Instruct", "Qwen/Qwen2.5-Coder-32B-Instruct"), key = "model"
+                ("deepseek-ai/DeepSeek-R1-Distill-Qwen-32B", "Qwen/Qwen2.5-72B-Instruct", "Qwen/Qwen2.5-Coder-32B-Instruct", "gemini-2.0-flash"), key = "model"
             )
         with col_c:
             context = st.text_area("Context for the conversation", max_chars=200)
             api_key_user = st.sidebar.text_input("🔑 Api key", placeholder="hf_...",
-                                                 help="Set your own HuggingFace api key. You can get one here: https://huggingface.co/settings/tokens/new?tokenType=read")
+                                                 help="Set your own HuggingFace or Gemini api key. You can get one here: https://huggingface.co/settings/tokens/new?tokenType=read and here: https://aistudio.google.com/apikey")
         if "messages" not in st.session_state or not memory:
             st.session_state.messages = []
 
+        def answer_question_server_simple_genai(question):
+            client = genai.Client(api_key=api_key)
+
+            with st.chat_message("assistant"):
+                if context:
+                    messages_stream = "context: " + context + " user: " + question + ", you: "
+                else:
+                    messages_stream = " user: " + question + ", you: "
+                if memory:
+                    messages = ""
+                    for m in reversed(st.session_state.messages):
+                        if m["role"] == "assistant":
+                            messages += "you: " + m["content"]+", "
+                        else:
+                            messages += m["role"] + ": " + m["content"]+", "
+                    if len(context) >= 1:
+                        messages_stream = "context: " + context + "messages: " + messages + "you: "
+                    else:
+                        messages_stream = "messages: " + messages + "you: "
+
+                stream = client.models.generate_content_stream(
+                    model="gemini-2.0-flash",
+                    config=types.GenerateContentConfig(
+                        system_instruction="Answer the user."),
+                    contents=messages_stream
+                )
+                for chunk in stream:
+                    yield chunk.text
+
         def answer_question_server_simple(question):
             client = InferenceClient(api_key=api_key)
-
             with st.chat_message("assistant"):
                 messages_stream = [{"role": "user", "content": template_server + " context: " + context + " user: " + question}]
                 if memory:
@@ -207,9 +239,9 @@ Try again tomorrow or use your own api key...
             if api_key_user or (not api_key_user and load_n(n_file_demos) <= daily_questions):
                 if "tries_demos" not in st.session_state:
                     st.session_state.tries_demos = 1
-                if len(question) > 300 or len(context) > 400:
+                if len(question) > 300 or len(context) > 400 and not api_key_user:
                     st.chat_message("assistant", avatar="logo.png").write("⚠️ The question is too long ⚠️")
-                elif st.session_state.tries_demos >= session_limit:
+                elif st.session_state.tries_demos >= session_limit and not api_key_user:
                     st.chat_message("assistant", avatar="logo.png").write("⚠️ Too many messages, try again later ⚠️")
                 else:
                     tries_demos()
@@ -219,14 +251,21 @@ Try again tomorrow or use your own api key...
                         st.chat_message("user").write(question)
                     try:
                         with st.spinner("Thinking...", show_time=True):
-                            response = st.write_stream(answer_question_server_simple(question))
+                            if model == "gemini-2.0-flash":
+                                if not api_key_user:
+                                    api_key = st.secrets["api_key_genai"]
+                                response = st.write_stream(answer_question_server_simple_genai(question))
+                            else:
+                                if not api_key_user:
+                                    api_key = st.secrets["api_key_d"]
+                                response = st.write_stream(answer_question_server_simple(question))
                             save_n(load_n(n_file_demos) + 1, n_file_demos)
                         for message in st.session_state.messages:
                             with st.chat_message(message["role"]):
                                 st.markdown(message["content"])
                         if memory:
                             st.session_state.messages.insert(0, {"role": "assistant", "content": response})
-                    except Exception:
+                    except Exception as e:
                         if api_key_user:
                             st.write("""**⚠️ Rate Limit ⚠️**
 
@@ -238,6 +277,7 @@ Your api key has been rate limited or you set an incorrect api key
 My website uses an api key that is free, so it may hit a limit at some point
     
 Try again later...
-                                            """+str(e))
+                                            """)
+                        print(str(e))
 if __name__ == "__main__":
     main()
