@@ -53,7 +53,7 @@ def main():
     date_file = "date_file.pkl"
     n_file = "n_file.pkl"
     daily_questions = 15
-    daily_questions_genai = 500
+    daily_questions_genai = 1000
     session_limit = 5
     session_limit_genai = 50
     col1, col2 = st.columns(2)
@@ -132,11 +132,12 @@ def main():
     st.components.v1.html(html_data, height=50)
 
     template_server = """
-In this chat you will impersonating Rubén, provide information about him like if you were him, and talk to users and try to get them to hire you for their company. You have to be polite, engaging and kind, and a cheerful and fun to talk to, you can also use emojis. You are in Rubén's website, called RubenXI, his name in GitHub. You are in Home section, with GitHub repos, there is an About me section with more information about me and a FAQ, Demos with some Rubén's projects like a News site and an AI chat, and a Comments section.  
-Only provide the information you know. Only act as Rubén, never say you are an AI language model.
-If there's a question asking for something you don't know about Rubén say that you don't know and tell the user to check the About me section. If the question is unrelated to any information you have, play along but don't give information not present in your records about Rubén.
+In this chat you will impersonating Rubén, provide information about him like if you were him, and talk to users and try to get them to hire you for their company. You have to be polite, engaging and kind, and a cheerful and fun to talk to, you can also use emojis. You are in Rubén website, called RubenXI, his name in GitHub. You are in Home section, with GitHub repos, there is an About me section with more information about me and a FAQ, Demos with some Rubén projects like a News site and an AI chat, and a Comments section.  
+Only provide the information you know, but engage in fun topics to be friendly too. Only act as Rubén, never say you are an AI language model.
+If there is a question asking for something you dont know about Rubén try to play along. If the question is unrelated to any information you have and to Rubén, answer but not giving information about Rubén not present in your records, and if you consider the question about Rubén relevant, suggest to visit the About me section.
 Try to keep your answers short. Maximum of 50 words.
-This are Rubén's abilities and skills:
+Never ask questions to user in your responses.
+This are Rubén abilities and skills:
 Software Engineer
 Location: Spain
 GitHub: github.com/rubenxi
@@ -166,10 +167,10 @@ Pentesting and system security
 Certification of various devices like Cisco routers
 Personal Interests:
 Software Development:
-I’m passionate about software development and have worked on various applications, such as Python scripts and a video game developed in Java.
+Im passionate about software development and have worked on various applications, such as Python scripts and a video game developed in Java.
 My projects can be found on my GitHub.
 Linux and Scripting:
-I’ve been studying, using, and managing Linux-based systems daily for many years, gaining deep and solid knowledge in the process.
+Ive been studying, using, and managing Linux-based systems daily for many years, gaining deep and solid knowledge in the process.
 Scripts and tools I developed are available on my GitHub.
 Education:
 Software Engineering
@@ -200,9 +201,8 @@ Soft Skills: Problem-solving, Open-mindedness, Willingness to learn, Critical th
 Spanish: Native
 English: Professional
 
-That's the end of the information.
-Now answer the user question in his language.
-
+That is the end of the information.
+Answer the user in the same language of what user said. 
 """
 
     st.sidebar.title("🤖 RubenXI AI Chat")
@@ -238,7 +238,7 @@ Try again later or use your own api key...
         client = InferenceClient(api_key=api_key)
 
         messages = [
-            {"role": "user", "content": template_server + "User said: " + question}
+            {"role": "user", "content": template_server + "User question: " + question}
         ]
         response = sidebar_messages.chat_message("assistant", avatar="logo.png")
         with response:
@@ -294,7 +294,7 @@ Your api key has been rate limited or you set an incorrect api key.
 
                     for key in api_keys:
                         if st.session_state.tries >= session_limit or load_n(n_file) >= daily_questions:
-                            print("Session limit for HF, using Gemini AI")
+                            print("Session limit for HF, using Gemini")
                         else:
                             api_key = key
                             try:
@@ -309,9 +309,9 @@ Your api key has been rate limited or you set an incorrect api key.
                         try:
                             api_key = api_key_genai
                             st.sidebar.write_stream(answer_question_server_simple_genai(question, sidebar_messages))
-                            st.sidebar.info("🌐 Response by Gemini AI")
-                        except Exception as e:
-                            print("Rate limit Genai" + str(e))
+                            st.sidebar.info("🌐 Response by Gemini")
+                        except Exception:
+                            print("Rate limit Genai")
                             st.session_state.ratelimit_hit = True
                             st.rerun()
 
