@@ -309,9 +309,7 @@ Your api key has been rate limited or you set an incorrect api key.
                         try:
                             api_key = api_key_genai
                             st.sidebar.write_stream(answer_question_server_simple_genai(question, sidebar_messages))
-                            st.sidebar.info("""🌐 Response by Gemini.
-                            
-Today: """+str(load_n(n_file)))
+                            st.sidebar.info("🌐 Response by Gemini.")
                         except Exception:
                             print("Rate limit Genai")
                             st.session_state.ratelimit_hit = True
