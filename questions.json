@@ -1,0 +1,22 @@
+[
+    {
+        "question": "If incompatible, do you prioritize your benefit over the benefit of the group?",
+        "func_mbti_yes": "egoist",
+        "func_mbti_no": "altruist"
+    },
+    {
+        "question": "Do you find yourself often trying to guess the future?",
+        "func_mbti_yes": "future_present",
+        "func_mbti_no": "past_present"
+    },
+    {
+        "question": "Do you tend to act based on a well thought logic?",
+        "func_mbti_yes": "thinker",
+        "func_mbti_no": "feeler"
+    },
+    {
+        "question": "Do you often get distracted in your own thoughts more than living in the physical daily life?",
+        "func_mbti_yes": "intuitive",
+        "func_mbti_no": "sensor"
+    }
+]

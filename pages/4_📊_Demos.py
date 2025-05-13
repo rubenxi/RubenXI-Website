@@ -15,6 +15,8 @@ from utils import load_date
 from datetime import datetime
 from google import genai
 from google.genai import types
+import json
+
 
 
 st.set_page_config(
@@ -33,7 +35,7 @@ def main():
     n_file_demos = "n_file_demos.pkl"
     st.sidebar.title("📊 Demo projects")
     st.sidebar.text("Here there are demos of some of my projects separated by tabs. You can click each tab to see the app and use it")
-    news_tab, deepseek_tab = st.tabs(["**News**", "**DeepSeek**"])
+    news_tab, deepseek_tab, mbti_tab = st.tabs(["**News**", "**DeepSeek**", "**MBTI Test**"])
     options_name_link = show_options()
     names = []
     for element in options_name_link:
@@ -54,7 +56,7 @@ def main():
                             🚀 This project and many others can be found on my GitHub.           
                                         """)
 
-                if st.button("❓ About this project  "):
+                if st.button("❓ About this project"):
                     show_info()
             with col3:
                 st.link_button("🚀 View on GitHub", "https://github.com/rubenxi/newsPython", type="primary")
@@ -81,7 +83,7 @@ def main():
                                                     'latitude': [lat],
                                                     'longitude': [lon]
                                                 })
-                                                st.map(data, zoom=6, size=8000)
+                                                st.map(data, zoom=7, size=2000)
 
                                             with st.spinner("Loading map...", show_time=True):
                                                 show_map()
@@ -120,7 +122,7 @@ def main():
                         🚀 This project and many others can be found on my GitHub.           
                                     """)
 
-            if st.button("❓ About this project  ", key="deep"):
+            if st.button("❓ About this project", key="deep"):
                 show_info()
         with col6:
             st.link_button("🚀 View on GitHub", "https://github.com/rubenxi/deepseek-web-chat", type="primary")
@@ -278,5 +280,212 @@ My website uses an api key that is free, so it may hit a limit at some point
     
 Try again later...
                                             """)
+
+    def load_questions():
+        with open("questions.json", "r", encoding="utf-8") as f:
+            return json.load(f)
+
+    questions_data = load_questions()
+
+    with mbti_tab:
+        col1, col2, col3 = st.columns(3)
+        mbti_emojis = {
+            "ESTP": "🏎️",
+            "ISTP": "🛠️",
+            "ESFP": "🎉",
+            "ISFP": "🎨",
+            "ENTP": "🧠",
+            "INTP": "🔬",
+            "ENFP": "🌈",
+            "INFP": "🦋",
+            "ESTJ": "📋",
+            "ISTJ": "📚",
+            "ESFJ": "🤝",
+            "ISFJ": "🧺",
+            "ENTJ": "🏰",
+            "INTJ": "♟️",
+            "ENFJ": "🌟",
+            "INFJ": "🔮"
+        }
+
+        mbti_functions_colors = {
+            "Ni": "#6B4C9A",
+            "Te": "#D62828",
+            "Fe": "#D63384",
+            "Se": "#FFD700",
+            "Ne": "#2ECC71",
+            "Ti": "#808080",
+            "Si": "#87CEFA",
+            "Fi": "#FFB6C1"
+        }
+
+        if "traits" not in st.session_state:
+            st.session_state.traits = {
+        "egoist": 0,
+        "altruist": 0,
+        "feeler": 0,
+        "thinker": 0,
+        "future_present": 0,
+        "past_present": 0,
+        "intuitive": 0,
+        "sensor": 0
+        }
+
+        with col1:
+            st.header("MBTI Test (WIP)")
+        with col2:
+            @st.dialog("Python MBTI Personality Test")
+            def show_info():
+                st.markdown("""\
+                                    **This project consists of a Python test using data from a JSON object that processes user input to create a profile that shows the more approximate personality based on the 16 available.**
+
+                                    ---
+
+                                    🚀 This project and many others can be found on my GitHub.           
+                                                """)
+
+            if st.button("❓ About this project", key="mbti"):
+                show_info()
+        with col3:
+            st.link_button("🚀 View on GitHub", "https://github.com/rubenxi/Python-MBTI-Personality-Test", type="primary")
+
+        if "start" not in st.session_state:
+            st.session_state.start = False
+        if "balloons" not in st.session_state:
+            st.session_state.balloons = False
+        if "step" not in st.session_state:
+            st.session_state.step = 0
+
+        if not st.session_state.start:
+            col_pic_mbti, col_desc_mbti = st.columns(2)
+            with col_pic_mbti:
+                st.image("mbti.png", width=600)
+
+            with col_desc_mbti:
+                st.markdown(f"""
+**MBTI (Myers–Briggs Type Indicator) is a self-report questionnaire that uses pseudoscientific psychology knowledge to categorize individuals into 16 distinct personality types.**"
+
+There are 8 cognitive functions, each personality has 4, and the order they are used defines what specific personality a person is.
+
+The functions are:
+
+- <span style="color:{mbti_functions_colors["Se"]}">SE</span>: Extraverted Sensing
+- <span style="color:{mbti_functions_colors["Ni"]}">NI</span>: Introverted Intuition
+- <span style="color:{mbti_functions_colors["Si"]}">SI</span>: Introverted Sensing
+- <span style="color:{mbti_functions_colors["Ne"]}">NE</span>: Extraverted Intuition
+- <span style="color:{mbti_functions_colors["Ti"]}">TI</span>: Introverted Thinking
+- <span style="color:{mbti_functions_colors["Fe"]}">FE</span>: Extraverted Feeling
+- <span style="color:{mbti_functions_colors["Te"]}">TE</span>: Extraverted Thinking
+- <span style="color:{mbti_functions_colors["Fi"]}">FI</span>: Introverted Feeling
+
+
+                """,
+                help="More information: https://www.16personalities.com", unsafe_allow_html=True
+            )
+            if st.button("📝 **Begin test**", type="primary"):
+                st.session_state.start = True
+                st.rerun()
+            with st.expander("📊 **Personalities**"):
+                markdown_personalities = f"""
+### <span style="color:{mbti_functions_colors["Se"]}">{mbti_emojis["ESTP"]} ESTP</span> = <span style="color:{mbti_functions_colors["Se"]}">SE</span> <span style="color:{mbti_functions_colors["Ti"]}">TI</span> <span style="color:{mbti_functions_colors["Fe"]}">FE</span> <span style="color:{mbti_functions_colors["Ni"]}">NI</span> / <span style="color:{mbti_functions_colors["Si"]}">SI</span> <span style="color:{mbti_functions_colors["Te"]}">TE</span> <span style="color:{mbti_functions_colors["Fi"]}">FI</span> <span style="color:{mbti_functions_colors["Ne"]}">NE</span>
+
+### <span style="color:{mbti_functions_colors["Ti"]}">{mbti_emojis["ISTP"]} ISTP</span> = <span style="color:{mbti_functions_colors["Ti"]}">TI</span> <span style="color:{mbti_functions_colors["Se"]}">SE</span> <span style="color:{mbti_functions_colors["Ni"]}">NI</span> <span style="color:{mbti_functions_colors["Fe"]}">FE</span> / <span style="color:{mbti_functions_colors["Te"]}">TE</span> <span style="color:{mbti_functions_colors["Si"]}">SI</span> <span style="color:{mbti_functions_colors["Ne"]}">NE</span> <span style="color:{mbti_functions_colors["Fi"]}">FI</span>
+
+### <span style="color:{mbti_functions_colors["Fe"]}">{mbti_emojis["ENFJ"]} ENFJ</span> = <span style="color:{mbti_functions_colors["Fe"]}">FE</span> <span style="color:{mbti_functions_colors["Ni"]}">NI</span> <span style="color:{mbti_functions_colors["Se"]}">SE</span> <span style="color:{mbti_functions_colors["Ti"]}">TI</span> / <span style="color:{mbti_functions_colors["Fi"]}">FI</span> <span style="color:{mbti_functions_colors["Ne"]}">NE</span> <span style="color:{mbti_functions_colors["Si"]}">SI</span> <span style="color:{mbti_functions_colors["Te"]}">TE</span>
+
+### <span style="color:{mbti_functions_colors["Ni"]}">{mbti_emojis["INFJ"]} INFJ</span> = <span style="color:{mbti_functions_colors["Ni"]}">NI</span> <span style="color:{mbti_functions_colors["Fe"]}">FE</span> <span style="color:{mbti_functions_colors["Ti"]}">TI</span> <span style="color:{mbti_functions_colors["Se"]}">SE</span> / <span style="color:{mbti_functions_colors["Ne"]}">NE</span> <span style="color:{mbti_functions_colors["Fi"]}">FI</span> <span style="color:{mbti_functions_colors["Te"]}">TE</span> <span style="color:{mbti_functions_colors["Si"]}">SI</span>
+
+---
+
+### <span style="color:{mbti_functions_colors["Se"]}">{mbti_emojis["ESFP"]} ESFP</span> = <span style="color:{mbti_functions_colors["Se"]}">SE</span> <span style="color:{mbti_functions_colors["Fi"]}">FI</span> <span style="color:{mbti_functions_colors["Te"]}">TE</span> <span style="color:{mbti_functions_colors["Ni"]}">NI</span> / <span style="color:{mbti_functions_colors["Si"]}">SI</span> <span style="color:{mbti_functions_colors["Fe"]}">FE</span> <span style="color:{mbti_functions_colors["Ti"]}">TI</span> <span style="color:{mbti_functions_colors["Ne"]}">NE</span>
+
+### <span style="color:{mbti_functions_colors["Fi"]}">{mbti_emojis["ISFP"]} ISFP</span> = <span style="color:{mbti_functions_colors["Fi"]}">FI</span> <span style="color:{mbti_functions_colors["Se"]}">SE</span> <span style="color:{mbti_functions_colors["Ni"]}">NI</span> <span style="color:{mbti_functions_colors["Te"]}">TE</span> / <span style="color:{mbti_functions_colors["Fe"]}">FE</span> <span style="color:{mbti_functions_colors["Si"]}">SI</span> <span style="color:{mbti_functions_colors["Ne"]}">NE</span> <span style="color:{mbti_functions_colors["Ti"]}">TI</span>
+
+### <span style="color:{mbti_functions_colors["Te"]}">{mbti_emojis["ENTJ"]} ENTJ</span> = <span style="color:{mbti_functions_colors["Te"]}">TE</span> <span style="color:{mbti_functions_colors["Ni"]}">NI</span> <span style="color:{mbti_functions_colors["Se"]}">SE</span> <span style="color:{mbti_functions_colors["Fi"]}">FI</span> / <span style="color:{mbti_functions_colors["Ti"]}">TI</span> <span style="color:{mbti_functions_colors["Ne"]}">NE</span> <span style="color:{mbti_functions_colors["Si"]}">SI</span> <span style="color:{mbti_functions_colors["Fe"]}">FE</span>
+
+### <span style="color:{mbti_functions_colors["Ni"]}">{mbti_emojis["INTJ"]} INTJ</span> = <span style="color:{mbti_functions_colors["Ni"]}">NI</span> <span style="color:{mbti_functions_colors["Te"]}">TE</span> <span style="color:{mbti_functions_colors["Fi"]}">FI</span> <span style="color:{mbti_functions_colors["Se"]}">SE</span> / <span style="color:{mbti_functions_colors["Ne"]}">NE</span> <span style="color:{mbti_functions_colors["Ti"]}">TI</span> <span style="color:{mbti_functions_colors["Fe"]}">FE</span> <span style="color:{mbti_functions_colors["Si"]}">SI</span>
+
+---
+
+### <span style="color:{mbti_functions_colors["Te"]}">{mbti_emojis["ESTJ"]} ESTJ</span> = <span style="color:{mbti_functions_colors["Te"]}">TE</span> <span style="color:{mbti_functions_colors["Si"]}">SI</span> <span style="color:{mbti_functions_colors["Ne"]}">NE</span> <span style="color:{mbti_functions_colors["Fi"]}">FI</span> / <span style="color:{mbti_functions_colors["Ti"]}">TI</span> <span style="color:{mbti_functions_colors["Se"]}">SE</span> <span style="color:{mbti_functions_colors["Ni"]}">NI</span> <span style="color:{mbti_functions_colors["Fe"]}">FE</span>
+
+### <span style="color:{mbti_functions_colors["Si"]}">{mbti_emojis["ISTJ"]} ISTJ</span> = <span style="color:{mbti_functions_colors["Si"]}">SI</span> <span style="color:{mbti_functions_colors["Te"]}">TE</span> <span style="color:{mbti_functions_colors["Fi"]}">FI</span> <span style="color:{mbti_functions_colors["Ne"]}">NE</span> / <span style="color:{mbti_functions_colors["Se"]}">SE</span> <span style="color:{mbti_functions_colors["Ti"]}">TI</span> <span style="color:{mbti_functions_colors["Fe"]}">FE</span> <span style="color:{mbti_functions_colors["Ni"]}">NI</span>
+
+### <span style="color:{mbti_functions_colors["Ne"]}">{mbti_emojis["ENFP"]} ENFP</span> = <span style="color:{mbti_functions_colors["Ne"]}">NE</span> <span style="color:{mbti_functions_colors["Fi"]}">FI</span> <span style="color:{mbti_functions_colors["Te"]}">TE</span> <span style="color:{mbti_functions_colors["Si"]}">SI</span> / <span style="color:{mbti_functions_colors["Ni"]}">NI</span> <span style="color:{mbti_functions_colors["Fe"]}">FE</span> <span style="color:{mbti_functions_colors["Ti"]}">TI</span> <span style="color:{mbti_functions_colors["Se"]}">SE</span>
+
+### <span style="color:{mbti_functions_colors["Fi"]}">{mbti_emojis["INFP"]} INFP</span> = <span style="color:{mbti_functions_colors["Fi"]}">FI</span> <span style="color:{mbti_functions_colors["Ne"]}">NE</span> <span style="color:{mbti_functions_colors["Si"]}">SI</span> <span style="color:{mbti_functions_colors["Te"]}">TE</span> / <span style="color:{mbti_functions_colors["Fe"]}">FE</span> <span style="color:{mbti_functions_colors["Ni"]}">NI</span> <span style="color:{mbti_functions_colors["Se"]}">SE</span> <span style="color:{mbti_functions_colors["Ti"]}">TI</span>
+
+---
+
+### <span style="color:{mbti_functions_colors["Fe"]}">{mbti_emojis["ESFJ"]} ESFJ</span> = <span style="color:{mbti_functions_colors["Fe"]}">FE</span> <span style="color:{mbti_functions_colors["Si"]}">SI</span> <span style="color:{mbti_functions_colors["Ne"]}">NE</span> <span style="color:{mbti_functions_colors["Ti"]}">TI</span> / <span style="color:{mbti_functions_colors["Fi"]}">FI</span> <span style="color:{mbti_functions_colors["Se"]}">SE</span> <span style="color:{mbti_functions_colors["Ni"]}">NI</span> <span style="color:{mbti_functions_colors["Te"]}">TE</span>
+
+### <span style="color:{mbti_functions_colors["Si"]}">{mbti_emojis["ISFJ"]} ISFJ</span> = <span style="color:{mbti_functions_colors["Si"]}">SI</span> <span style="color:{mbti_functions_colors["Fe"]}">FE</span> <span style="color:{mbti_functions_colors["Ti"]}">TI</span> <span style="color:{mbti_functions_colors["Ne"]}">NE</span> / <span style="color:{mbti_functions_colors["Se"]}">SE</span> <span style="color:{mbti_functions_colors["Fi"]}">FI</span> <span style="color:{mbti_functions_colors["Te"]}">TE</span> <span style="color:{mbti_functions_colors["Ni"]}">NI</span>
+
+### <span style="color:{mbti_functions_colors["Ne"]}">{mbti_emojis["ENTP"]} ENTP</span> = <span style="color:{mbti_functions_colors["Ne"]}">NE</span> <span style="color:{mbti_functions_colors["Ti"]}">TI</span> <span style="color:{mbti_functions_colors["Fe"]}">FE</span> <span style="color:{mbti_functions_colors["Si"]}">SI</span> / <span style="color:{mbti_functions_colors["Ni"]}">NI</span> <span style="color:{mbti_functions_colors["Te"]}">TE</span> <span style="color:{mbti_functions_colors["Fi"]}">FI</span> <span style="color:{mbti_functions_colors["Se"]}">SE</span>
+
+### <span style="color:{mbti_functions_colors["Ti"]}">{mbti_emojis["INTP"]} INTP</span> = <span style="color:{mbti_functions_colors["Ti"]}">TI</span> <span style="color:{mbti_functions_colors["Ne"]}">NE</span> <span style="color:{mbti_functions_colors["Si"]}">SI</span> <span style="color:{mbti_functions_colors["Fe"]}">FE</span> / <span style="color:{mbti_functions_colors["Te"]}">TE</span> <span style="color:{mbti_functions_colors["Ni"]}">NI</span> <span style="color:{mbti_functions_colors["Se"]}">SE</span> <span style="color:{mbti_functions_colors["Fi"]}">FI</span>
+"""
+                st.markdown(markdown_personalities, unsafe_allow_html=True)
+        else:
+            questions = [q["question"] for q in questions_data]
+            funcs_mbti_yes = [q["func_mbti_yes"] for q in questions_data]
+            funcs_mbti_no = [q["func_mbti_no"] for q in questions_data]
+
+            col_q_1, col_q_2 = st.columns(2)
+            with col_q_1:
+                if st.session_state.step <= len(questions) - 1:
+                    st.markdown(questions[st.session_state.step], help="✅ " + funcs_mbti_yes[st.session_state.step] + " / " + "❌ " + funcs_mbti_no[st.session_state.step])
+                    st.divider()
+                    col_yes, col_no, col_aux_1, col_aux_2 = st.columns(4)
+                    with col_yes:
+                        if st.button("✅ Yes"):
+                            st.session_state.traits[funcs_mbti_yes[st.session_state.step]] += 1
+                            st.session_state.step += 1
+                            if st.session_state.step > len(questions) - 1:
+                                st.session_state.balloons=True
+                            st.rerun()
+                    with col_no:
+                        if st.button("❌ No"):
+                            st.session_state.traits[funcs_mbti_no[st.session_state.step]] += 1
+                            st.session_state.step += 1
+                            if st.session_state.step > len(questions) - 1:
+                                st.session_state.balloons=True
+                            st.rerun()
+                else:
+                    if st.session_state.balloons:
+                        st.balloons()
+                        st.session_state.balloons=False
+                    decision = ""
+                    perception = ""
+                    if st.session_state.traits["egoist"] >= st.session_state.traits["altruist"]:
+                        if st.session_state.traits["feeler"] >= st.session_state.traits["thinker"]:
+                            decision = "Fi"
+                        else:
+                            decision = "Te"
+                    else:
+                        if st.session_state.traits["feeler"] >= st.session_state.traits["thinker"]:
+                            decision = "Fe"
+                        else:
+                            decision = "Ti"
+                    if st.session_state.traits["future_present"] >= st.session_state.traits[
+                        "past_present"]:
+                        if st.session_state.traits["intuitive"] >= st.session_state.traits["sensor"]:
+                            perception = "Ni"
+                        else:
+                            perception = "Se"
+                    else:
+                        if st.session_state.traits["intuitive"] >= st.session_state.traits["sensor"]:
+                            perception = "Ne"
+                        else:
+                            perception = "Si"
+                    #WIP: Add filter to get final personality based on functions ordered. Also add shadow. Add spanish
+                    st.markdown(f"""
+                    
+You have: <span style="color:{mbti_functions_colors[decision]}">{decision}</span> / <span style="color:{mbti_functions_colors[perception]}">{perception}</span> or shadow
+                    
+                    """, unsafe_allow_html=True)
+                    st.markdown("Your personality is: A MISTERY (WIP)")
+
+
 if __name__ == "__main__":
     main()
