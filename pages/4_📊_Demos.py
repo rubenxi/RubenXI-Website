@@ -363,7 +363,7 @@ Try again later...
 
             with col_desc_mbti:
                 st.markdown(f"""
-**MBTI (Myers–Briggs Type Indicator) is a self-report questionnaire that uses pseudoscientific psychology knowledge to categorize individuals into 16 distinct personality types.**"
+**MBTI (Myers–Briggs Type Indicator) is a self-report questionnaire that uses pseudoscientific psychology knowledge to categorize individuals into 16 distinct personality types.**
 
 There are 8 cognitive functions, each personality has 4, and the order they are used defines what specific personality a person is.
 
@@ -377,7 +377,6 @@ The functions are:
 - <span style="color:{mbti_functions_colors["Fe"]}">FE</span>: Extraverted Feeling
 - <span style="color:{mbti_functions_colors["Te"]}">TE</span>: Extraverted Thinking
 - <span style="color:{mbti_functions_colors["Fi"]}">FI</span>: Introverted Feeling
-
 
                 """,
                 help="More information: https://www.16personalities.com", unsafe_allow_html=True
