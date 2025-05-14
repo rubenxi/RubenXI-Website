@@ -50,24 +50,24 @@
 
      {
         "type": "SiFi",
-        "question": "xxx?",
+        "question": "Do you tend to keep your emotions inside and not externalize them?",
         "func_mbti_yes": "thinker",
         "func_mbti_no": "feeler"
     },
     {   "type": "SiTe",
-        "question": "xxxx?",
+        "question": "Are you usually the passive or silent one in group conversations?",
         "func_mbti_yes": "sensor",
         "func_mbti_no": "thinker"
     },
     {
         "type": "NeTe",
-        "question": "xxxx?",
+        "question": "Do you value acting based on specific logical sets of rules more than acting based on what you feel like doing at the time even if it goes against the expected behavior?",
         "func_mbti_yes": "thinker",
         "func_mbti_no": "feeler"
     },
     {
         "type": "NeFi",
-        "question": "xxxx?",
+        "question": "Do you find yourself more often than not trying new things or experiences outside of your usual ones but still in your comfort zone or close to it?",
         "func_mbti_yes": "intuitive",
         "func_mbti_no": "feeler"
     },
@@ -75,24 +75,24 @@
 
      {
         "type": "NeFe",
-        "question": "xxx?",
+        "question": "Do you value progress and improvement a lot over social stability even if it creates conflict sometimes?",
         "func_mbti_yes": "thinker",
         "func_mbti_no": "feeler"
     },
     {   "type": "SiFe",
-        "question": "xxxx?",
+        "question": "Do you have a strong interest in knowledge of specific fields of study you enjoy or value?",
         "func_mbti_yes": "sensor",
         "func_mbti_no": "feeler"
     },
     {
         "type": "SiTi",
-        "question": "xxxx?",
+        "question": "Are you usually seen or defined by others as cold or not empathetic, usually feeling that you can't understand other people's feelings?",
         "func_mbti_yes": "thinker",
         "func_mbti_no": "feeler"
     },
     {
         "type": "NeTi",
-        "question": "xxxx?",
+        "question": "Do you enjoy debates and defending your point of view as a hobby more than you consider it just something necessary sometimes?",
         "func_mbti_yes": "intuitive",
         "func_mbti_no": "thinker"
     }
