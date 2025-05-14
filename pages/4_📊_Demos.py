@@ -281,13 +281,11 @@ My website uses an api key that is free, so it may hit a limit at some point
 Try again later...
                                             """)
 
-    def load_questions(question_file):
-        with open(question_file, "r", encoding="utf-8") as f:
+    def load_questions():
+        with open("questions.json", "r", encoding="utf-8") as f:
             return json.load(f)
 
-    questions_data = load_questions("questions.json")
-    questions_type_data = load_questions("questions_type.json")
-
+    questions_data = load_questions()
 
     with mbti_tab:
         col1, col2, col3 = st.columns(3)
@@ -332,7 +330,63 @@ Try again later...
         "intuitive": 0,
         "sensor": 0
         }
-        markdown_personalities = f"""
+
+        with col1:
+            st.header("MBTI Test (WIP)")
+        with col2:
+            @st.dialog("Python MBTI Personality Test")
+            def show_info():
+                st.markdown("""\
+                                    **This project consists of a Python test using data from a JSON object that processes user input to create a profile that shows the more approximate personality based on the 16 available.**
+
+                                    ---
+
+                                    🚀 This project and many others can be found on my GitHub.           
+                                                """)
+
+            if st.button("❓ About this project", key="mbti"):
+                show_info()
+        with col3:
+            st.link_button("🚀 View on GitHub", "https://github.com/rubenxi/Python-MBTI-Personality-Test", type="primary")
+
+        if "start" not in st.session_state:
+            st.session_state.start = False
+        if "balloons" not in st.session_state:
+            st.session_state.balloons = False
+        if "step" not in st.session_state:
+            st.session_state.step = 0
+
+        if not st.session_state.start:
+            col_pic_mbti, col_desc_mbti = st.columns(2)
+            with col_pic_mbti:
+                st.image("mbti.png", width=600)
+
+            with col_desc_mbti:
+                st.markdown(f"""
+**MBTI (Myers–Briggs Type Indicator) is a self-report questionnaire that uses pseudoscientific psychology knowledge to categorize individuals into 16 distinct personality types.**"
+
+There are 8 cognitive functions, each personality has 4, and the order they are used defines what specific personality a person is.
+
+The functions are:
+
+- <span style="color:{mbti_functions_colors["Se"]}">SE</span>: Extraverted Sensing
+- <span style="color:{mbti_functions_colors["Ni"]}">NI</span>: Introverted Intuition
+- <span style="color:{mbti_functions_colors["Si"]}">SI</span>: Introverted Sensing
+- <span style="color:{mbti_functions_colors["Ne"]}">NE</span>: Extraverted Intuition
+- <span style="color:{mbti_functions_colors["Ti"]}">TI</span>: Introverted Thinking
+- <span style="color:{mbti_functions_colors["Fe"]}">FE</span>: Extraverted Feeling
+- <span style="color:{mbti_functions_colors["Te"]}">TE</span>: Extraverted Thinking
+- <span style="color:{mbti_functions_colors["Fi"]}">FI</span>: Introverted Feeling
+
+
+                """,
+                help="More information: https://www.16personalities.com", unsafe_allow_html=True
+            )
+            if st.button("📝 **Begin test**", type="primary"):
+                st.session_state.start = True
+                st.rerun()
+            with st.expander("📊 **Personalities**"):
+                markdown_personalities = f"""
 ### <span style="color:{mbti_functions_colors["Se"]}">{mbti_emojis["ESTP"]} ESTP</span> = <span style="color:{mbti_functions_colors["Se"]}">SE</span> <span style="color:{mbti_functions_colors["Ti"]}">TI</span> <span style="color:{mbti_functions_colors["Fe"]}">FE</span> <span style="color:{mbti_functions_colors["Ni"]}">NI</span> / <span style="color:{mbti_functions_colors["Si"]}">SI</span> <span style="color:{mbti_functions_colors["Te"]}">TE</span> <span style="color:{mbti_functions_colors["Fi"]}">FI</span> <span style="color:{mbti_functions_colors["Ne"]}">NE</span>
 
 ### <span style="color:{mbti_functions_colors["Ti"]}">{mbti_emojis["ISTP"]} ISTP</span> = <span style="color:{mbti_functions_colors["Ti"]}">TI</span> <span style="color:{mbti_functions_colors["Se"]}">SE</span> <span style="color:{mbti_functions_colors["Ni"]}">NI</span> <span style="color:{mbti_functions_colors["Fe"]}">FE</span> / <span style="color:{mbti_functions_colors["Te"]}">TE</span> <span style="color:{mbti_functions_colors["Si"]}">SI</span> <span style="color:{mbti_functions_colors["Ne"]}">NE</span> <span style="color:{mbti_functions_colors["Fi"]}">FI</span>
@@ -370,108 +424,16 @@ Try again later...
 ### <span style="color:{mbti_functions_colors["Ne"]}">{mbti_emojis["ENTP"]} ENTP</span> = <span style="color:{mbti_functions_colors["Ne"]}">NE</span> <span style="color:{mbti_functions_colors["Ti"]}">TI</span> <span style="color:{mbti_functions_colors["Fe"]}">FE</span> <span style="color:{mbti_functions_colors["Si"]}">SI</span> / <span style="color:{mbti_functions_colors["Ni"]}">NI</span> <span style="color:{mbti_functions_colors["Te"]}">TE</span> <span style="color:{mbti_functions_colors["Fi"]}">FI</span> <span style="color:{mbti_functions_colors["Se"]}">SE</span>
 
 ### <span style="color:{mbti_functions_colors["Ti"]}">{mbti_emojis["INTP"]} INTP</span> = <span style="color:{mbti_functions_colors["Ti"]}">TI</span> <span style="color:{mbti_functions_colors["Ne"]}">NE</span> <span style="color:{mbti_functions_colors["Si"]}">SI</span> <span style="color:{mbti_functions_colors["Fe"]}">FE</span> / <span style="color:{mbti_functions_colors["Te"]}">TE</span> <span style="color:{mbti_functions_colors["Ni"]}">NI</span> <span style="color:{mbti_functions_colors["Se"]}">SE</span> <span style="color:{mbti_functions_colors["Fi"]}">FI</span>
-                                    """
-
-        with col1:
-            st.header("MBTI Test (WIP)")
-        with col2:
-            @st.dialog("Python MBTI Personality Test")
-            def show_info():
-                st.markdown("""\
-                                    **This project consists of a Python test using data from a JSON object that processes user input to create a profile that shows the more approximate personality based on the 16 available.**
-                                    
-                                    
-                                    """)
-                with st.expander("More information"):
-                    st.markdown(f"""
-                     The system used for the test was designed by me to get the personality of the user in the shortest and most precise way, using a mix of function analysis and specific type related questions that depend on the two more used functions of the user.
-                                    
-                     To achieve that, first the test gets the two more often used cognitive functions of the user based on the first questions. After that, using this functions, the test knows that the user will be one out of 4 possible personalities, the ones that use the same functions he got. This is still not precise, since a person can use the functions in different orders depending on different mental issues, so to discard those, the test asks questions specific to distinguish the user personality from the other 3 in the same stack.
-                     
-                     The test divides functions in different categories such as:
-                     - egoist: Decision functions in the <span style="color:{mbti_functions_colors["Fi"]}">Fi</span>-<span style="color:{mbti_functions_colors["Te"]}">Te</span> axe
-                     - altruist: Decision functions in the <span style="color:{mbti_functions_colors["Fe"]}">Fe</span>-<span style="color:{mbti_functions_colors["Ti"]}">Ti</span> axe
-                     - feeler/thinker: Auxiliar category to distinguish F and T in decision functions
-                     - future_present: Perception functions in the <span style="color:{mbti_functions_colors["Ni"]}">Ni</span>-<span style="color:{mbti_functions_colors["Se"]}">SE</span> axe
-                     - past_present: Perception functions in the <span style="color:{mbti_functions_colors["Ne"]}">Ne</span>-<span style="color:{mbti_functions_colors["Si"]}">Si</span> axe
-                     - intuitive/sensor: Auxiliar category to distinguish N and S in perception functions
-                     
-                     Introversion and extroversion are then discarded as an important factor, since in MBTI this differentiation is not as important as the functions themselves.
-                    """, unsafe_allow_html=True)
-                st.divider()
-                st.markdown("""
-                🚀 This project and many others can be found on my GitHub.           
-                """)
-
-            if st.button("❓ About this project", key="mbti"):
-                show_info()
-        with col3:
-            st.link_button("🚀 View on GitHub", "https://github.com/rubenxi/Python-MBTI-Personality-Test", type="primary")
-
-        if "start" not in st.session_state:
-            st.session_state.start = False
-        if "decision" not in st.session_state:
-            st.session_state.decision = ""
-        if "use_type" not in st.session_state:
-            st.session_state.use_type = False
-        if "perception" not in st.session_state:
-            st.session_state.perception = ""
-        if "type" not in st.session_state:
-            st.session_state.type = ""
-        if "balloons" not in st.session_state:
-            st.session_state.balloons = False
-        if "step" not in st.session_state:
-            st.session_state.step = 0
-
-        if not st.session_state.start:
-            col_pic_mbti, col_desc_mbti = st.columns(2)
-            with col_pic_mbti:
-                st.image("mbti.png", width=600)
-
-            with col_desc_mbti:
-                st.markdown(f"""
-**MBTI (Myers–Briggs Type Indicator) is a self-report questionnaire that uses pseudoscientific psychology knowledge to categorize individuals into 16 distinct personality types.**"
-
-There are 8 cognitive functions, each personality has 4, and the order they are used defines what specific personality a person is.
-
-The functions are:
-
-- <span style="color:{mbti_functions_colors["Se"]}">SE</span>: Extraverted Sensing
-- <span style="color:{mbti_functions_colors["Ni"]}">NI</span>: Introverted Intuition
-- <span style="color:{mbti_functions_colors["Si"]}">SI</span>: Introverted Sensing
-- <span style="color:{mbti_functions_colors["Ne"]}">NE</span>: Extraverted Intuition
-- <span style="color:{mbti_functions_colors["Ti"]}">TI</span>: Introverted Thinking
-- <span style="color:{mbti_functions_colors["Fe"]}">FE</span>: Extraverted Feeling
-- <span style="color:{mbti_functions_colors["Te"]}">TE</span>: Extraverted Thinking
-- <span style="color:{mbti_functions_colors["Fi"]}">FI</span>: Introverted Feeling
-
-
-                """,
-                help="More information: https://www.16personalities.com", unsafe_allow_html=True
-            )
-            
-            col_begin, col_minim = st.columns(2)
-            with col_begin:
-                if st.button("📝 **Begin test**", type="primary"):
-                    st.session_state.start = True
-                    st.rerun()
-            with col_minim:
-                minimum = st.toggle("Smallest test", value=True, help="If checked, the test will only ask the basic 5 questions")
-            with st.expander("📊 **Personalities**"):
+"""
                 st.markdown(markdown_personalities, unsafe_allow_html=True)
         else:
-            if st.session_state.use_type:
-                questions = [q["question"] for q in questions_type_data if q.get("type") == st.session_state.perception+st.session_state.decision]
-                funcs_mbti_yes = [q["func_mbti_yes"] for q in questions_type_data if q.get("type") == st.session_state.perception+st.session_state.decision]
-                funcs_mbti_no = [q["func_mbti_no"] for q in questions_type_data if q.get("type") == st.session_state.perception+st.session_state.decision]
-            else:
-                questions = [q["question"] for q in questions_data]
-                funcs_mbti_yes = [q["func_mbti_yes"] for q in questions_data]
-                funcs_mbti_no = [q["func_mbti_no"] for q in questions_data]
+            questions = [q["question"] for q in questions_data]
+            funcs_mbti_yes = [q["func_mbti_yes"] for q in questions_data]
+            funcs_mbti_no = [q["func_mbti_no"] for q in questions_data]
 
             col_q_1, col_q_2 = st.columns(2)
             with col_q_1:
-                if st.session_state.step <= len(questions) - 1 and not st.session_state.balloons:
+                if st.session_state.step <= len(questions) - 1:
                     st.markdown(questions[st.session_state.step], help="✅ " + funcs_mbti_yes[st.session_state.step] + " / " + "❌ " + funcs_mbti_no[st.session_state.step])
                     st.divider()
                     col_yes, col_no, col_aux_1, col_aux_2 = st.columns(4)
@@ -479,165 +441,50 @@ The functions are:
                         if st.button("✅ Yes"):
                             st.session_state.traits[funcs_mbti_yes[st.session_state.step]] += 1
                             st.session_state.step += 1
-                            if st.session_state.step > len(questions) - 1 and st.session_state.use_type:
+                            if st.session_state.step > len(questions) - 1:
                                 st.session_state.balloons=True
                             st.rerun()
                     with col_no:
                         if st.button("❌ No"):
                             st.session_state.traits[funcs_mbti_no[st.session_state.step]] += 1
                             st.session_state.step += 1
-                            if st.session_state.step > len(questions) - 1 and st.session_state.use_type:
+                            if st.session_state.step > len(questions) - 1:
                                 st.session_state.balloons=True
                             st.rerun()
-                elif not st.session_state.use_type and not st.session_state.balloons:
-                    st.session_state.use_type = True
-                    st.session_state.step = 0
-                    if st.session_state.traits["egoist"] >= st.session_state.traits["altruist"]:
-                        if st.session_state.traits["feeler"] >= st.session_state.traits["thinker"]:
-                            st.session_state.decision = "Fi"
-                        else:
-                            st.session_state.decision = "Te"
-                    else:
-                        if st.session_state.traits["feeler"] >= st.session_state.traits["thinker"]:
-                            st.session_state.decision = "Fe"
-                        else:
-                            st.session_state.decision = "Ti"
-                    if st.session_state.traits["future_present"] >= st.session_state.traits[
-                        "past_present"]:
-                        if st.session_state.traits["intuitive"] >= st.session_state.traits["sensor"]:
-                            st.session_state.perception = "Ni"
-                        else:
-                            st.session_state.perception = "Se"
-                    else:
-                        if st.session_state.traits["intuitive"] >= st.session_state.traits["sensor"]:
-                            st.session_state.perception = "Ne"
-                        else:
-                            st.session_state.perception = "Si"
-                    st.rerun()
-
-                    #WIP: Add filter to get final personality based on functions ordered. Also add shadow. Add spanish
                 else:
                     if st.session_state.balloons:
                         st.balloons()
                         st.session_state.balloons=False
-
-                ##Specific questions for each personality:
-
-                    ###Ni-Se + Fi-Te
-
-                    if st.session_state.perception == "Ni" and st.session_state.decision == "Fi":
-                        if st.session_state.traits["thinker"] >= st.session_state.traits["feeler"]:
-                            st.session_state.decision = "Te"
-                            st.session_state.type = "INTJ"
-                        else:
-                            st.session_state.type = "ISFP"
-
-                    elif st.session_state.perception == "Ni" and st.session_state.decision == "Te":
-                        if st.session_state.traits["thinker"] >= st.session_state.traits["intuitive"]:
-                            st.session_state.type = "ENTJ"
-                        else:
-                            st.session_state.type = "INTJ"
-
-                    elif st.session_state.perception == "Se" and st.session_state.decision == "Te":
+                    decision = ""
+                    perception = ""
+                    if st.session_state.traits["egoist"] >= st.session_state.traits["altruist"]:
                         if st.session_state.traits["feeler"] >= st.session_state.traits["thinker"]:
-                            st.session_state.decision = "Fi"
-                            st.session_state.type = "ESFP"
+                            decision = "Fi"
                         else:
-                            st.session_state.type = "ENTJ"
-
-                    elif st.session_state.perception == "Se" and st.session_state.decision == "Fi":
-                        if st.session_state.traits["feeler"] >= st.session_state.traits["sensor"]:
-                            st.session_state.type = "ISFP"
-                        else:
-                            st.session_state.type = "ESFP"
-
-                            ###Ni-Se + Fe-Ti
-
-                    elif st.session_state.perception == "Ni" and st.session_state.decision == "Ti":
+                            decision = "Te"
+                    else:
                         if st.session_state.traits["feeler"] >= st.session_state.traits["thinker"]:
-                            st.session_state.decision = "Fe"
-                            st.session_state.type = "INFJ"
+                            decision = "Fe"
                         else:
-                            st.session_state.type = "ISTP"
-
-                    elif st.session_state.perception == "Ni" and st.session_state.decision == "Fe":
-                        if st.session_state.traits["feeler"] >= st.session_state.traits["intuitive"]:
-                            st.session_state.type = "ENFJ"
+                            decision = "Ti"
+                    if st.session_state.traits["future_present"] >= st.session_state.traits[
+                        "past_present"]:
+                        if st.session_state.traits["intuitive"] >= st.session_state.traits["sensor"]:
+                            perception = "Ni"
                         else:
-                            st.session_state.type = "INFJ"
-
-                    elif st.session_state.perception == "Se" and st.session_state.decision == "Fe":
-                        if st.session_state.traits["thinker"] >= st.session_state.traits["feeler"]:
-                            st.session_state.decision = "Ti"
-                            st.session_state.type = "ESTP"
+                            perception = "Se"
+                    else:
+                        if st.session_state.traits["intuitive"] >= st.session_state.traits["sensor"]:
+                            perception = "Ne"
                         else:
-                            st.session_state.type = "ENFJ"
-
-                    elif st.session_state.perception == "Se" and st.session_state.decision == "Ti":
-                        if st.session_state.traits["thinker"] >= st.session_state.traits["sensor"]:
-                            st.session_state.type = "ISTP"
-                        else:
-                            st.session_state.type = "ESTP"
-
-                    ###Ne-Si + Fi-Te
-
-                    elif st.session_state.perception == "Si" and st.session_state.decision == "Fi":
-                        if st.session_state.traits["thinker"] >= st.session_state.traits["feeler"]:
-                            st.session_state.decision = "Te"
-                            st.session_state.type = "ISTJ"
-                        else:
-                            st.session_state.type = "INFP"
-
-                    elif st.session_state.perception == "Si" and st.session_state.decision == "Te":
-                        if st.session_state.traits["thinker"] >= st.session_state.traits["sensor"]:
-                            st.session_state.type = "ESTJ"
-                        else:
-                            st.session_state.type = "ISTJ"
-
-                    elif st.session_state.perception == "Ne" and st.session_state.decision == "Te":
-                        if st.session_state.traits["feeler"] >= st.session_state.traits["thinker"]:
-                            st.session_state.decision = "Fi"
-                            st.session_state.type = "ENFP"
-                        else:
-                            st.session_state.type = "ESTJ"
-
-                    elif st.session_state.perception == "Ne" and st.session_state.decision == "Fi":
-                        if st.session_state.traits["feeler"] >= st.session_state.traits["intuitive"]:
-                            st.session_state.type = "INFP"
-                        else:
-                            st.session_state.type = "ENFP"
-
-                    ###Ne-Si + Fe-Ti
-
-                    elif st.session_state.perception == "Ne" and st.session_state.decision == "Fe":
-                        if st.session_state.traits["thinker"] >= st.session_state.traits["feeler"]:
-                            st.session_state.decision = "Ti"
-                            st.session_state.type = "ENTP"
-                        else:
-                            st.session_state.type = "ESFJ"
-
-                    elif st.session_state.perception == "Si" and st.session_state.decision == "Fe":
-                        if st.session_state.traits["feeler"] >= st.session_state.traits["sensor"]:
-                            st.session_state.type = "ESFJ"
-                        else:
-                            st.session_state.type = "ISFJ"
-
-                    elif st.session_state.perception == "Si" and st.session_state.decision == "Ti":
-                        if st.session_state.traits["feeler"] >= st.session_state.traits["thinker"]:
-                            st.session_state.decision = "Fe"
-                            st.session_state.type = "ISFJ"
-                        else:
-                            st.session_state.type = "INTP"
-
-                    elif st.session_state.perception == "Ne" and st.session_state.decision == "Ti":
-                        if st.session_state.traits["thinker"] >= st.session_state.traits["intuitive"]:
-                            st.session_state.type = "INTP"
-                        else:
-                            st.session_state.type = "ENTP"
-
-                            ###
-                    st.header("Your personality is:")
-                    st.markdown(next((line for line in markdown_personalities.splitlines() if st.session_state.type in line), None), unsafe_allow_html=True)
+                            perception = "Si"
+                    #WIP: Add filter to get final personality based on functions ordered. Also add shadow. Add spanish
+                    st.markdown(f"""
+                    
+You have: <span style="color:{mbti_functions_colors[decision]}">{decision}</span> / <span style="color:{mbti_functions_colors[perception]}">{perception}</span> or shadow
+                    
+                    """, unsafe_allow_html=True)
+                    st.markdown("Your personality is: A MISTERY (WIP)")
 
 
 if __name__ == "__main__":
