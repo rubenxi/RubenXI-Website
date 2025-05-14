@@ -1,18 +1,18 @@
 [
     {
-        "question": "If incompatible, do you prioritize your benefit over the benefit of the group?",
+        "question": "If a stranger is about to die of hunger and you give them your food, but then after eating it they die, and now you have to stay hungry the whole day because you lost your only food and this will make you a bit sick for some days, would you regret giving them the food?",
         "func_mbti_yes": "egoist",
         "func_mbti_no": "altruist"
     },
     {
-        "question": "Do you find yourself often trying to guess the future?",
+        "question": "When you discover a new hobby you suddenly realize you like a lot, does it turn into the only thing you want to do until you are satisfied more than doing things you are used to?",
         "func_mbti_yes": "future_present",
         "func_mbti_no": "past_present"
     },
     {
-        "question": "Do you tend to act based on a well thought logic?",
-        "func_mbti_yes": "thinker",
-        "func_mbti_no": "feeler"
+        "question": "Would it be really hard for you not to cry and get emotional a lot if you see a dog really in pain crying in front of you and you can't help?",
+        "func_mbti_yes": "feeler",
+        "func_mbti_no": "thinker"
     },
     {
         "question": "Do you often get distracted in your own thoughts more than living in the physical daily life?",

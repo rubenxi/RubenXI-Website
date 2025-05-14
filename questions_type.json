@@ -1,0 +1,100 @@
+[    {
+        "type": "NiFi",
+        "question": "Do you value knowledge over your own enjoyment in life?",
+        "func_mbti_yes": "thinker",
+        "func_mbti_no": "feeler"
+    },
+    {   "type": "NiTe",
+        "question": "Do you value more your ideals over achieving your goals in life even if this ideals are not realistic and achievable?",
+        "func_mbti_yes": "intuitive",
+        "func_mbti_no": "thinker"
+    },
+    {
+        "type": "SeTe",
+        "question": "Do you make decisions based on a well thought plan more often than you act based on impulsive feelings?",
+        "func_mbti_yes": "thinker",
+        "func_mbti_no": "feeler"
+    },
+    {
+        "type": "SeFi",
+        "question": "Do you value more having many acquaintances to go to parties with more than a really good friend to do activities with?",
+        "func_mbti_yes": "sensor",
+        "func_mbti_no": "feeler"
+    },
+
+
+    {
+        "type": "NiTi",
+        "question": "Being accepted by people around you is a critical thing for you to feel happy?",
+        "func_mbti_yes": "thinker",
+        "func_mbti_no": "feeler"
+    },
+    {   "type": "NiFe",
+        "question": "Do you feel tired often after socializing for a long period of time?",
+        "func_mbti_yes": "intuitive",
+        "func_mbti_no": "feeler"
+    },
+    {
+        "type": "SeFe",
+        "question": "Do you consider yourself or are sometimes perceived as physically hyperactive?",
+        "func_mbti_yes": "thinker",
+        "func_mbti_no": "feeler"
+    },
+    {
+        "type": "SeTi",
+        "question": "Do you prefer working in team more than alone?",
+        "func_mbti_yes": "sensor",
+        "func_mbti_no": "thinker"
+    },
+
+
+     {
+        "type": "SiFi",
+        "question": "xxx?",
+        "func_mbti_yes": "thinker",
+        "func_mbti_no": "feeler"
+    },
+    {   "type": "SiTe",
+        "question": "xxxx?",
+        "func_mbti_yes": "sensor",
+        "func_mbti_no": "thinker"
+    },
+    {
+        "type": "NeTe",
+        "question": "xxxx?",
+        "func_mbti_yes": "thinker",
+        "func_mbti_no": "feeler"
+    },
+    {
+        "type": "NeFi",
+        "question": "xxxx?",
+        "func_mbti_yes": "intuitive",
+        "func_mbti_no": "feeler"
+    },
+
+
+     {
+        "type": "NeFe",
+        "question": "xxx?",
+        "func_mbti_yes": "thinker",
+        "func_mbti_no": "feeler"
+    },
+    {   "type": "SiFe",
+        "question": "xxxx?",
+        "func_mbti_yes": "sensor",
+        "func_mbti_no": "feeler"
+    },
+    {
+        "type": "SiTi",
+        "question": "xxxx?",
+        "func_mbti_yes": "thinker",
+        "func_mbti_no": "feeler"
+    },
+    {
+        "type": "NeTi",
+        "question": "xxxx?",
+        "func_mbti_yes": "intuitive",
+        "func_mbti_no": "thinker"
+    }
+
+]
