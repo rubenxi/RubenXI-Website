@@ -77,7 +77,7 @@ def main():
                                 with st.container(border=True):
                                     st.link_button("**" + news[j * 3 + i][0] + "**\n\n" + news[j * 3 + i][1],
                                                    news[j * 3 + i][2])
-                                    if st.button("🗺️ See in map", key="map_" + news[j * 3 + i][2], type="tertiary"):
+                                    if st.button("🗺️ See in map", key="map_" + news[j * 3 + i][2] + "_" + str(j)+str(i), type="tertiary"):
                                         @st.dialog(option + " Map")
                                         def show_map():
                                             lat, lon = get_coords(news[j * 3 + i][2])

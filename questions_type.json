@@ -25,7 +25,7 @@
 
     {
         "type": "NiTi",
-        "question": "Being accepted by people around you is a critical thing for you to feel happy?",
+        "question": "Are you usually brief and practical in your explanations?",
         "func_mbti_yes": "thinker",
         "func_mbti_no": "feeler"
     },
