@@ -1,13 +1,13 @@
 [
     {
-        "question": "If a stranger is about to die of hunger and you give them your food, but then after eating it they die, and now you have to stay hungry the whole day because you lost your only food and this will make you a bit sick for some days, would you regret giving them the food?",
+        "question": "Do you perceive yourself in part for what people think of you more than you have a strong self identity that doesn't depend on anyone else? In other words, would your self identity be intact even if you were invisible to others?",
         "func_mbti_yes": "egoist",
         "func_mbti_no": "altruist"
     },
     {
-        "question": "When you discover a new hobby you suddenly realize you like a lot, does it turn into the only thing you want to do until you are satisfied more than doing things you are used to?",
-        "func_mbti_yes": "future_present",
-        "func_mbti_no": "past_present"
+        "question": "Do you tend to want to leave things unfinished if you are not careful more than finishing them before starting something new?",
+        "func_mbti_yes": "past_present",
+        "func_mbti_no": "future_present"
     },
     {
         "question": "Would it be really hard for you not to cry and get emotional a lot if you see a dog really in pain crying in front of you and you can't help?",
@@ -15,7 +15,7 @@
         "func_mbti_no": "thinker"
     },
     {
-        "question": "Do you often get distracted in your own thoughts more than living in the physical daily life?",
+        "question": "Do you often get distracted in your own thoughts more than living in the physical present life even when you are outside socializing?",
         "func_mbti_yes": "intuitive",
         "func_mbti_no": "sensor"
     }
