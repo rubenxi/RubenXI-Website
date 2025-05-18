@@ -1,6 +1,6 @@
 [
     {
-        "question": "Do you perceive yourself in part for what people think of you more than you have a strong self identity that doesn't depend on anyone else? In other words, would your self identity be intact even if you were invisible to others?",
+        "question": "Do you perceive yourself in part for what people think of you more than you have a strong self identity that doesn't depend on anyone else? In other words, would your self identity change if you were invisible to others?",
         "func_mbti_yes": "egoist",
         "func_mbti_no": "altruist"
     },
