@@ -17,7 +17,7 @@
     },
     {
         "type": "SeFi",
-        "question": "Do you value more having many acquaintances to go to parties with more than a really good friend to do activities with?",
+        "question": "Is it easy for you to stay positive or keep trying when things go wrong instead of paralyzing and overthinking about your mistakes and how to not fail again?",
         "func_mbti_yes": "sensor",
         "func_mbti_no": "feeler"
     },
@@ -67,9 +67,9 @@
     },
     {
         "type": "NeFi",
-        "question": "Do you find yourself more often than not trying new things or experiences outside of your usual ones but still in your comfort zone or close to it?",
-        "func_mbti_yes": "intuitive",
-        "func_mbti_no": "feeler"
+        "question": "Do you often feel confident about your conclusion when you make up your mind about a specific opinion or thought, not needing to rethink about it once you are done with it?",
+        "func_mbti_yes": "feeler",
+        "func_mbti_no": "intuitive"
     },
 
 
