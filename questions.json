@@ -1,8 +1,8 @@
 [
     {
         "question": "Do you perceive yourself in part for what people think of you more than you have a strong self identity that doesn't depend on anyone else? In other words, would your self identity change if you were invisible to others?",
-        "func_mbti_yes": "egoist",
-        "func_mbti_no": "altruist"
+        "func_mbti_yes": "altruist",
+        "func_mbti_no": "egoist"
     },
     {
         "question": "Do you tend to want to leave things unfinished if you are not careful more than finishing them before starting something new?",
