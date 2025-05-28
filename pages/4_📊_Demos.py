@@ -434,7 +434,7 @@ Try again later...
 
             with col_desc_mbti:
                 st.markdown(f"""
-**MBTI (Myers–Briggs Type Indicator) is a self-report questionnaire that uses pseudoscientific psychology knowledge to categorize individuals into 16 distinct personality types.**"
+**MBTI (Myers–Briggs Type Indicator) is a self-report questionnaire that uses pseudoscientific psychology knowledge to categorize individuals into 16 distinct personality types.**
 
 There are 8 cognitive functions, each personality has 4, and the order they are used defines what specific personality a person is.
 
