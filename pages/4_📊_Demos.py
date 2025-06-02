@@ -282,7 +282,7 @@ Your api key has been rate limited or you set an incorrect api key
 
 My website uses an api key that is free, so it may hit a limit at some point
 
-Try again later...
+Try again later or select a different model...
                                             """)
 
     def load_questions(question_file):
