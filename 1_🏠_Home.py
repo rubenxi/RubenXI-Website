@@ -225,7 +225,7 @@ Try again later or use your own api key...
         response = sidebar_messages.chat_message("assistant", avatar="logo.png")
         with response:
             stream = client.models.generate_content_stream(
-                model="gemini-2.0-flash",
+                model="gemini-2.5-flash",
                 config=types.GenerateContentConfig(
                     system_instruction=template_server),
                 contents=messages_stream
