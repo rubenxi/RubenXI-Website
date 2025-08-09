@@ -1,5 +1,5 @@
 streamlit
-PyGithub
+PyGithub==3.1.44
 lxml
 pandas
 huggingface_hub
