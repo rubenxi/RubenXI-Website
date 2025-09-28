@@ -66,7 +66,10 @@ def main():
                 option = names[0]
             code = names.index(option)
             with st.spinner("Retrieving information...", show_time=True):
-                news = get_news(code, options_name_link)
+                try:
+                    news = get_news(code, options_name_link)
+                except:
+                    news = None
             if news is not None:
                 for j in range(len(news)):
                     cols = st.columns(3)
@@ -91,6 +94,8 @@ def main():
                                             show_map()
                             else:
                                 break
+            else:
+                st.warning("The website is rate limited. Try again later...")
     with deepseek_tab:
 
         api_key = st.secrets["api_key_d"]
@@ -142,8 +147,8 @@ def main():
                     st.markdown("")
             model = st.selectbox(
                 "Model to use",
-                ("deepseek-ai/DeepSeek-R1-Distill-Qwen-32B", "Qwen/Qwen2.5-72B-Instruct",
-                 "Qwen/Qwen2.5-Coder-32B-Instruct", "gemini-2.0-flash"), key="model"
+                ("gemini-2.0-flash", "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B", "Qwen/Qwen2.5-72B-Instruct",
+                 "Qwen/Qwen2.5-Coder-32B-Instruct"), key="model"
             )
         with col_c:
             context = st.text_area("Context for the conversation", max_chars=200)
