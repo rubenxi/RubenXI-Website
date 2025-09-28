@@ -39,8 +39,9 @@ def main():
     news_tab, deepseek_tab, mbti_tab = st.tabs(["**News**", "**DeepSeek**", "**MBTI Test**"])
     options_name_link = show_options()
     names = []
-    for element in options_name_link:
-        names.append(element[1])
+    if options_name_link is not None:
+        for element in options_name_link:
+            names.append(element[1])
     with news_tab:
         if names is not None:
             col1, col2, col3 = st.columns(3)
@@ -62,40 +63,38 @@ def main():
             with col3:
                 st.link_button("🚀 View on GitHub", "https://github.com/rubenxi/newsPython", type="primary")
             option = st.selectbox("**Choose a country or conflict**", names)
-            if option is None:
+            if option is not None and names is not None:
                 option = names[0]
-            code = names.index(option)
-            with st.spinner("Retrieving information...", show_time=True):
-                try:
+                code = names.index(option)
+                with st.spinner("Retrieving information...", show_time=True):
                     news = get_news(code, options_name_link)
-                except:
-                    news = None
-            if news is not None:
-                for j in range(len(news)):
-                    cols = st.columns(3)
-                    for i in range(len(cols)):
-                        col = cols[i]
-                        with col:
-                            if j * 3 + i < len(news):
-                                with st.container(border=True):
-                                    st.link_button("**" + news[j * 3 + i][0] + "**\n\n" + news[j * 3 + i][1],
-                                                   news[j * 3 + i][2])
-                                    if st.button("🗺️ See in map", key="map_" + news[j * 3 + i][2] + "_" + str(j)+str(i), type="tertiary"):
-                                        @st.dialog(option + " Map")
-                                        def show_map():
-                                            lat, lon = get_coords(news[j * 3 + i][2])
-                                            data = pd.DataFrame({
-                                                'latitude': [lat],
-                                                'longitude': [lon]
-                                            })
-                                            st.map(data, zoom=7, size=2000)
+                if news is not None:
+                    for j in range(len(news)):
+                        cols = st.columns(3)
+                        for i in range(len(cols)):
+                            col = cols[i]
+                            with col:
+                                if j * 3 + i < len(news):
+                                    with st.container(border=True):
+                                        st.link_button("**" + news[j * 3 + i][0] + "**\n\n" + news[j * 3 + i][1],
+                                                       news[j * 3 + i][2])
+                                        if st.button("🗺️ See in map", key="map_" + news[j * 3 + i][2] + "_" + str(j)+str(i), type="tertiary"):
+                                            @st.dialog(option + " Map")
+                                            def show_map():
+                                                lat, lon = get_coords(news[j * 3 + i][2])
+                                                data = pd.DataFrame({
+                                                    'latitude': [lat],
+                                                    'longitude': [lon]
+                                                })
+                                                st.map(data, zoom=7, size=2000)
 
-                                        with st.spinner("Loading map...", show_time=True):
-                                            show_map()
-                            else:
-                                break
+                                            with st.spinner("Loading map...", show_time=True):
+                                                show_map()
+                                else:
+                                    break
             else:
                 st.warning("The website is rate limited. Try again later...")
+
     with deepseek_tab:
 
         api_key = st.secrets["api_key_d"]
