@@ -7,6 +7,7 @@ import re
 import base64
 import pickle
 from datetime import datetime
+import os
 
 g = Github()
 
@@ -91,6 +92,9 @@ def show_options():
     url_options = 'https://liveuamap.com'
     response_options = requests.get(url_options, headers=headers)
     print("Response: " + str(response_options))
+    message = f"Response, {str(response_options)}!\n"
+    os.write(1, message.encode())
+
     if response_options.status_code == 200:
         tree = html.fromstring(response_options.content)
         xpath_all = '/html/body/div[3]/div[3]/div/div'
