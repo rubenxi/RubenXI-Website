@@ -90,6 +90,7 @@ def show_options():
     options_name_link = []
     url_options = 'https://liveuamap.com'
     response_options = requests.get(url_options, headers=headers)
+    print("Response: " + response_options)
     if response_options.status_code == 200:
         tree = html.fromstring(response_options.content)
         xpath_all = '/html/body/div[3]/div[3]/div/div'
