@@ -43,7 +43,16 @@ def get_repos_github():
     else:
         return None
 
-headers = {'User-Agent': 'Mozilla/5.0'}
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.5993.90 Safari/537.36',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+    'Connection': 'keep-alive',
+    'Referer': 'https://www.google.com/',
+    'DNT': '1',
+    'Upgrade-Insecure-Requests': '1'
+}
 
 def get_news(country_code, options_name_link):
     url = options_name_link[int(country_code)][2]
