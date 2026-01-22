@@ -63,7 +63,7 @@ def main():
     with col2:
         st.title("RubenXI")
         intro_md = """\
-        **I'm a multidisciplinary Software Engineer aiming to be a DevOps**  
+        **I'm a multidisciplinary DevOps Engineer**  
         """
 
         abilities_md = """\
@@ -142,10 +142,10 @@ Software Engineer
 Location: Spain
 GitHub: github.com/rubenxi
 Profile:
-I am a multidisciplinary software engineer, currently working as a Level 1 Systems Operator in English. I enjoy learning new technologies to grow professionally. 
+I am a multidisciplinary DevOps Engineer, currently working as a Systems Operator in English. I enjoy learning new technologies to grow professionally. 
 Professional Experience:
 Aubay:
-Remote L1 Systems Operator: Mar 2025 - Present
+Systems Operator DevOps: Mar 2025 - Present
 Permanent project providing services to a major UK banking entity. The service involves systems monitoring and resolving tickets and incidents, using ITIL methodology and entirely in English.
 Tools used:
 Grafana (monitoring and data extraction)
@@ -179,6 +179,7 @@ Udemy 36-hour course: "Complete Linux Training Course to Get Your Dream IT Job 2
 Udemy Aubay course: "Grafana. Complete Course in Spanish"
 Technical Skills:
 Linux
+DevOps
 Kubernetes
 Bash Shell Scripting
 Docker
