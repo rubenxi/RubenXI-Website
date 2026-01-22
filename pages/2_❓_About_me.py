@@ -32,7 +32,7 @@ Some of the tools used in the project include:
 - Git (version and change control)
 
 ## 🏢 Dekra  
-**Systems and cybersecurity: Oct 2024 — Feb 2025**  
+**Systems and cybersecurity: Oct 2024 — Mar 2025**  
 At Dekra, I had the opportunity to learn from great professionals about cybersecurity, the pentesting process, certification standards, and systems administration.  
 Some of the key tasks I worked on include:  
 - Application and script development in Python and Bash  
@@ -129,7 +129,7 @@ Algunas de las herramientas usadas en el proyecto son:
 - Git (gestión de versiones y cambios)
 
 ## 🏢 Dekra  
-**Sistemas y ciberseguridad: Oct 2024 — Feb 2025**  
+**Sistemas y ciberseguridad: Oct 2024 — Mar 2025**  
 En Dekra, tuve la oportunidad de aprender de grandes profesionales sobre ciberseguridad, el proceso de pentesting, los estándares de certificación y la administración de sistemas.  
 Algunas de las tareas clave en las que trabajé incluyen:  
 - Desarrollo de aplicaciones y scripts en Python y Bash  
