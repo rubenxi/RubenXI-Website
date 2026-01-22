@@ -156,8 +156,8 @@ AWS, Kubernetes, and Prometheus (monitored and managed services)
 JMSToolBox (transaction queue management)
 Git (version and change control)
 Dekra:
-Internship: Oct 2024 - Feb 2025
-During my internship at Dekra, I had the opportunity to learn from great professionals about cybersecurity, the pentesting process, certification standards, and systems administration.
+Oct 2024 - Mar 2025
+At Dekra, I had the opportunity to learn from great professionals about cybersecurity, the pentesting process, certification standards, and systems administration.
 Tasks performed:
 Application and script development in Python and Bash
 Virtualization (VirtualBox and Proxmox) and containers
@@ -179,6 +179,7 @@ Udemy 36-hour course: "Complete Linux Training Course to Get Your Dream IT Job 2
 Udemy Aubay course: "Grafana. Complete Course in Spanish"
 Technical Skills:
 Linux
+Kubernetes
 Bash Shell Scripting
 Docker
 Python
