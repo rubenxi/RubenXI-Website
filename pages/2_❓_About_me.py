@@ -32,8 +32,8 @@ Some of the tools used in the project include:
 - Git (version and change control)
 
 ## 🏢 Dekra  
-**Internship: Oct 2024 — Feb 2025**  
-During my internship at Dekra, I had the opportunity to learn from great professionals about cybersecurity, the pentesting process, certification standards, and systems administration.  
+**Oct 2024 — Feb 2025**  
+At Dekra, I had the opportunity to learn from great professionals about cybersecurity, the pentesting process, certification standards, and systems administration.  
 Some of the key tasks I worked on include:  
 - Application and script development in Python and Bash  
 - Virtualization (VirtualBox and Proxmox) and containers  
@@ -57,10 +57,9 @@ The scripts and tools I’ve developed are available on my GitHub.
 
 # 📜 Certifications  
 
-- **Udemy 36-hour course: "Complete Linux Training Course to Get Your Dream IT Job 2024"**  
-  The best Linux Administration course to prepare you for corporate jobs and certifications like RHCSA, RHCE, LFCS, CLNP.
-
-- **Udemy Aubay course: "Grafana. Complete Course in Spanish"**
+- **Complete Linux Training Course IT 2024**
+- **Grafana complete course**
+- **Basic SQL with PostgreSQL**
 
 # 🛠 Technical Skills  
 
@@ -100,7 +99,7 @@ The scripts and tools I’ve developed are available on my GitHub.
 # 🌍 Languages  
 
 - Spanish: Native  
-- English: Professional  
+- English: Professional (C1)
 """
 
 cv_es = """
@@ -130,8 +129,8 @@ Algunas de las herramientas usadas en el proyecto son:
 - Git (gestión de versiones y cambios)
 
 ## 🏢 Dekra  
-**Prácticas: Oct 2024 — Feb 2025**  
-Durante mis prácticas en Dekra, tuve la oportunidad de aprender de grandes profesionales sobre ciberseguridad, el proceso de pentesting, los estándares de certificación y la administración de sistemas.  
+**Oct 2024 — Feb 2025**  
+En Dekra, tuve la oportunidad de aprender de grandes profesionales sobre ciberseguridad, el proceso de pentesting, los estándares de certificación y la administración de sistemas.  
 Algunas de las tareas clave en las que trabajé incluyen:  
 - Desarrollo de aplicaciones y scripts en Python y Bash  
 - Virtualización (VirtualBox y Proxmox) y contenedores  
@@ -155,10 +154,9 @@ Los scripts y herramientas que he desarrollado están disponibles en mi GitHub.
 
 # 📜 Certificaciones  
 
-- **Curso Udemy 36 horas: "Complete Linux Training Course to Get Your Dream IT Job 2024"**  
-  El mejor curso de Administración de Linux que te prepara para trabajos corporativos y certificaciones RHCSA, RHCE, LFCS, CLNP.
-
-- **Curso Udemy Aubay: "Grafana. Curso completo en Español"**
+- **Complete Linux Training Course IT 2024**
+- **Grafana curso completo**
+- **SQL básico con PostgreSQL**
 
 # 🛠 Habilidades  
 
@@ -198,7 +196,7 @@ Los scripts y herramientas que he desarrollado están disponibles en mi GitHub.
 # 🌍 Idiomas  
 
 - Español: Nativo  
-- Inglés: Profesional  
+- Inglés: Profesional (C1)
 """
 
 aq_es = """
