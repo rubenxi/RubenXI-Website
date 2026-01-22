@@ -20,7 +20,7 @@ I have always been passionate about software development and technology, and I s
 # 💼 Professional Experience  
 
 ## 🏢 Aubay  
-**Remote L1 Systems Operator: Mar 2025 — Present**  
+**Systems Operator: Mar 2025 — Present**  
 Permanent project providing services to a major UK banking entity. The service involves systems monitoring and resolving tickets and incidents, using ITIL methodology and entirely in English.  
 Some of the tools used in the project include:  
 - Grafana (monitoring and data extraction)  
@@ -117,7 +117,7 @@ Siempre me ha apasionado el desarrollo de software y la tecnología, y aprovecho
 # 💼 Experiencia Profesional  
 
 ## 🏢 Aubay  
-**Operador de sistemas L1 en remoto: Mar 2025 — Actual**  
+**Operador de sistemas: Mar 2025 — Actual**  
 Proyecto fijo dando servicio a una importante entidad bancaria de Reino Unido. El servicio consiste en monitorización de sistemas y resolución de tickets e incidencias, utilizando metodología ITIL y completamente en inglés.  
 Algunas de las herramientas usadas en el proyecto son:  
 - Grafana (monitorización y extracción de datos)  
