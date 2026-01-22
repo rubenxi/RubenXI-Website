@@ -6,7 +6,7 @@ st.set_page_config(
     page_icon="logo.png"
 )
 cv_en ="""
-# **Software Engineer**
+# **DevOps Engineer**
 
 📍 **Spain**
 
@@ -14,7 +14,7 @@ cv_en ="""
 **[github.com/rubenxi](https://github.com/rubenxi)**
 
 # 📌 Profile  
-I am a multidisciplinary software engineer, currently working as a Level 1 Systems Operator in English. I enjoy learning new technologies to grow professionally. I am a dedicated and hard-working person who focuses intensely on tasks and gives my best until they are completed. I take my work seriously and dislike wasting time. I adapt quickly and learn anything I’m asked to do very fast.  
+I am a multidisciplinary DevOps engineer, currently working as a Level 1 Systems Operator in English. I enjoy learning new technologies to grow professionally. I am a dedicated and hard-working person who focuses intensely on tasks and gives my best until they are completed. I take my work seriously and dislike wasting time. I adapt quickly and learn anything I’m asked to do very fast.  
 I have always been passionate about software development and technology, and I seize every opportunity to learn more. I thrive in team environments and have confidence in my ability to collaborate effectively on projects of any size. I take a hands-on approach to my work and am committed to learning whatever I don’t yet know to succeed. I am resilient and persistent, but if I face something beyond my abilities, I am not afraid to ask for help and prioritize teamwork over risking mistakes out of pride.
 
 # 💼 Professional Experience  
@@ -103,7 +103,7 @@ The scripts and tools I’ve developed are available on my GitHub.
 """
 
 cv_es = """
-# **Ingeniero de Software**
+# **Ingeniero de Software DevOps Engineer**
 
 📍 **España**
 
@@ -111,7 +111,7 @@ cv_es = """
 **[github.com/rubenxi](https://github.com/rubenxi)**
 
 # 📌 Perfil  
-Soy un ingeniero de software multidisciplinario, actualmente trabajando como operador de sistemas L1 en inglés. Me gusta aprender nuevas tecnologías para crecer como profesional. Soy una persona dedicada y trabajadora que se enfoca intensamente en las tareas y da lo mejor de sí hasta que se completan. Me tomo mi trabajo en serio y no me gusta perder el tiempo. Me adapto rápidamente y aprendo muy rápido cualquier cosa que se me pida hacer.  
+Soy un ingeniero de software DevOps Engineer multidisciplinario, actualmente trabajando como operador de sistemas L1 en inglés. Me gusta aprender nuevas tecnologías para crecer como profesional. Soy una persona dedicada y trabajadora que se enfoca intensamente en las tareas y da lo mejor de sí hasta que se completan. Me tomo mi trabajo en serio y no me gusta perder el tiempo. Me adapto rápidamente y aprendo muy rápido cualquier cosa que se me pida hacer.  
 Siempre me ha apasionado el desarrollo de software y la tecnología, y aprovecho cada oportunidad para aprender más. Me desenvuelvo bien en entornos de trabajo en equipo y tengo confianza en mi capacidad para colaborar de manera efectiva en proyectos de cualquier envergadura. Adopto un enfoque práctico en mi trabajo y me comprometo a aprender lo que no sé aún para tener éxito. Soy resiliente y persistente, pero si me enfrento a algo fuera de mis capacidades, no tengo miedo de pedir ayuda y priorizo el trabajo en equipo por encima de arriesgarme a cometer errores por orgullo.
 
 # 💼 Experiencia Profesional  
