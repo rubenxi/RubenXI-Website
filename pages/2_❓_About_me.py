@@ -57,6 +57,8 @@ The scripts and tools I’ve developed are available on my GitHub.
 
 # 📜 Certifications  
 
+- **Certified Kubernetes Administrator (CKA) course**
+- **Jenkins course**
 - **Complete Linux Training Course IT 2024**
 - **Grafana complete course**
 - **Basic SQL with PostgreSQL**
@@ -154,6 +156,8 @@ Los scripts y herramientas que he desarrollado están disponibles en mi GitHub.
 
 # 📜 Certificaciones  
 
+- **Curso Certified Kubernetes Administrator (CKA)**
+- **Curso Jenkins**
 - **Complete Linux Training Course IT 2024**
 - **Grafana curso completo**
 - **SQL básico con PostgreSQL**
